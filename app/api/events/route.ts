@@ -1,15 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { createServerClient } from '@supabase/auth-helpers-nextjs';
+import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 
 // GET: összes esemény lekérdezése (pending param támogatás)
 export async function GET(req: NextRequest) {
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    { cookies }
-  );
+  const supabase = createRouteHandlerClient({ cookies });
   const pending = req.nextUrl.searchParams.get('pending');
   let query = supabase.from('events').select('*').order('date', { ascending: false });
   if (pending) {
@@ -27,11 +23,7 @@ export async function GET(req: NextRequest) {
 // POST: új esemény létrehozása (admin jogosultság kell, most mock, státusz approved)
 export async function POST(req: NextRequest) {
   try {
-    const supabase = createServerClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-      { cookies }
-    );
+    const supabase = createRouteHandlerClient({ cookies });
     const body = await req.json();
     // DEBUG: logoljuk a kapott body-t
     console.log('EVENT POST BODY:', body);
