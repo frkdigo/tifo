@@ -43,9 +43,12 @@ export default function NewEventForm({ onCreated }: { onCreated?: () => void }) 
         const fileName = `event_${Date.now()}.${fileExt}`;
         const { data, error } = await supabase.storage.from('events').upload(fileName, imageFile, {
           cacheControl: '3600',
-          upsert: false,
+          upsert: true,
         });
-        if (error) throw new Error('Kép feltöltése sikertelen: ' + error.message);
+        if (error) {
+          console.error('Kép feltöltése sikertelen:', error.message, error);
+          throw new Error('Kép feltöltése sikertelen: ' + error.message);
+        }
         const { data: publicUrlData } = supabase.storage.from('events').getPublicUrl(fileName);
         uploadedImageUrl = publicUrlData.publicUrl;
         setImageUrl(uploadedImageUrl);
