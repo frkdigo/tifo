@@ -53,7 +53,8 @@ export default function NewEventForm({ onCreated }: { onCreated?: () => void }) 
       const res = await fetch("/api/events", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ title, date, description, image: uploadedImageUrl, email: "furkonorbert16@gmail.com" })
+        credentials: "include",
+        body: JSON.stringify({ title, date, description, image: uploadedImageUrl })
       });
       if (!res.ok) {
         const data = await res.json().catch(() => null);
