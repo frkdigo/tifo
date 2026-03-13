@@ -5,6 +5,7 @@ import { cookies } from 'next/headers';
 
 // GET: összes esemény lekérdezése (pending param támogatás)
 export async function GET(req: NextRequest) {
+  const supabase = createServerClient({ cookies });
   const pending = req.nextUrl.searchParams.get('pending');
   let query = supabase.from('events').select('*').order('date', { ascending: false });
   if (pending) {
