@@ -1,0 +1,105 @@
+"use client";
+
+import { useRef, useState } from "react";
+import { supabase } from "../../lib/supabaseClient";
+
+export default function NewEventForm({ onCreated }: { onCreated?: () => void }) {
+  const [title, setTitle] = useState("");
+  const [date, setDate] = useState("");
+  const [description, setDescription] = useState("");
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false);
+  const submitLockRef = useRef(false);
+
+  function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setImageFile(file);
+    // Előnézethez olvassuk be a képet
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (typeof reader.result === "string") {
+        setImageUrl(reader.result);
+      }
+    };
+    reader.readAsDataURL(file);
+  }
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (submitLockRef.current) return;
+    submitLockRef.current = true;
+    setLoading(true);
+    setError("");
+    setSuccess(false);
+    let uploadedImageUrl = imageUrl;
+    try {
+      // Ha van új file, töltsük fel Supabase Storage-ba
+      if (imageFile) {
+        const fileExt = imageFile.name.split('.').pop();
+        const fileName = `event_${Date.now()}.${fileExt}`;
+        const { data, error } = await supabase.storage.from('events').upload(fileName, imageFile, {
+          cacheControl: '3600',
+          upsert: false,
+        });
+        if (error) throw new Error('Kép feltöltése sikertelen: ' + error.message);
+        const { data: publicUrlData } = supabase.storage.from('events').getPublicUrl(fileName);
+        uploadedImageUrl = publicUrlData.publicUrl;
+        setImageUrl(uploadedImageUrl);
+      }
+      const res = await fetch("/api/events", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ title, date, description, image: uploadedImageUrl, email: "furkonorbert16@gmail.com" })
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => null);
+        throw new Error(data?.error || "Hiba az esemény mentésekor.");
+      }
+      setSuccess(true);
+      setTitle("");
+      setDate("");
+      setDescription("");
+      setImageFile(null);
+      setImageUrl(null);
+      if (onCreated) onCreated();
+    } catch (e: unknown) {
+      const message = e instanceof Error ? e.message : "Nem sikerült menteni az eseményt.";
+      setError(message);
+    } finally {
+      setLoading(false);
+      submitLockRef.current = false;
+    }
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow p-6 mb-8 flex flex-col gap-3">
+      <h3 className="font-bold text-lg mb-2">Új esemény felvétele</h3>
+      <input type="text" value={title} onChange={e => setTitle(e.target.value)} className="w-full border border-slate-200 rounded-lg p-2 focus:ring-2 focus:ring-slate-300 transition" placeholder="Esemény címe" required />
+      <input type="date" value={date} onChange={e => setDate(e.target.value)} className="w-full border border-slate-200 rounded-lg p-2 focus:ring-2 focus:ring-slate-300 transition" required />
+      <textarea value={description} onChange={e => setDescription(e.target.value)} className="w-full border border-slate-200 rounded-lg p-2 focus:ring-2 focus:ring-slate-300 transition" placeholder="Leírás" />
+      <div className="flex flex-col items-start gap-1">
+        <span className="text-sm font-medium text-slate-700">Kép feltöltése</span>
+        <label className="inline-block cursor-pointer">
+          <span className="bg-slate-900 text-white px-6 py-2 rounded-full font-semibold hover:bg-slate-800 transition-colors inline-block">Fájl kiválasztása</span>
+          <input type="file" accept="image/*" onChange={handleFileChange} className="hidden" />
+        </label>
+        {imageFile && <span className="text-xs text-slate-600 mt-1">{imageFile.name}</span>}
+        {imageUrl && (
+          <img
+            src={imageUrl}
+            alt="Kép előnézet"
+            className="mt-2 rounded shadow max-h-32 border border-slate-200"
+            style={{ objectFit: "contain", maxWidth: 180 }}
+          />
+        )}
+      </div>
+      <button type="submit" className="bg-slate-900 text-white px-6 py-2 rounded-full font-semibold hover:bg-slate-800 transition-colors mt-2" disabled={loading}>Mentés</button>
+      {error && <div className="text-red-500 text-sm mt-2">{error}</div>}
+      {success && <div className="text-green-600 text-sm mt-2">{success}</div>}
+    </form>
+  );
+}

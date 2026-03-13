@@ -1,0 +1,1 @@
+Kérlek, másold ki a zöld szín hex kódját ebből a képből, hogy a Tailwind configban használhassam!
