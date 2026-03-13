@@ -7,34 +7,39 @@ type UserIdRow = {
 
 // GET: összes poszt lekérdezése (csak jóváhagyottak vagy pending, ha admin)
 export async function GET(req: NextRequest) {
-  const pending = req.nextUrl.searchParams.get('pending');
-  let posts;
-  if (pending) {
-    posts = db
-      .prepare(
-        `SELECT posts.*, COALESCE(NULLIF(users.nickname, ''), users.name) AS authorName, users.profileImage AS authorProfileImage
-         FROM posts
-         LEFT JOIN users ON users.id = posts.userId
-         WHERE posts.status = 'pending'
-         ORDER BY posts.createdAt DESC`
-      )
-      .all();
-  } else {
-    posts = db
-      .prepare(
-        `SELECT posts.*, COALESCE(NULLIF(users.nickname, ''), users.name) AS authorName, users.profileImage AS authorProfileImage
-         FROM posts
-         LEFT JOIN users ON users.id = posts.userId
-         WHERE posts.status = 'approved'
-         ORDER BY posts.createdAt DESC`
-      )
-      .all();
+  try {
+    const pending = req.nextUrl.searchParams.get('pending');
+    let posts;
+    if (pending) {
+      posts = db
+        .prepare(
+          `SELECT posts.*, COALESCE(NULLIF(users.nickname, ''), users.name) AS authorName, users.profileImage AS authorProfileImage
+           FROM posts
+           LEFT JOIN users ON users.id = posts.userId
+           WHERE posts.status = 'pending'
+           ORDER BY posts.createdAt DESC`
+        )
+        .all();
+    } else {
+      posts = db
+        .prepare(
+          `SELECT posts.*, COALESCE(NULLIF(users.nickname, ''), users.name) AS authorName, users.profileImage AS authorProfileImage
+           FROM posts
+           LEFT JOIN users ON users.id = posts.userId
+           WHERE posts.status = 'approved'
+           ORDER BY posts.createdAt DESC`
+        )
+        .all();
+    }
+    return NextResponse.json(posts, {
+      headers: {
+        'Cache-Control': 'no-store',
+      },
+    });
+  } catch (e: unknown) {
+    const message = e instanceof Error ? e.message : 'Ismeretlen hiba';
+    return NextResponse.json({ error: message }, { status: 500 });
   }
-  return NextResponse.json(posts, {
-    headers: {
-      'Cache-Control': 'no-store',
-    },
-  });
 }
 // PATCH: poszt jóváhagyása
 export async function PATCH(req: NextRequest) {
