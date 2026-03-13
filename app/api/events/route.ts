@@ -5,11 +5,10 @@ import { cookies } from 'next/headers';
 
 // GET: összes esemény lekérdezése (pending param támogatás)
 export async function GET(req: NextRequest) {
-  const cookieStore = cookies();
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    { cookies: cookieStore }
+    { cookies }
   );
   const pending = req.nextUrl.searchParams.get('pending');
   let query = supabase.from('events').select('*').order('date', { ascending: false });
@@ -28,11 +27,10 @@ export async function GET(req: NextRequest) {
 // POST: új esemény létrehozása (admin jogosultság kell, most mock, státusz approved)
 export async function POST(req: NextRequest) {
   try {
-    const cookieStore = cookies();
     const supabase = createServerClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
       process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-      { cookies: cookieStore }
+      { cookies }
     );
     const body = await req.json();
     // DEBUG: logoljuk a kapott body-t
