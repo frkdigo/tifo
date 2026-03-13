@@ -57,7 +57,7 @@ export async function POST(req: NextRequest) {
       .eq('date', date)
       .eq('description', description)
       .eq('location', location || '')
-      .gte('createdAt', new Date(Date.now() - 15000).toISOString())
+      .gte('createdat', new Date(Date.now() - 15000).toISOString())
       .order('id', { ascending: false })
       .limit(1);
     if (dupError) {
