@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
+import { createServerClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 
 // GET: összes esemény lekérdezése (pending param támogatás)
@@ -22,7 +22,7 @@ export async function GET(req: NextRequest) {
 // POST: új esemény létrehozása (admin jogosultság kell, most mock, státusz approved)
 export async function POST(req: NextRequest) {
   try {
-    const supabase = createRouteHandlerClient({ cookies });
+    const supabase = createServerClient({ cookies });
     const body = await req.json();
     // DEBUG: logoljuk a kapott body-t
     console.log('EVENT POST BODY:', body);
