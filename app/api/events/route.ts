@@ -114,6 +114,16 @@ export async function PATCH(req: NextRequest) {
 
 // DELETE: esemény törlése (admin jogosultság kell, most mock)
 export async function DELETE(req: NextRequest) {
+  const cookieStore = await cookies();
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        get: (key: string) => cookieStore.get(key)?.value,
+      }
+    }
+  );
   const { id } = await req.json();
   // TODO: admin jogosultság ellenőrzése (most mock)
   const { error } = await supabase.from('events').delete().eq('id', id);
