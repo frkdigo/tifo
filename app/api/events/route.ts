@@ -81,6 +81,16 @@ export async function POST(req: NextRequest) {
 }
 // PATCH: esemény jóváhagyása
 export async function PATCH(req: NextRequest) {
+  const cookieStore = await cookies();
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        get: (key: string) => cookieStore.get(key)?.value,
+      }
+    }
+  );
   const body = await req.json();
   const { id, action } = body;
   if (action === 'approve') {
