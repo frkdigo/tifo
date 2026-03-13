@@ -93,23 +93,23 @@ export async function PATCH(req: NextRequest) {
   );
   const body = await req.json();
   const { id, action } = body;
-  if (action === 'approve') {
-    const { error } = await supabase.from('events').update({ status: 'approved' }).eq('id', id);
-    if (error) return NextResponse.json({ error: error.message }, { status: 500 });
-    return NextResponse.json({ success: true });
-  }
-  if (action === 'delete') {
-    const { error } = await supabase.from('events').delete().eq('id', id);
-    if (error) return NextResponse.json({ error: error.message }, { status: 500 });
-    return NextResponse.json({ success: true });
-  }
-  if (action === 'update') {
-    const { title, date, description, image, location } = body;
-    const { error } = await supabase.from('events').update({ title, date, description, image, location }).eq('id', id);
-    if (error) return NextResponse.json({ error: error.message }, { status: 500 });
-    return NextResponse.json({ success: true });
-  }
-  return NextResponse.json({ error: 'Ismeretlen művelet' }, { status: 400 });
+    if (action === 'approve') {
+      const { error } = await supabase.from('events').update({ status: 'approved' }).eq('id', id);
+      if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+      return NextResponse.json({ success: true });
+    }
+    if (action === 'delete') {
+      const { error } = await supabase.from('events').delete().eq('id', id);
+      if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+      return NextResponse.json({ success: true });
+    }
+    if (action === 'update') {
+      const { title, date, description, image, location } = body;
+      const { error } = await supabase.from('events').update({ title, date, description, image, location }).eq('id', id);
+      if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+      return NextResponse.json({ success: true });
+    }
+    return NextResponse.json({ error: 'Ismeretlen művelet.' }, { status: 400 });
 }
 
 // DELETE: esemény törlése (admin jogosultság kell, most mock)
