@@ -13,7 +13,6 @@ export default function AuthPage() {
 	const { user, loginUser } = useAuth();
 	const [rememberMe, setRememberMe] = useState(true);
 	const router = useRouter();
-	// Ha már be van jelentkezve, azonnal dobja át a főoldalra
 	useEffect(() => {
 		if (user) {
 			router.replace("/");
@@ -44,7 +43,6 @@ export default function AuthPage() {
 				console.error("API error:", data);
 			} else {
 				setSuccess(isLogin ? "Sikeres bejelentkezés!" : "Sikeres regisztráció!");
-				// Bejelentkezés vagy regisztráció után is jelentkeztesse be a user-t
 				if (data.user) {
 					loginUser(
 						data.user.name,
@@ -67,8 +65,8 @@ export default function AuthPage() {
 	}
 
 	return (
-		<div className="flex flex-col flex-1 min-h-screen justify-center">
-			<main className="max-w-md mx-auto py-12 px-4 flex-1 flex flex-col justify-center">
+		<main className="flex-grow flex flex-col items-center justify-center">
+			<div className="max-w-md w-full py-12 px-4">
 				<h1 className="text-2xl font-bold mb-6 text-center">
 					{isLogin ? "Bejelentkezés" : "Regisztráció"}
 				</h1>
@@ -110,7 +108,7 @@ export default function AuthPage() {
 				>
 					{isLogin ? "Nincs még fiókod? Regisztrálj!" : "Van már fiókod? Jelentkezz be!"}
 				</button>
-			</main>
-		</div>
+			</div>
+		</main>
 	);
 }
