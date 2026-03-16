@@ -29,7 +29,7 @@ export default function Navbar() {
 
   return (
     <nav className="bg-white shadow-md sticky top-0 z-50">
-      <div className="max-w-6xl mx-auto px-4 py-3 flex items-center">
+      <div className="max-w-6xl mx-auto px-4 py-3 flex items-center w-full">
         {/* Bal oldali logó */}
         <div className="relative h-10 flex items-center" style={{ overflow: 'visible' }}>
           <img src="/images/logo.jpg" alt="TIFO logó" className="h-16 w-auto -mt-3" />
@@ -37,7 +37,7 @@ export default function Navbar() {
         {/* Menü és bejelentkezés új elrendezés */}
         <div className="flex flex-1 items-center">
           {/* Menü középre-jobbra tolva, de nem teljesen a szélén */}
-          <ul className="flex gap-6 items-center ml-auto mr-8">
+          <ul className="flex gap-6 items-center ml-auto">
             {navItems.map(item => (
               <li key={item.href}>
                 {item.href === '/' ? (
