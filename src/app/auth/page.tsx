@@ -10,37 +10,44 @@ export default function AuthPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [submitting, setSubmitting] = useState(false);
   const { loginUser } = useAuth();
   const router = useRouter();
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    if (submitting) return;
+    setSubmitting(true);
     setError("");
     setSuccess("");
-    const method = isLogin ? "PUT" : "POST";
-    const res = await fetch("/api/auth", {
-      method,
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(isLogin ? { email, password } : { name, email, password }),
-    });
-    const data = await res.json();
-    if (!res.ok) {
-      setError(data.error || "Hiba történt");
-    } else {
-      setSuccess(isLogin ? "Sikeres bejelentkezés!" : "Sikeres regisztráció!");
-      // Ha bejelentkezés, állítsd be a user-t contextben
-      if (isLogin && data.user) {
-        const profileImage = data.user.profileImage ?? data.user.profileimage ?? null;
-        const isAdmin = data.user.isAdmin ?? data.user.isadmin ?? false;
-        loginUser(
-          data.user.name,
-          data.user.nickname || data.user.name,
-          profileImage,
-          data.user.email,
-          isAdmin
-        );
-        setTimeout(() => router.push("/"), 800);
+    try {
+      const method = isLogin ? "PUT" : "POST";
+      const res = await fetch("/api/auth", {
+        method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(isLogin ? { email, password } : { name, email, password }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setError(data.error || "Hiba történt");
+      } else {
+        setSuccess(isLogin ? "Sikeres bejelentkezés!" : "Sikeres regisztráció!");
+        // Ha bejelentkezés, állítsd be a user-t contextben
+        if (isLogin && data.user) {
+          const profileImage = data.user.profileImage ?? data.user.profileimage ?? null;
+          const isAdmin = data.user.isAdmin ?? data.user.isadmin ?? false;
+          loginUser(
+            data.user.name,
+            data.user.nickname || data.user.name,
+            profileImage,
+            data.user.email,
+            isAdmin
+          );
+          setTimeout(() => router.push("/"), 800);
+        }
       }
+    } finally {
+      setSubmitting(false);
     }
   }
 
@@ -64,8 +71,12 @@ export default function AuthPage() {
           Jelszó
           <input type="password" value={password} onChange={e => setPassword(e.target.value)} className="mt-1 w-full border rounded px-3 py-2" required />
         </label>
-        <button type="submit" className="bg-secondary text-white font-semibold px-6 py-2 rounded hover:bg-primary transition">
-          {isLogin ? "Bejelentkezés" : "Regisztráció"}
+        <button
+          type="submit"
+          disabled={submitting}
+          className="bg-secondary text-white font-semibold px-6 py-2 rounded hover:bg-primary transition-all duration-150 active:scale-95 active:brightness-90 disabled:opacity-70 disabled:cursor-not-allowed"
+        >
+          {submitting ? "Folyamatban..." : isLogin ? "Bejelentkezés" : "Regisztráció"}
         </button>
         <button type="button" className="text-sm text-gray-500 hover:underline mt-2" onClick={() => setIsLogin(l => !l)}>
           {isLogin ? "Nincs fiókod? Regisztrálj!" : "Van már fiókod? Jelentkezz be!"}

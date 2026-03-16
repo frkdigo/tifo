@@ -10,6 +10,7 @@ export default function AuthPage() {
 	const [password, setPassword] = useState("");
 	const [error, setError] = useState("");
 	const [success, setSuccess] = useState("");
+	const [submitting, setSubmitting] = useState(false);
 	const { user, loginUser } = useAuth();
 	const [rememberMe, setRememberMe] = useState(true);
 	const router = useRouter();
@@ -21,6 +22,8 @@ export default function AuthPage() {
 
 	async function handleSubmit(e: React.FormEvent) {
 		e.preventDefault();
+		if (submitting) return;
+		setSubmitting(true);
 		setError("");
 		setSuccess("");
 		const method = isLogin ? "PUT" : "POST";
@@ -62,6 +65,8 @@ export default function AuthPage() {
 		} catch (err) {
 			setError("Hálózati vagy szerver hiba");
 			console.error("Fetch error:", err);
+		} finally {
+			setSubmitting(false);
 		}
 	}
 
@@ -99,8 +104,12 @@ export default function AuthPage() {
 					)}
 					{error && <div className="text-red-600 text-sm">{error}</div>}
 					{success && <div className="text-green-600 text-sm">{success}</div>}
-					<button type="submit" className="bg-slate-900 text-white rounded px-4 py-2 font-semibold">
-						{isLogin ? "Bejelentkezés" : "Regisztráció"}
+					<button
+						type="submit"
+						disabled={submitting}
+						className="bg-slate-900 text-white rounded px-4 py-2 font-semibold transition-all duration-150 active:scale-95 active:brightness-90 disabled:opacity-70 disabled:cursor-not-allowed"
+					>
+						{submitting ? "Folyamatban..." : isLogin ? "Bejelentkezés" : "Regisztráció"}
 					</button>
 				</form>
 				<button

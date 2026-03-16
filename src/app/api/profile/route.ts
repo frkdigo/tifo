@@ -4,7 +4,7 @@ import { supabase } from '@/lib/supabaseClient';
 export async function GET(req: NextRequest) {
   const email = req.nextUrl.searchParams.get('email');
   if (!email) {
-    return NextResponse.json({ error: 'Email kotelezo' }, { status: 400 });
+    return NextResponse.json({ error: 'Email kötelező' }, { status: 400 });
   }
   const { data: user, error } = await supabase
     .from('users')

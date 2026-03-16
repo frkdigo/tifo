@@ -85,8 +85,12 @@ export default function NewEventForm({ onCreated }: { onCreated?: () => void }) 
         <textarea value={description} onChange={e => setDescription(e.target.value)} required className="w-full border rounded px-2 py-1" />
       </div>
       {error && <div className="text-red-500 mb-2">{error}</div>}
-      {success && <div className="text-green-600 mb-2">Sikeres mentés, az esemény azonnal publikálva lett.</div>}
-      <button type="submit" className="bg-primary text-white px-4 py-2 rounded" disabled={loading}>
+      {success && <div className="text-green-600 mb-2">Sikeresen létrehoztad az eseményt!</div>}
+      <button
+        type="submit"
+        className="bg-primary text-white px-4 py-2 rounded transition-all duration-150 active:scale-95 active:brightness-90 disabled:opacity-70 disabled:cursor-not-allowed"
+        disabled={loading}
+      >
         {loading ? "Mentés..." : "Esemény mentése"}
       </button>
     </form>

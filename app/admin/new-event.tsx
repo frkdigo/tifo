@@ -86,9 +86,15 @@ export default function NewEventForm({ onCreated }: { onCreated?: () => void }) 
           />
         )}
       </div>
-      <button type="submit" className="bg-slate-900 text-white px-6 py-2 rounded-full font-semibold hover:bg-slate-800 transition-colors mt-2" disabled={loading}>Mentés</button>
+      <button
+        type="submit"
+        className="bg-slate-900 text-white px-6 py-2 rounded-full font-semibold hover:bg-slate-800 transition-all duration-150 active:scale-95 active:brightness-90 mt-2 disabled:opacity-70 disabled:cursor-not-allowed"
+        disabled={loading}
+      >
+        {loading ? "Mentés..." : "Mentés"}
+      </button>
       {error && <div className="text-red-500 text-sm mt-2">{error}</div>}
-      {success && <div className="text-green-600 text-sm mt-2">{success}</div>}
+      {success && <div className="text-green-600 text-sm mt-2">Sikeresen létrehoztad az eseményt!</div>}
     </form>
   );
 }
