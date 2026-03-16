@@ -141,10 +141,10 @@ function AdminPageContent() {
                     <div className="text-xs text-gray-500">{getPostCreatedAt(post)}</div>
                     <div className="text-sm text-slate-700 max-h-16 overflow-hidden">{post.text}</div>
                   </div>
-                  <div className="flex gap-2">
-                    <button onClick={() => setSelectedPost(post)} className="bg-slate-700 text-white px-3 py-1 rounded">Megtekintés</button>
-                    <button onClick={() => approvePost(post.id)} className="bg-green-500 text-white px-3 py-1 rounded">Jóváhagy</button>
-                    <button onClick={() => deletePost(post.id)} className="bg-red-500 text-white px-3 py-1 rounded">Törlés</button>
+                  <div className="mt-2 grid grid-cols-1 sm:grid-cols-3 gap-2 w-full">
+                    <button onClick={() => setSelectedPost(post)} className="w-full bg-slate-700 text-white px-3 py-2 rounded">Megtekintés</button>
+                    <button onClick={() => approvePost(post.id)} className="w-full bg-green-500 text-white px-3 py-2 rounded">Jóváhagy</button>
+                    <button onClick={() => deletePost(post.id)} className="w-full bg-red-500 text-white px-3 py-2 rounded">Törlés</button>
                   </div>
                 </li>
               ))}

@@ -125,10 +125,10 @@ function AdminPageContent() {
                         <img src={post.image} alt="post" className="max-h-20 rounded mt-1 mb-1" style={{objectFit:'contain', maxWidth:'100%'}} />
                       )}
                       <p className="text-sm text-slate-700 max-h-16 overflow-hidden">{post.text}</p>
-                      <div className="flex gap-2 mt-2">
-                        <button className="bg-slate-700 text-white px-4 py-2 rounded-lg hover:bg-slate-800 font-semibold transition-colors" onClick={() => setSelectedPost(post)}>Megtekintés</button>
-                        <button className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 font-semibold transition-colors" onClick={() => approvePost(post.id)}>Jóváhagyás</button>
-                        <button className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 font-semibold transition-colors" onClick={() => {
+                      <div className="mt-2 grid grid-cols-1 sm:grid-cols-3 gap-2 w-full">
+                        <button className="w-full bg-slate-700 text-white px-3 py-2 rounded-lg hover:bg-slate-800 font-semibold transition-colors" onClick={() => setSelectedPost(post)}>Megtekintés</button>
+                        <button className="w-full bg-green-500 text-white px-3 py-2 rounded-lg hover:bg-green-600 font-semibold transition-colors" onClick={() => approvePost(post.id)}>Jóváhagyás</button>
+                        <button className="w-full bg-red-500 text-white px-3 py-2 rounded-lg hover:bg-red-600 font-semibold transition-colors" onClick={() => {
                           if (window.confirm('Biztosan elutasítod ezt a posztot?')) rejectPost(post.id);
                         }}>Elutasítás</button>
                       </div>

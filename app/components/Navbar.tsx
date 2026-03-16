@@ -89,12 +89,13 @@ export default function Navbar() {
             {!user && (
               <Link
                 href="/auth"
-                className={`px-3 py-2 rounded font-medium transition-colors ${
+                className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-full font-semibold transition-all duration-200 shadow-md active:scale-95 ${
                   pathname === '/auth'
-                    ? 'text-secondary'
-                    : 'text-gray-700 hover:text-secondary'
+                    ? 'bg-slate-900 text-white ring-2 ring-slate-900/20'
+                    : 'bg-secondary text-white hover:brightness-95 hover:-translate-y-0.5'
                 }`}
               >
+                <span className="inline-block h-2 w-2 rounded-full bg-white/85" />
                 Bejelentkezés
               </Link>
             )}
@@ -178,10 +179,10 @@ export default function Navbar() {
                 <li className="px-5 py-3">
                   <Link
                     href="/auth"
-                    className={`block w-full text-center px-3 py-2 rounded font-medium transition-colors ${
+                    className={`block w-full text-center px-4 py-2.5 rounded-full font-semibold transition-all duration-200 shadow-sm active:scale-95 ${
                       pathname === '/auth'
-                        ? 'text-secondary'
-                        : 'text-gray-700 hover:text-secondary'
+                        ? 'bg-slate-900 text-white'
+                        : 'bg-secondary text-white hover:brightness-95'
                     }`}
                   >
                     Bejelentkezés
