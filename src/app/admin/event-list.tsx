@@ -32,3 +32,4 @@ export default function AdminEventList() {
     </div>
   )
   // ...existing code...
+import { useState, useEffect } from 'react';
