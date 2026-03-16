@@ -1,0 +1,7 @@
+- [x] Projekt követelmények tisztázva
+- [x] Next.js + Tailwind projekt létrehozva
+- [ ] Funkciók és oldalak testreszabása magyarul
+- [ ] Szükséges VS Code extensionök telepítése
+- [ ] Projekt fordítása, tesztelése
+- [ ] Npm scriptek és taskok hozzáadása
+- [ ] Dokumentáció ellenőrzése, frissítése

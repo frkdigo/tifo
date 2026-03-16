@@ -1,0 +1,1 @@
+// Globális típusdefiníciók (ha szükséges)
