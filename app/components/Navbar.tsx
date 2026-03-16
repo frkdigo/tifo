@@ -128,7 +128,7 @@ export default function Navbar() {
               )}
             </div>
           )}
-        </div>
+        {/* Desktop menü lezárása */}
       </div>
     </nav>
   );
