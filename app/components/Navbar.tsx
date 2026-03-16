@@ -13,10 +13,10 @@ const navItems = [
 
 import { useEffect, useState } from 'react';
 
+export default function Navbar() {
   const { user, logoutUser } = useAuth();
   const router = typeof window !== 'undefined' ? require('next/navigation').useRouter() : null;
   const [menuOpen, setMenuOpen] = useState(false);
-
 
   // Close menu on route change (optional, ha szeretnéd)
   useEffect(() => {
@@ -114,10 +114,7 @@ import { useEffect, useState } from 'react';
       </div>
     </nav>
   );
-            )}
-          </div>
-        </div>
-      </div>
+}
     </nav>
   )
 }
