@@ -126,6 +126,13 @@ export default function Navbar() {
                   </li>
                 )}
               </ul>
+              {!user && (
+                <div className="px-5 py-3">
+                  <Link href="/auth" className="block w-full text-center text-gray-700 hover:text-secondary font-medium transition-colors px-3 py-2 rounded border border-slate-300 bg-white hover:bg-slate-100">
+                    Bejelentkezés
+                  </Link>
+                </div>
+              )}
             </div>
           )}
         </div>
