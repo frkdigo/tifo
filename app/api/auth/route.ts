@@ -25,8 +25,8 @@ export async function POST(req: NextRequest) {
   const passwordHash = bcrypt.hashSync(password, 10);
   const { data: insertData, error: insertError } = await supabase
     .from('users')
-    .insert([{ name, nickname: name, email, passwordHash, isadmin: false, profileimage: null }])
-    .select('id, name, nickname, profileimage, email, isadmin');
+    .insert([{ name, nickname: name, email, passwordHash, isadmin: false, profileImage: null }])
+    .select('id, name, nickname, profileImage, email, isadmin');
   if (insertError) return NextResponse.json({ error: insertError.message }, { status: 500 });
   // TODO: session kezelése (cookie, JWT, stb.)
   return NextResponse.json({ user: insertData && insertData[0] });
@@ -50,7 +50,7 @@ export async function PUT(req: NextRequest) {
       id: user.id,
       name: user.name,
       nickname: user.nickname || user.name,
-      profileimage: user.profileimage,
+      profileImage: user.profileImage,
       email: user.email,
       isadmin: !!user.isadmin,
     },

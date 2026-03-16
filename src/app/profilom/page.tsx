@@ -7,7 +7,7 @@ import { useAuth } from "../../../app/components/AuthProvider";
 export default function ProfilomPage() {
   const { user, updateUserProfile } = useAuth();
   const router = useRouter();
-  const [nickname, setNickname] = useState("");
+  const [nickname, setNickname] = useState(user?.nickname || user?.name || "");
   const [profileImage, setProfileImage] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
@@ -18,12 +18,15 @@ export default function ProfilomPage() {
       return;
     }
 
+    setNickname(user.nickname || user.name || "");
+    setProfileImage(user.profileImage ?? user.profileimage ?? null);
+
     async function loadProfile() {
       const res = await fetch(`/api/profile?email=${encodeURIComponent(user.email)}`, { cache: "no-store" });
       if (!res.ok) return;
       const data = await res.json();
-      setNickname(data.nickname || data.name || "");
-      setProfileImage(data.profileImage ?? data.profileimage ?? null);
+      setNickname(data.nickname || data.name || user.nickname || user.name || "");
+      setProfileImage(data.profileImage ?? data.profileimage ?? user.profileImage ?? user.profileimage ?? null);
     }
 
     loadProfile();

@@ -44,10 +44,11 @@ export default function AuthPage() {
 			} else {
 				setSuccess(isLogin ? "Sikeres bejelentkezés!" : "Sikeres regisztráció!");
 				if (data.user) {
+					const profileImage = data.user.profileImage ?? data.user.profileimage ?? null;
 					loginUser(
 						data.user.name,
 						data.user.nickname || data.user.name,
-						data.user.profileimage || null,
+						profileImage,
 						data.user.email,
 						data.user.isadmin,
 						rememberMe

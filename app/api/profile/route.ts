@@ -9,7 +9,7 @@ export async function GET(req: NextRequest) {
 
   const { data, error } = await supabase
     .from('users')
-    .select('id, name, nickname, profileimage, email, isadmin')
+    .select('id, name, nickname, profileImage, email, isadmin')
     .eq('email', email)
     .single();
 
@@ -26,8 +26,9 @@ export async function GET(req: NextRequest) {
 
 export async function PATCH(req: NextRequest) {
   try {
-    const { email, nickname, profileimage } = await req.json();
-    console.log("PATCH body:", { email, nickname, profileimage: profileimage?.slice?.(0, 100) });
+    const { email, nickname, profileImage, profileimage } = await req.json();
+    const nextProfileImage = profileImage ?? profileimage;
+    console.log("PATCH body:", { email, nickname, profileImage: nextProfileImage?.slice?.(0, 100) });
     if (!email) {
       return NextResponse.json({ error: 'Email kötelező' }, { status: 400 });
     }
@@ -36,7 +37,7 @@ export async function PATCH(req: NextRequest) {
       .from('users')
       .update({
         nickname: typeof nickname === 'string' ? nickname : undefined,
-        profileimage: profileimage !== undefined ? profileimage : undefined,
+        profileImage: nextProfileImage !== undefined ? nextProfileImage : undefined,
       })
       .eq('email', email);
     console.log("Supabase update result:", { updateData, updateError });
@@ -50,7 +51,7 @@ export async function PATCH(req: NextRequest) {
 
     const { data, error } = await supabase
       .from('users')
-      .select('id, name, nickname, profileimage, email, isadmin')
+      .select('id, name, nickname, profileImage, email, isadmin')
       .eq('email', email)
       .single();
 
