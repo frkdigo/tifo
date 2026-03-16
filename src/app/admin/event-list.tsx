@@ -16,7 +16,7 @@ export default function AdminEventList() {
     <div className="mt-8">
       <h2 className="text-xl font-bold mb-4">Események</h2>
       <ul className="space-y-4">
-        {events.map(event => (
+        {events.map((event: any) => (
           <li key={event.id} className="bg-gray-50 rounded p-4 flex justify-between items-center">
             <div>
               <div className="font-semibold">{event.title}</div>
