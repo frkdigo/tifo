@@ -1,6 +1,0 @@
-{
-  "/api/posts/route": "app/api/posts/route.js",
-  "/auth/page": "app/auth/page.js",
-  "/page": "app/page.js",
-  "/profilom/page": "app/profilom/page.js"
-}

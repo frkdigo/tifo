@@ -1,11 +1,30 @@
-import { mockEvents } from '../lib/mockEvents'
+import { useEffect, useState } from "react";
 
 export default function AdminEventList() {
+  const [events, setEvents] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    fetch("/api/events")
+      .then(res => res.json())
+      .then(data => {
+        setEvents(data);
+        setLoading(false);
+      })
+      .catch(() => {
+        setError("Hiba történt az események betöltésekor.");
+        setLoading(false);
+      });
+  }, []);
+
   return (
     <div className="mt-8">
       <h2 className="text-xl font-bold mb-4">Események</h2>
+      {loading && <div>Betöltés...</div>}
+      {error && <div className="text-red-500">{error}</div>}
       <ul className="space-y-4">
-        {mockEvents.map(event => (
+        {events.map(event => (
           <li key={event.id} className="bg-gray-50 rounded p-4 flex justify-between items-center">
             <div>
               <div className="font-semibold">{event.title}</div>
@@ -19,5 +38,5 @@ export default function AdminEventList() {
         ))}
       </ul>
     </div>
-  )
+  );
 }
