@@ -48,6 +48,7 @@ export default function Navbar() {
         <div className="flex flex-1 items-center">
           <ul className="flex items-center gap-6 flex-1 justify-end mr-6">
             {navItems.map((item) => {
+              const [loginClicked, setLoginClicked] = useState(false);
               const active = pathname === item.href;
               return (
                 <li key={item.href}>
