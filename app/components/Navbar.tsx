@@ -103,7 +103,7 @@ export default function Navbar() {
                 {user && (
                   <li>
                     <div className="px-5 py-3">
-                      <UserMenu />
+                      <UserMenu user={user} onLogout={logoutUser} />
                     </div>
                   </li>
                 )}
