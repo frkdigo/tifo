@@ -79,37 +79,38 @@ export default function AuthPage() {
 							<input type="text" value={name} onChange={e => setName(e.target.value)} className="mt-1 w-full border rounded px-3 py-2" required={!isLogin} />
 						</label>
 					)}
-				<label>
-					Email
-					<input type="email" value={email} onChange={e => setEmail(e.target.value)} className="mt-1 w-full border rounded px-3 py-2" required />
-				</label>
-				<label>
-					Jelszó
-					<input type="password" value={password} onChange={e => setPassword(e.target.value)} className="mt-1 w-full border rounded px-3 py-2" required />
-				</label>
-				{isLogin && (
-					<label className="flex items-center gap-2 select-none">
-						<input
-							type="checkbox"
-							checked={rememberMe}
-							onChange={e => setRememberMe(e.target.checked)}
-							className="accent-primary"
-						/>
-						Emlékezz rám
+					<label>
+						Email
+						<input type="email" value={email} onChange={e => setEmail(e.target.value)} className="mt-1 w-full border rounded px-3 py-2" required />
 					</label>
-				)}
-				{error && <div className="text-red-600 text-sm">{error}</div>}
-				{success && <div className="text-green-600 text-sm">{success}</div>}
-				<button type="submit" className="bg-slate-900 text-white rounded px-4 py-2 font-semibold">
-					{isLogin ? "Bejelentkezés" : "Regisztráció"}
+					<label>
+						Jelszó
+						<input type="password" value={password} onChange={e => setPassword(e.target.value)} className="mt-1 w-full border rounded px-3 py-2" required />
+					</label>
+					{isLogin && (
+						<label className="flex items-center gap-2 select-none">
+							<input
+								type="checkbox"
+								checked={rememberMe}
+								onChange={e => setRememberMe(e.target.checked)}
+								className="accent-primary"
+							/>
+							Emlékezz rám
+						</label>
+					)}
+					{error && <div className="text-red-600 text-sm">{error}</div>}
+					{success && <div className="text-green-600 text-sm">{success}</div>}
+					<button type="submit" className="bg-slate-900 text-white rounded px-4 py-2 font-semibold">
+						{isLogin ? "Bejelentkezés" : "Regisztráció"}
+					</button>
+				</form>
+				<button
+					className="mt-4 text-sm text-slate-700 underline"
+					onClick={() => setIsLogin((v) => !v)}
+				>
+					{isLogin ? "Nincs még fiókod? Regisztrálj!" : "Van már fiókod? Jelentkezz be!"}
 				</button>
-			</form>
-			<button
-				className="mt-4 text-sm text-slate-700 underline"
-				onClick={() => setIsLogin((v) => !v)}
-			>
-				{isLogin ? "Nincs még fiókod? Regisztrálj!" : "Van már fiókod? Jelentkezz be!"}
-			</button>
-		</main>
+			</main>
+		</div>
 	);
 }
