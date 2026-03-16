@@ -33,8 +33,8 @@ export default function Navbar() {
           <img src="/images/logo.jpg" alt="TIFO logó" className="h-16 w-auto -mt-3" />
         </div>
         {/* Desktop menu */}
-        <div className="flex flex-1 justify-end items-center gap-6">
-          <ul className="flex gap-6 items-center ml-auto">
+        <div className="flex flex-1 items-center">
+          <ul className="flex gap-6 items-center flex-grow justify-end pr-8">
             {navItems.map(item => (
               <li key={item.href}>
                 {item.href === '/' ? (
@@ -64,18 +64,19 @@ export default function Navbar() {
                 </div>
               </li>
             )}
-            {user ? (
+            {user && (
               <li>
                 <UserMenu user={user} onLogout={logoutUser} />
               </li>
-            ) : (
-              <li className="ml-2">
-                <Link href="/auth" className="text-gray-700 hover:text-secondary font-medium transition-colors px-3 py-2 rounded border border-slate-300 bg-white hover:bg-slate-100">
-                  Bejelentkezés
-                </Link>
-              </li>
             )}
           </ul>
+          {!user && (
+            <div className="flex items-center">
+              <Link href="/auth" className="text-gray-700 hover:text-secondary font-medium transition-colors px-3 py-2 rounded border border-slate-300 bg-white hover:bg-slate-100">
+                Bejelentkezés
+              </Link>
+            </div>
+          )}
         </div>
         {/* Mobile hamburger */}
         <div className="md:hidden flex flex-1 justify-end items-center">
