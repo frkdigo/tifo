@@ -7,7 +7,7 @@ export default function AdminEventList() {
     <div className="mt-8">
       <h2 className="text-xl font-bold mb-4">Események</h2>
       <ul className="space-y-4">
-        {mockEvents.map(event => (
+        {events.map(event => (
           <li key={event.id} className="bg-gray-50 rounded p-4 flex justify-between items-center">
             <div>
               <div className="font-semibold">{event.title}</div>
@@ -22,4 +22,14 @@ export default function AdminEventList() {
       </ul>
     </div>
   )
+  const [events, setEvents] = useState<any[]>([]);
+  useEffect(() => {
+    async function fetchEvents() {
+      const { data, error } = await import('../../../lib/supabaseClient').then(({ supabase }) =>
+        supabase.from('events').select('*').order('date', { ascending: false })
+      );
+      if (!error && data) setEvents(data);
+    }
+    fetchEvents();
+  }, []);
 }
