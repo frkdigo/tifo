@@ -1,4 +1,6 @@
+
 import { NextRequest, NextResponse } from 'next/server';
+import { supabase } from '../../../lib/supabaseClient';
 
 
 type UserIdRow = {
@@ -9,26 +11,23 @@ type UserIdRow = {
 export async function GET(req: NextRequest) {
   try {
     const pending = req.nextUrl.searchParams.get('pending');
-    // TODO: Supabase lekérdezés implementálása
-    let posts = [];
-    // Itt Supabase-ből kell lekérni a posztokat
-    // Példa:
-    // const { data, error } = await supabase.from('posts').select('*');
-    // posts = data;
-        )
-        .all();
+    let query = supabase
+      .from('posts')
+      .select(`*, users:users!posts_userId_fkey(nickname, name, profileImage)`)
+      .order('createdAt', { ascending: false });
+
+    if (pending) {
+      query = query.eq('status', 'pending');
     } else {
-      posts = db
-        .prepare(
-          `SELECT posts.*, COALESCE(NULLIF(users.nickname, ''), users.name) AS authorName, users.profileImage AS authorProfileImage
-           FROM posts
-           LEFT JOIN users ON users.id = posts.userId
-           WHERE posts.status = 'approved'
-        // ...existing code...
-        )
-        .all();
+      query = query.eq('status', 'approved');
     }
-    return NextResponse.json(posts, {
+
+    const { data, error } = await query;
+    if (error) {
+      throw new Error(error.message);
+    }
+    // posts = data; // már a data-ban van
+    return NextResponse.json(data || [], {
       headers: {
         'Cache-Control': 'no-store',
       },
