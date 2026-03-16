@@ -64,8 +64,12 @@ export default function Navbar() {
                 </div>
               </li>
             )}
+            {user && (
+              <li>
+                <UserMenu user={user} onLogout={logoutUser} />
+              </li>
+            )}
           </ul>
-          <UserMenu user={user} onLogout={logoutUser} />
         </div>
         {/* Mobile hamburger */}
         <div className="md:hidden flex flex-1 justify-end items-center">
