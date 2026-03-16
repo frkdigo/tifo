@@ -6,7 +6,7 @@ export default function UserMenu({
   user,
   onLogout,
 }: {
-  user: { name: string; nickname: string; profileimage: string | null; email: string; isAdmin: boolean } | null;
+  user: { name: string; nickname: string; profileimage?: string | null; profileImage?: string | null; email: string; isAdmin: boolean } | null;
   onLogout: () => void;
 }) {
   const [open, setOpen] = useState(false);
@@ -38,6 +38,7 @@ export default function UserMenu({
   }, [open]);
 
   if (!user) return null;
+  const userAvatar = user.profileimage ?? user.profileImage ?? null;
   return (
     <div className="relative" ref={menuRef}>
       <button
@@ -47,8 +48,8 @@ export default function UserMenu({
         aria-expanded={open}
         aria-haspopup="menu"
       >
-        {user.profileimage ? (
-          <img src={user.profileimage} alt="Profilkep" className="w-8 h-8 rounded-full object-cover border" />
+        {userAvatar ? (
+          <img src={userAvatar} alt="Profilkep" className="w-8 h-8 rounded-full object-cover border" />
         ) : (
           <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-xs text-gray-700 border">
             {(user.nickname || user.name || user.email).charAt(0).toUpperCase()}

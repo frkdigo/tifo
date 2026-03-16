@@ -30,12 +30,14 @@ export default function AuthPage() {
       setSuccess(isLogin ? "Sikeres bejelentkezés!" : "Sikeres regisztráció!");
       // Ha bejelentkezés, állítsd be a user-t contextben
       if (isLogin && data.user) {
+        const profileImage = data.user.profileImage ?? data.user.profileimage ?? null;
+        const isAdmin = data.user.isAdmin ?? data.user.isadmin ?? false;
         loginUser(
           data.user.name,
           data.user.nickname || data.user.name,
-          data.user.profileImage || null,
+          profileImage,
           data.user.email,
-          data.user.isAdmin
+          isAdmin
         );
         setTimeout(() => router.push("/"), 800);
       }

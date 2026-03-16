@@ -23,7 +23,7 @@ export default function ProfilomPage() {
       if (!res.ok) return;
       const data = await res.json();
       setNickname(data.nickname || data.name || "");
-      setProfileImage(data.profileImage || null);
+      setProfileImage(data.profileImage ?? data.profileimage ?? null);
     }
 
     loadProfile();
@@ -56,6 +56,7 @@ export default function ProfilomPage() {
         email: user.email,
         nickname,
         profileImage,
+        profileimage: profileImage,
       }),
     });
 
@@ -67,7 +68,9 @@ export default function ProfilomPage() {
       return;
     }
 
-    updateUserProfile(data.user.nickname || nickname, data.user.profileImage || null);
+    const nextProfileImage = data.user?.profileImage ?? data.user?.profileimage ?? profileImage ?? null;
+    updateUserProfile(data.user.nickname || nickname, nextProfileImage);
+    setProfileImage(nextProfileImage);
     setMessage("Profil sikeresen mentve.");
   }
 

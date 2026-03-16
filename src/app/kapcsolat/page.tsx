@@ -4,6 +4,7 @@ import { useAuth } from "../../../app/components/AuthProvider";
 
 export default function Kapcsolat() {
   const { user } = useAuth();
+  const userProfileImage = user?.profileImage ?? user?.profileimage ?? null;
 
   return (
     <main className="max-w-5xl mx-auto py-12 px-4">
@@ -29,9 +30,9 @@ export default function Kapcsolat() {
           </div>
 
           <div className="w-fit mx-auto">
-            {user?.profileImage ? (
+            {userProfileImage ? (
               <img
-                src={user.profileImage}
+                src={userProfileImage}
                 alt="Saját profilkép"
                 className="w-full max-w-[240px] h-[240px] mx-auto object-cover rounded-full border border-slate-500/60"
               />
