@@ -58,8 +58,9 @@ export default function Navbar() {
             {logoutMessage}
           </div>
         )}
-        <div className="flex flex-1 items-center">
-          <ul className="flex items-center gap-6 flex-1 justify-end mr-6">
+        <div className="flex flex-1 items-center flex-row md:flex-row">
+          {/* Menü csak desktopon */}
+          <ul className="hidden md:flex items-center gap-6 flex-1 justify-end mr-6">
             {navItems.map((item) => {
               const active = pathname === item.href;
               return (
@@ -83,7 +84,8 @@ export default function Navbar() {
               </li>
             )}
           </ul>
-          <div className="flex items-center ml-auto">
+          {/* Bejelentkezés gomb csak desktopon jobbra, mobilon normál helyen */}
+          <div className="flex items-center md:ml-auto">
             {!user && (
               <Link
                 href="/auth"
