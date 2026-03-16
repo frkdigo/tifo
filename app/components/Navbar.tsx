@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 import UserMenu from "./UserMenu";
 import { useAuth } from "./AuthProvider";
 import AdminDropdown from "./AdminDropdown";
-import { useEffect, useState } from "react";
 
 const navItems = [
   { href: "/", label: "Főoldal" },
@@ -15,40 +16,60 @@ const navItems = [
 
 export default function Navbar() {
   const { user, logoutUser } = useAuth();
+  const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    if (!menuOpen) return;
-    const close = () => setMenuOpen(false);
-    window.addEventListener("resize", close);
-    return () => window.removeEventListener("resize", close);
-  }, [menuOpen]);
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 10);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <nav className="bg-white shadow-md sticky top-0 z-50">
+    <nav
+      className={`sticky top-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? "bg-white/80 backdrop-blur-md shadow-md"
+          : "bg-white shadow-sm"
+      }`}
+    >
       <div className="max-w-6xl mx-auto px-4 py-3 flex items-center w-full">
 
         {/* LOGO */}
-        <div className="relative h-10 flex items-center" style={{ overflow: "visible" }}>
-          <img
-            src="/images/logo.jpg"
-            alt="TIFO logó"
-            className="h-16 w-auto -mt-3"
-          />
+        <div className="flex items-center">
+          <Link href="/">
+            <img
+              src="/images/logo.jpg"
+              alt="TIFO logó"
+              className="h-16 w-auto -mt-3 cursor-pointer"
+            />
+          </Link>
         </div>
 
         {/* DESKTOP MENU */}
-        <ul className="hidden md:flex gap-6 items-center ml-auto mr-6">
-          {navItems.map((item) => (
-            <li key={item.href}>
-              <Link
-                href={item.href}
-                className="text-gray-700 hover:text-secondary font-medium transition-colors px-3 py-2 rounded"
-              >
-                {item.label}
-              </Link>
-            </li>
-          ))}
+        <ul className="hidden md:flex items-center gap-6 ml-auto mr-6">
+          {navItems.map((item) => {
+            const active = pathname === item.href;
+
+            return (
+              <li key={item.href}>
+                <Link
+                  href={item.href}
+                  className={`px-3 py-2 rounded font-medium transition-colors ${
+                    active
+                      ? "text-secondary"
+                      : "text-gray-700 hover:text-secondary"
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              </li>
+            );
+          })}
 
           {user && user.isAdmin && (
             <li>
@@ -62,20 +83,22 @@ export default function Navbar() {
           {!user && (
             <Link
               href="/auth"
-              className="text-gray-700 hover:text-secondary font-medium transition-colors px-3 py-2 rounded border border-slate-300 bg-white hover:bg-slate-100"
+              className="px-4 py-2 rounded-lg border border-slate-300 bg-white hover:bg-slate-100 transition font-medium"
             >
               Bejelentkezés
             </Link>
           )}
 
-          {user && <UserMenu user={user} onLogout={logoutUser} />}
+          {user && (
+            <UserMenu user={user} onLogout={logoutUser} />
+          )}
         </div>
 
-        {/* MOBILE HAMBURGER */}
-        <div className="md:hidden flex ml-auto">
+        {/* MOBILE BUTTON */}
+        <div className="md:hidden ml-auto">
           <button
-            className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:bg-gray-100"
-            onClick={() => setMenuOpen((v) => !v)}
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="p-2 rounded-md hover:bg-gray-100 transition"
           >
             <svg
               className="h-7 w-7"
@@ -99,14 +122,15 @@ export default function Navbar() {
 
         {/* MOBILE MENU */}
         {menuOpen && (
-          <div className="absolute top-full right-4 mt-2 w-48 bg-white rounded-xl shadow-lg border border-slate-200 z-50">
-            <ul className="flex flex-col gap-1 py-2">
+          <div className="absolute top-full right-4 mt-2 w-56 bg-white rounded-xl shadow-lg border border-slate-200 z-50 animate-fade-in">
+            <ul className="flex flex-col py-2">
+
               {navItems.map((item) => (
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="block px-5 py-3 text-gray-700 hover:bg-slate-100 rounded-xl font-medium"
                     onClick={() => setMenuOpen(false)}
+                    className="block px-5 py-3 text-gray-700 hover:bg-slate-100 font-medium rounded-lg"
                   >
                     {item.label}
                   </Link>
@@ -129,12 +153,13 @@ export default function Navbar() {
                 <li className="px-5 py-3">
                   <Link
                     href="/auth"
-                    className="block w-full text-center text-gray-700 hover:text-secondary font-medium px-3 py-2 rounded border border-slate-300 bg-white hover:bg-slate-100"
+                    className="block w-full text-center px-4 py-2 rounded-lg border border-slate-300 hover:bg-slate-100 font-medium"
                   >
                     Bejelentkezés
                   </Link>
                 </li>
               )}
+
             </ul>
           </div>
         )}
