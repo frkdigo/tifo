@@ -1,0 +1,17 @@
+{
+  "/_global-error/page": "app/_global-error/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/admin/login/page": "app/admin/login/page.js",
+  "/admin/page": "app/admin/page.js",
+  "/api/auth/route": "app/api/auth/route.js",
+  "/api/events/route": "app/api/events/route.js",
+  "/api/posts/route": "app/api/posts/route.js",
+  "/api/profile/route": "app/api/profile/route.js",
+  "/api/team/route": "app/api/team/route.js",
+  "/auth/page": "app/auth/page.js",
+  "/esemenyeink/page": "app/esemenyeink/page.js",
+  "/kapcsolat/page": "app/kapcsolat/page.js",
+  "/page": "app/page.js",
+  "/profilom/page": "app/profilom/page.js",
+  "/rolunk/page": "app/rolunk/page.js"
+}
