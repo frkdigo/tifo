@@ -1,5 +1,6 @@
 // Eseménylista admin felülethez (mock, Supabase integrációhoz előkészítve)
-import { mockEvents } from '../../lib/mockEvents'
+// import { mockEvents } from '../../lib/mockEvents'
+// Események Supabase-ből jönnek
 
 export default function AdminEventList() {
   return (

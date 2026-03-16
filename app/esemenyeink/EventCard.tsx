@@ -1,4 +1,5 @@
-import { Event } from '../../lib/mockEvents'
+// import { Event } from '../../lib/mockEvents'
+// Az Event típust a Supabase-ből kapott adatok alapján határozzuk meg
 import { useAuth } from '../../components/AuthProvider';
 
 export default function EventCard({ event }: { event: Event }) {
