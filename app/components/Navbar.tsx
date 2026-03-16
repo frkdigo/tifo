@@ -30,12 +30,14 @@ export default function Navbar() {
   return (
     <nav className="bg-white shadow-md sticky top-0 z-50">
       <div className="max-w-6xl mx-auto px-4 py-3 flex items-center">
+        {/* Bal oldali logó */}
         <div className="relative h-10 flex items-center" style={{ overflow: 'visible' }}>
           <img src="/images/logo.jpg" alt="TIFO logó" className="h-16 w-auto -mt-3" />
         </div>
-        {/* Menü és bejelentkezés elrendezés */}
+        {/* Menü és bejelentkezés új elrendezés */}
         <div className="flex flex-1 items-center">
-          <ul className="flex gap-6 items-center flex-grow justify-end pr-8">
+          {/* Menü középre-jobbra tolva, de nem teljesen a szélén */}
+          <ul className="flex gap-6 items-center ml-auto mr-8">
             {navItems.map(item => (
               <li key={item.href}>
                 {item.href === '/' ? (
@@ -66,16 +68,22 @@ export default function Navbar() {
               </li>
             )}
             {user && (
-              <li>
+              <li className="hidden md:block">
                 <UserMenu user={user} onLogout={logoutUser} />
               </li>
             )}
           </ul>
+          {/* Bejelentkezés gomb vagy UserMenu teljesen jobb szélre tolva */}
           {!user && (
             <div className="flex items-center ml-auto">
               <Link href="/auth" className="text-gray-700 hover:text-secondary font-medium transition-colors px-3 py-2 rounded border border-slate-300 bg-white hover:bg-slate-100">
                 Bejelentkezés
               </Link>
+            </div>
+          )}
+          {user && (
+            <div className="flex items-center ml-auto md:hidden">
+              <UserMenu user={user} onLogout={logoutUser} />
             </div>
           )}
         </div>
