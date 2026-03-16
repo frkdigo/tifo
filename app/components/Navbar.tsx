@@ -1,3 +1,4 @@
+// Utolsó módosítás: deploy trigger komment (2026-03-16)
 "use client";
 import Link from 'next/link'
 import UserMenu from './UserMenu'
