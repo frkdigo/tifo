@@ -83,7 +83,7 @@ export default function Navbar() {
               </li>
             )}
           </ul>
-          <div className="flex items-center ml-8">
+          <div className="flex items-center ml-auto">
             {!user && (
               <Link
                 href="/auth"
