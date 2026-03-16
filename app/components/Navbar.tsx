@@ -76,7 +76,7 @@ export default function Navbar() {
                 href="/auth"
                 className={`px-4 py-2 rounded-lg border transition font-medium ${
                   pathname === '/auth'
-                    ? 'bg-green-500 text-white border-green-600 hover:bg-green-600'
+                    ? 'bg-white text-green-600 border-green-600 hover:bg-green-500 hover:text-white'
                     : 'border-slate-300 bg-white hover:bg-slate-100'
                 }`}
               >
@@ -150,7 +150,7 @@ export default function Navbar() {
                     href="/auth"
                     className={`block w-full text-center px-4 py-2 rounded-lg border font-medium ${
                       pathname === '/auth'
-                        ? 'bg-green-500 text-white border-green-600 hover:bg-green-600'
+                        ? 'bg-white text-green-600 border-green-600 hover:bg-green-500 hover:text-white'
                         : 'border-slate-300 hover:bg-slate-100'
                     }`}
                   >
