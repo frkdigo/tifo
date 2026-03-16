@@ -64,9 +64,15 @@ export default function Navbar() {
                 </div>
               </li>
             )}
-            {user && (
+            {user ? (
               <li>
                 <UserMenu user={user} onLogout={logoutUser} />
+              </li>
+            ) : (
+              <li>
+                <Link href="/auth" className="bg-slate-900 text-white rounded px-4 py-2 font-semibold hover:bg-slate-700 transition-colors">
+                  Bejelentkezés
+                </Link>
               </li>
             )}
           </ul>
