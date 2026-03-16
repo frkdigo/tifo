@@ -75,15 +75,26 @@ export async function POST(req: NextRequest) {
     if (!email) {
       return NextResponse.json({ error: 'Nincs email, nem vagy bejelentkezve.' }, { status: 401 });
     }
-    const user = db.prepare('SELECT id FROM users WHERE email = ?').get(email) as UserIdRow | undefined;
-    if (!user) {
+    // Supabase user lookup
+    const { data: userData, error: userError } = await supabase
+      .from('users')
+      .select('id')
+      .eq('email', email)
+      .single();
+    if (userError || !userData) {
       return NextResponse.json({ error: 'Ismeretlen felhasználó.' }, { status: 401 });
     }
-    const userId = user.id;
-    const stmt = db.prepare("INSERT INTO posts (userId, text, image, status) VALUES (?, ?, ?, 'pending')");
-    const info = stmt.run(userId, text, image);
-    const post = db.prepare('SELECT * FROM posts WHERE id = ?').get(info.lastInsertRowid);
-    return NextResponse.json(post);
+    const userId = userData.id;
+    // Supabase insert
+    const { data: postData, error: postError } = await supabase
+      .from('posts')
+      .insert([{ userId, text, image, status: 'pending' }])
+      .select('*')
+      .single();
+    if (postError || !postData) {
+      throw new Error(postError?.message || 'Nem sikerült létrehozni a posztot');
+    }
+    return NextResponse.json(postData);
   } catch (e: unknown) {
     const message = e instanceof Error ? e.message : 'Ismeretlen hiba';
     return NextResponse.json({ error: message }, { status: 500 });
