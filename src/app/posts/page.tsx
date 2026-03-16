@@ -32,7 +32,12 @@ export default function PostsPage() {
     setLoading(true);
     const res = await fetch("/api/posts", { cache: "no-store" });
     const data = await res.json();
-    setPosts(data);
+    if (Array.isArray(data)) {
+      setPosts(data);
+    } else {
+      setError(data?.error || "Ismeretlen hiba történt a posztok betöltésekor.");
+      setPosts([]);
+    }
     setLoading(false);
   }
 
