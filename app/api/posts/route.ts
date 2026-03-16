@@ -42,11 +42,23 @@ export async function PATCH(req: NextRequest) {
   try {
     const { id, action } = await req.json();
     if (action === 'approve') {
-      db.prepare("UPDATE posts SET status = 'approved' WHERE id = ?").run(id);
+      const { error } = await supabase
+        .from('posts')
+        .update({ status: 'approved' })
+        .eq('id', id);
+      if (error) {
+        throw new Error(error.message);
+      }
       return NextResponse.json({ success: true });
     }
     if (action === 'delete') {
-      db.prepare('DELETE FROM posts WHERE id = ?').run(id);
+      const { error } = await supabase
+        .from('posts')
+        .delete()
+        .eq('id', id);
+      if (error) {
+        throw new Error(error.message);
+      }
       return NextResponse.json({ success: true });
     }
     return NextResponse.json({ error: 'Ismeretlen muvelet' }, { status: 400 });
