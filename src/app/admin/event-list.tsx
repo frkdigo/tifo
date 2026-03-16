@@ -1,6 +1,5 @@
-// Eseménylista admin felülethez (mock, Supabase integrációhoz előkészítve)
-// import { mockEvents } from '../../lib/mockEvents'
-// Események Supabase-ből jönnek
+
+import { useState, useEffect } from 'react';
 
 export default function AdminEventList() {
   const [events, setEvents] = useState<any[]>([]);
