@@ -74,10 +74,10 @@ export default function Navbar() {
             {!user && (
               <Link
                 href="/auth"
-                className={`px-4 py-2 rounded-lg border transition font-medium ${
+                className={`px-3 py-2 rounded font-medium transition-colors ${
                   pathname === '/auth'
-                    ? 'bg-white text-green-600 border-green-600 hover:bg-green-500 hover:text-white'
-                    : 'border-slate-300 bg-white hover:bg-slate-100'
+                    ? 'text-secondary'
+                    : 'text-gray-700 hover:text-secondary'
                 }`}
               >
                 Bejelentkezés
@@ -148,10 +148,10 @@ export default function Navbar() {
                 <li className="px-5 py-3">
                   <Link
                     href="/auth"
-                    className={`block w-full text-center px-4 py-2 rounded-lg border font-medium ${
+                    className={`block w-full text-center px-3 py-2 rounded font-medium transition-colors ${
                       pathname === '/auth'
-                        ? 'bg-white text-green-600 border-green-600 hover:bg-green-500 hover:text-white'
-                        : 'border-slate-300 hover:bg-slate-100'
+                        ? 'text-secondary'
+                        : 'text-gray-700 hover:text-secondary'
                     }`}
                   >
                     Bejelentkezés
