@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function NewEventForm({ onCreated }: { onCreated?: () => void }) {
   const [title, setTitle] = useState("");
@@ -13,6 +13,12 @@ export default function NewEventForm({ onCreated }: { onCreated?: () => void }) 
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
   const submitLockRef = useRef(false);
+
+  useEffect(() => {
+    if (!success) return;
+    const timer = setTimeout(() => setSuccess(false), 3500);
+    return () => clearTimeout(timer);
+  }, [success]);
 
   function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];

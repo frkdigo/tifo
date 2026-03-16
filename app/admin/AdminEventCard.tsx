@@ -2,7 +2,7 @@ import { useAuth } from '../components/AuthProvider';
 import { useState } from 'react';
 import EditEventModal from './EditEventModal';
 
-export default function AdminEventCard({ event, onUpdated }: { event: any, onUpdated?: () => void }) {
+export default function AdminEventCard({ event, onUpdated, onDeleted }: { event: any, onUpdated?: () => void, onDeleted?: () => void }) {
   const { user } = useAuth();
   const [editOpen, setEditOpen] = useState(false);
   return (
@@ -23,7 +23,7 @@ export default function AdminEventCard({ event, onUpdated }: { event: any, onUpd
         </div>
       </div>
       {editOpen && (
-        <EditEventModal event={event} onClose={() => setEditOpen(false)} onDeleted={onUpdated || (() => {})} onUpdated={onUpdated || (() => {})} />
+        <EditEventModal event={event} onClose={() => setEditOpen(false)} onDeleted={onDeleted || onUpdated || (() => {})} onUpdated={onUpdated || (() => {})} />
       )}
     </>
   );

@@ -1,17 +1,53 @@
 "use client";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { supabase } from "../../lib/supabaseClient";
 
 export default function AdminDropdown() {
   const [open, setOpen] = useState(false);
-  let hoverTimeout: NodeJS.Timeout | null = null;
+  const [pendingCount, setPendingCount] = useState(0);
+  const hoverTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    let mounted = true;
+
+    async function fetchPendingCount() {
+      try {
+        const res = await fetch("/api/posts?pending=1", { cache: "no-store" });
+        if (!res.ok) return;
+        const posts = await res.json();
+        if (mounted) {
+          setPendingCount(Array.isArray(posts) ? posts.length : 0);
+        }
+      } catch {
+        // Leave the current badge value unchanged on transient errors.
+      }
+    }
+
+    fetchPendingCount();
+    const channel = supabase
+      .channel("admin-pending-posts-counter")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "posts" },
+        () => {
+          fetchPendingCount();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      mounted = false;
+      supabase.removeChannel(channel);
+    };
+  }, []);
 
   function handleMouseEnter() {
-    if (hoverTimeout) clearTimeout(hoverTimeout);
+    if (hoverTimeout.current) clearTimeout(hoverTimeout.current);
     setOpen(true);
   }
   function handleMouseLeave() {
-    hoverTimeout = setTimeout(() => setOpen(false), 80);
+    hoverTimeout.current = setTimeout(() => setOpen(false), 80);
   }
 
   return (
@@ -22,13 +58,18 @@ export default function AdminDropdown() {
       tabIndex={0}
     >
       <button
-        className="text-gray-700 hover:text-secondary font-medium transition-colors px-3 py-2 rounded focus:outline-none"
+        className="relative text-gray-700 hover:text-secondary font-medium transition-colors px-3 py-2 rounded focus:outline-none"
         aria-haspopup="true"
         aria-expanded={open}
         tabIndex={0}
         type="button"
       >
         Admin
+        {pendingCount > 0 && (
+          <span className="absolute -top-1 -right-1 min-w-[1.15rem] h-[1.15rem] px-1 rounded-full bg-red-500 text-white text-[10px] leading-[1.15rem] text-center font-bold">
+            {pendingCount > 99 ? "99+" : pendingCount}
+          </span>
+        )}
       </button>
       {open && (
         <div
