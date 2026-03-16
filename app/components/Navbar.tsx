@@ -34,9 +34,8 @@ export default function Navbar() {
       className="sticky top-0 z-50 bg-white shadow-md transition-all duration-300"
     >
       <div className="max-w-6xl mx-auto px-4 py-3 flex items-center w-full">
-
         {/* LOGO */}
-        <div className="flex items-center">
+        <div className="flex items-center min-w-[120px]">
           <Link href="/">
             <img
               src="/images/logo.jpg"
@@ -45,49 +44,45 @@ export default function Navbar() {
             />
           </Link>
         </div>
-
-        {/* DESKTOP MENU */}
-        <ul className="hidden md:flex items-center gap-6 ml-auto mr-6">
-          {navItems.map((item) => {
-            const active = pathname === item.href;
-
-            return (
-              <li key={item.href}>
-                <Link
-                  href={item.href}
-                  className={`px-3 py-2 rounded font-medium transition-colors ${
-                    active
-                      ? "text-secondary"
-                      : "text-gray-700 hover:text-secondary"
-                  }`}
-                >
-                  {item.label}
-                </Link>
+        {/* MENÜ ÉS LOGIN/USER */}
+        <div className="flex flex-1 items-center">
+          <ul className="flex items-center gap-6 flex-1 justify-end mr-6">
+            {navItems.map((item) => {
+              const active = pathname === item.href;
+              return (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    className={`px-3 py-2 rounded font-medium transition-colors ${
+                      active
+                        ? "text-secondary"
+                        : "text-gray-700 hover:text-secondary"
+                    }`}
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              );
+            })}
+            {user && user.isAdmin && (
+              <li>
+                <AdminDropdown />
               </li>
-            );
-          })}
-
-          {user && user.isAdmin && (
-            <li>
-              <AdminDropdown />
-            </li>
-          )}
-        </ul>
-
-        {/* LOGIN / USER */}
-        <div className="hidden md:flex items-center">
-          {!user && (
-            <Link
-              href="/auth"
-              className="px-4 py-2 rounded-lg border border-slate-300 bg-white hover:bg-slate-100 transition font-medium"
-            >
-              Bejelentkezés
-            </Link>
-          )}
-
-          {user && (
-            <UserMenu user={user} onLogout={logoutUser} />
-          )}
+            )}
+          </ul>
+          <div className="flex items-center ml-8">
+            {!user && (
+              <Link
+                href="/auth"
+                className="px-4 py-2 rounded-lg border border-slate-300 bg-white hover:bg-slate-100 transition font-medium"
+              >
+                Bejelentkezés
+              </Link>
+            )}
+            {user && (
+              <UserMenu user={user} onLogout={logoutUser} />
+            )}
+          </div>
         </div>
 
         {/* MOBILE BUTTON */}
