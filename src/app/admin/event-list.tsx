@@ -31,5 +31,15 @@ export default function AdminEventList() {
       if (!error && data) setEvents(data);
     }
     fetchEvents();
+    const [events, setEvents] = useState<any[]>([]);
+    useEffect(() => {
+      async function fetchEvents() {
+        const { data, error } = await import('../../../lib/supabaseClient').then(({ supabase }) =>
+          supabase.from('events').select('*').order('date', { ascending: false })
+        );
+        if (!error && data) setEvents(data);
+      }
+      fetchEvents();
+    }, []);
   }, []);
 }
