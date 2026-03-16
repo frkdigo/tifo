@@ -31,6 +31,10 @@ function AdminPageContent() {
     return new Date(raw).toLocaleString("hu-HU");
   }
 
+  function getPostAuthorEmail(post: any) {
+    return post.authorEmail || post.users?.email || post.email || "Nincs email";
+  }
+
   useEffect(() => {
     if (!user) {
       router.push("/auth");
@@ -141,10 +145,10 @@ function AdminPageContent() {
                     <div className="text-xs text-gray-500">{getPostCreatedAt(post)}</div>
                     <div className="text-sm text-slate-700 max-h-16 overflow-hidden">{post.text}</div>
                   </div>
-                  <div className="mt-2 grid grid-cols-1 sm:grid-cols-3 gap-2 w-full">
-                    <button onClick={() => setSelectedPost(post)} className="w-full bg-slate-700 text-white px-3 py-2 rounded">Megtekintés</button>
-                    <button onClick={() => approvePost(post.id)} className="w-full bg-green-500 text-white px-3 py-2 rounded">Jóváhagy</button>
-                    <button onClick={() => deletePost(post.id)} className="w-full bg-red-500 text-white px-3 py-2 rounded">Törlés</button>
+                  <div className="mt-2 grid grid-cols-2 gap-2 w-full">
+                    <button onClick={() => setSelectedPost(post)} className="w-full bg-slate-800 text-white px-3 py-2 rounded text-sm font-semibold shadow-sm hover:bg-slate-900 transition-all duration-150 active:scale-[0.98]">Megtekintés</button>
+                    <button onClick={() => approvePost(post.id)} className="w-full bg-emerald-600 text-white px-3 py-2 rounded text-sm font-semibold shadow-sm hover:bg-emerald-700 transition-all duration-150 active:scale-[0.98]">Jóváhagyás</button>
+                    <button onClick={() => deletePost(post.id)} className="col-span-2 w-full bg-rose-600 text-white px-3 py-2 rounded text-sm font-semibold shadow-sm hover:bg-rose-700 transition-all duration-150 active:scale-[0.98]">Elutasítás</button>
                   </div>
                 </li>
               ))}
@@ -190,7 +194,7 @@ function AdminPageContent() {
               )}
               <div>
                 <p className="font-semibold text-slate-900">{getPostAuthorName(selectedPost)}</p>
-                <p className="text-xs text-slate-500">{selectedPost.email || "Nincs email"}</p>
+                <p className="text-xs text-slate-500">{getPostAuthorEmail(selectedPost)}</p>
                 <p className="text-xs text-slate-500">{getPostCreatedAt(selectedPost)}</p>
               </div>
             </div>

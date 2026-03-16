@@ -31,6 +31,10 @@ function AdminPageContent() {
     return new Date(raw).toLocaleString("hu-HU");
   }
 
+  function getPostAuthorEmail(post: any) {
+    return post.authorEmail || post.users?.email || post.email || "Nincs email";
+  }
+
   useEffect(() => {
     if (!user) {
       router.push("/auth");
@@ -125,10 +129,10 @@ function AdminPageContent() {
                         <img src={post.image} alt="post" className="max-h-20 rounded mt-1 mb-1" style={{objectFit:'contain', maxWidth:'100%'}} />
                       )}
                       <p className="text-sm text-slate-700 max-h-16 overflow-hidden">{post.text}</p>
-                      <div className="mt-2 grid grid-cols-1 sm:grid-cols-3 gap-2 w-full">
-                        <button className="w-full bg-slate-700 text-white px-3 py-2 rounded-lg hover:bg-slate-800 font-semibold transition-colors" onClick={() => setSelectedPost(post)}>Megtekintés</button>
-                        <button className="w-full bg-green-500 text-white px-3 py-2 rounded-lg hover:bg-green-600 font-semibold transition-colors" onClick={() => approvePost(post.id)}>Jóváhagyás</button>
-                        <button className="w-full bg-red-500 text-white px-3 py-2 rounded-lg hover:bg-red-600 font-semibold transition-colors" onClick={() => {
+                      <div className="mt-2 grid grid-cols-2 gap-2 w-full">
+                        <button className="w-full bg-slate-800 text-white px-3 py-2 rounded-lg hover:bg-slate-900 shadow-sm font-semibold text-sm transition-all duration-150 active:scale-[0.98]" onClick={() => setSelectedPost(post)}>Megtekintés</button>
+                        <button className="w-full bg-emerald-600 text-white px-3 py-2 rounded-lg hover:bg-emerald-700 shadow-sm font-semibold text-sm transition-all duration-150 active:scale-[0.98]" onClick={() => approvePost(post.id)}>Jóváhagyás</button>
+                        <button className="col-span-2 w-full bg-rose-600 text-white px-3 py-2 rounded-lg hover:bg-rose-700 shadow-sm font-semibold text-sm transition-all duration-150 active:scale-[0.98]" onClick={() => {
                           if (window.confirm('Biztosan elutasítod ezt a posztot?')) rejectPost(post.id);
                         }}>Elutasítás</button>
                       </div>
@@ -180,7 +184,7 @@ function AdminPageContent() {
               )}
               <div>
                 <p className="font-semibold text-slate-900">{getPostAuthorName(selectedPost)}</p>
-                <p className="text-xs text-slate-500">{selectedPost.email || "Nincs email"}</p>
+                <p className="text-xs text-slate-500">{getPostAuthorEmail(selectedPost)}</p>
                 <p className="text-xs text-slate-500">{getPostCreatedAt(selectedPost)}</p>
               </div>
             </div>

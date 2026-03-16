@@ -20,13 +20,14 @@ export async function GET(req: NextRequest) {
     (posts || []).map(async (post) => {
       const { data: user } = await supabase
         .from('users')
-        .select('nickname,name,profileImage')
+        .select('nickname,name,profileImage,email')
         .eq('id', post.userId)
         .single();
       return {
         ...post,
         authorName: user?.nickname || user?.name || '',
         authorProfileImage: user?.profileImage || null,
+        authorEmail: user?.email || null,
       };
     })
   );

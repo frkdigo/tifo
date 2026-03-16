@@ -13,7 +13,7 @@ export async function GET(req: NextRequest) {
     const pending = req.nextUrl.searchParams.get('pending');
     let query = supabase
       .from('posts')
-      .select(`*, users:users!posts_userId_fkey(nickname, name, profileImage)`)
+      .select(`*, users:users!posts_userId_fkey(nickname, name, profileImage, email)`)
       .order('createdAt', { ascending: false });
 
     if (pending) {
