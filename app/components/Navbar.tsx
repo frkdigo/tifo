@@ -168,7 +168,7 @@ export default function Navbar() {
                     setTimeout(() => {
                       setLoading(false);
                       setLogoutMessage("Sikeres kijelentkezés!");
-                      setTimeout(() => setLogoutMessage("");, 3000);
+                      setTimeout(() => setLogoutMessage(""), 3000);
                     }, 1200);
                   }} />
                 </li>
