@@ -22,11 +22,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
 
     // HTML email body
+    // Publikus logó URL (Google Drive vagy más CDN, vagy a tifo.hu/images/tifo-logo.png legyen tényleg elérhető)
+    const logoUrl = 'https://raw.githubusercontent.com/furk0/tifo-assets/main/tifo-logo-email.png';
     const html = `
       <div style="font-family: 'Inter', Arial, sans-serif; background: #f8fafc; padding: 32px;">
         <div style="max-width: 520px; margin: 0 auto; background: #fff; border-radius: 18px; box-shadow: 0 8px 32px rgba(15,23,42,0.10); padding: 32px 28px 18px 28px;">
           <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 18px;">
-            <img src='https://tifo.hu/images/tifo-logo.png' alt='TIFO logó' style='height: 48px; width: 48px; border-radius: 12px; background: #f1f5f9; border: 1px solid #e2e8f0;' />
+            <img src='${logoUrl}' alt='TIFO logó' style='height: 48px; width: 48px; border-radius: 12px; background: #f1f5f9; border: 1px solid #e2e8f0;' />
             <div>
               <div style="font-size: 1.3rem; font-weight: 800; color: #0f172a; letter-spacing: -1px;">Törökbálinti Ifjúsági Önkormányzat</div>
               <div style="font-size: 0.95rem; color: #64748b; font-weight: 500;">Kapcsolat űrlap üzenet</div>
@@ -45,10 +47,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         <div style="max-width: 520px; margin: 0 auto; text-align: center; color: #64748b; font-size: 0.95rem; padding: 18px 0 0 0;">
           <hr style='border: none; border-top: 1px solid #e2e8f0; margin-bottom: 10px;' />
           <div style="margin-bottom: 4px;">
-            <img src='https://tifo.hu/images/tifo-logo.png' alt='TIFO logó' style='height: 28px; width: 28px; vertical-align: middle; margin-right: 6px;' />
+            <img src='${logoUrl}' alt='TIFO logó' style='height: 28px; width: 28px; vertical-align: middle; margin-right: 6px;' />
             <span style="font-weight: 700; color: #0ea5e9;">TIFO</span> &middot; Törökbálinti Ifjúsági Önkormányzat
           </div>
-          <div style="color: #94a3b8;">Ez az üzenet a tifo.hu kapcsolat űrlapjáról érkezett.</div>
+          <div style="color: #94a3b8;">Ez az üzenet a <a href='https://tifo.hu' style='color: #0ea5e9; text-decoration: none;'>tifo.hu</a> kapcsolat űrlapjáról érkezett.</div>
         </div>
       </div>
     `;
@@ -56,7 +58,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const mailOptions = {
       from: `Kapcsolat űrlap <${process.env.MAIL_USER}>`,
       to: 'info.tifo@gmail.com',
-      subject: `Új üzenet a kapcsolat űrlapról - ${name}`,
+      subject: `tifo.hu - weboldal üzenet`,
       replyTo: email,
       text: `Név: ${name}\nEmail: ${email}\n\nÜzenet:\n${message}`,
       html,
