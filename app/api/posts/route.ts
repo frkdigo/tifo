@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import db from '@/lib/db';
+
 
 type UserIdRow = {
   id: number;
@@ -9,15 +9,12 @@ type UserIdRow = {
 export async function GET(req: NextRequest) {
   try {
     const pending = req.nextUrl.searchParams.get('pending');
-    let posts;
-    if (pending) {
-      posts = db
-        .prepare(
-          `SELECT posts.*, COALESCE(NULLIF(users.nickname, ''), users.name) AS authorName, users.profileImage AS authorProfileImage
-           FROM posts
-           LEFT JOIN users ON users.id = posts.userId
-           WHERE posts.status = 'pending'
-           ORDER BY posts.createdAt DESC`
+    // TODO: Supabase lekérdezés implementálása
+    let posts = [];
+    // Itt Supabase-ből kell lekérni a posztokat
+    // Példa:
+    // const { data, error } = await supabase.from('posts').select('*');
+    // posts = data;
         )
         .all();
     } else {
@@ -27,7 +24,7 @@ export async function GET(req: NextRequest) {
            FROM posts
            LEFT JOIN users ON users.id = posts.userId
            WHERE posts.status = 'approved'
-           ORDER BY posts.createdAt DESC`
+        // ...existing code...
         )
         .all();
     }
