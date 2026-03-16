@@ -129,7 +129,7 @@ export default function PostsSection() {
       )}
       <div className="space-y-4">
         {loading ? (
-          <div>Betöltés...</div>
+          null
         ) : posts.length === 0 ? (
           <div className="text-gray-500">Még nincsenek posztok.</div>
         ) : (
