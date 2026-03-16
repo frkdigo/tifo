@@ -1,143 +1,143 @@
-// Utolsó módosítás: deploy trigger komment (2026-03-16)
 "use client";
-import Link from 'next/link'
-import UserMenu from './UserMenu'
-import { useAuth } from './AuthProvider'
-import AdminDropdown from './AdminDropdown';
+
+import Link from "next/link";
+import UserMenu from "./UserMenu";
+import { useAuth } from "./AuthProvider";
+import AdminDropdown from "./AdminDropdown";
+import { useEffect, useState } from "react";
 
 const navItems = [
-  { href: '/', label: 'Főoldal' },
-  { href: '/esemenyeink', label: 'Eseményeink' },
-  { href: '/rolunk', label: 'Rólunk' },
-  { href: '/kapcsolat', label: 'Kapcsolat' },
-]
-
-import { useEffect, useState } from 'react';
+  { href: "/", label: "Főoldal" },
+  { href: "/esemenyeink", label: "Eseményeink" },
+  { href: "/rolunk", label: "Rólunk" },
+  { href: "/kapcsolat", label: "Kapcsolat" },
+];
 
 export default function Navbar() {
   const { user, logoutUser } = useAuth();
-  const router = typeof window !== 'undefined' ? require('next/navigation').useRouter() : null;
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // Close menu on route change (optional, ha szeretnéd)
   useEffect(() => {
     if (!menuOpen) return;
     const close = () => setMenuOpen(false);
-    window.addEventListener('resize', close);
-    return () => window.removeEventListener('resize', close);
+    window.addEventListener("resize", close);
+    return () => window.removeEventListener("resize", close);
   }, [menuOpen]);
 
   return (
     <nav className="bg-white shadow-md sticky top-0 z-50">
       <div className="max-w-6xl mx-auto px-4 py-3 flex items-center w-full">
-        {/* Bal oldali logó */}
-        <div className="relative h-10 flex items-center" style={{ overflow: 'visible' }}>
-          <img src="/images/logo.jpg" alt="TIFO logó" className="h-16 w-auto -mt-3" />
+
+        {/* LOGO */}
+        <div className="relative h-10 flex items-center" style={{ overflow: "visible" }}>
+          <img
+            src="/images/logo.jpg"
+            alt="TIFO logó"
+            className="h-16 w-auto -mt-3"
+          />
         </div>
-        {/* Menü és bejelentkezés új elrendezés */}
-        <div className="flex flex-1 items-center">
-          {/* Menü középre-jobbra tolva, de nem teljesen a szélén */}
-          <ul className="flex gap-6 items-center ml-auto">
-            {navItems.map(item => (
-              <li key={item.href}>
-                {item.href === '/' ? (
+
+        {/* DESKTOP MENU */}
+        <ul className="hidden md:flex gap-6 items-center ml-auto mr-6">
+          {navItems.map((item) => (
+            <li key={item.href}>
+              <Link
+                href={item.href}
+                className="text-gray-700 hover:text-secondary font-medium transition-colors px-3 py-2 rounded"
+              >
+                {item.label}
+              </Link>
+            </li>
+          ))}
+
+          {user && user.isAdmin && (
+            <li>
+              <AdminDropdown />
+            </li>
+          )}
+        </ul>
+
+        {/* LOGIN / USER */}
+        <div className="hidden md:flex items-center">
+          {!user && (
+            <Link
+              href="/auth"
+              className="text-gray-700 hover:text-secondary font-medium transition-colors px-3 py-2 rounded border border-slate-300 bg-white hover:bg-slate-100"
+            >
+              Bejelentkezés
+            </Link>
+          )}
+
+          {user && <UserMenu user={user} onLogout={logoutUser} />}
+        </div>
+
+        {/* MOBILE HAMBURGER */}
+        <div className="md:hidden flex ml-auto">
+          <button
+            className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:bg-gray-100"
+            onClick={() => setMenuOpen((v) => !v)}
+          >
+            <svg
+              className="h-7 w-7"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d={
+                  menuOpen
+                    ? "M6 18L18 6M6 6l12 12"
+                    : "M4 6h16M4 12h16M4 18h16"
+                }
+              />
+            </svg>
+          </button>
+        </div>
+
+        {/* MOBILE MENU */}
+        {menuOpen && (
+          <div className="absolute top-full right-4 mt-2 w-48 bg-white rounded-xl shadow-lg border border-slate-200 z-50">
+            <ul className="flex flex-col gap-1 py-2">
+              {navItems.map((item) => (
+                <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="text-gray-700 hover:text-secondary font-medium transition-colors px-3 py-2 rounded"
-                    scroll={true}
-                    onClick={() => {
-                      if (window && window.scrollTo) {
-                        window.scrollTo({ top: 0, behavior: 'smooth' });
-                      }
-                    }}
+                    className="block px-5 py-3 text-gray-700 hover:bg-slate-100 rounded-xl font-medium"
+                    onClick={() => setMenuOpen(false)}
                   >
                     {item.label}
                   </Link>
-                ) : (
-                  <Link href={item.href} className="text-gray-700 hover:text-secondary font-medium transition-colors px-3 py-2 rounded">
-                    {item.label}
-                  </Link>
-                )}
-              </li>
-            ))}
-            {user && user.isAdmin && (
-              <li>
-                <div className="h-full flex items-center">
+                </li>
+              ))}
+
+              {user && user.isAdmin && (
+                <li className="px-5 py-3">
                   <AdminDropdown />
-                </div>
-              </li>
-            )}
-            {user && (
-              <li className="hidden md:block">
-                <UserMenu user={user} onLogout={logoutUser} />
-              </li>
-            )}
-          </ul>
-          {/* Bejelentkezés gomb vagy UserMenu teljesen jobb szélre tolva */}
-          {!user && (
-            <div className="flex items-center ml-auto">
-              <Link href="/auth" className="text-gray-700 hover:text-secondary font-medium transition-colors px-3 py-2 rounded border border-slate-300 bg-white hover:bg-slate-100">
-                Bejelentkezés
-              </Link>
-            </div>
-          )}
-          {user && (
-            <div className="flex items-center ml-auto md:hidden">
-              <UserMenu user={user} onLogout={logoutUser} />
-            </div>
-          )}
-        </div>
-        {/* Mobile hamburger */}
-        <div className="md:hidden flex flex-1 justify-end items-center">
-          <button
-            className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:bg-gray-100 focus:outline-none"
-            aria-label="Menü megnyitása"
-            onClick={() => setMenuOpen(v => !v)}
-          >
-            <svg className="h-7 w-7" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" d={menuOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'} />
-            </svg>
-          </button>
-          {/* Mobile menu dropdown */}
-          {menuOpen && (
-            <div className="absolute top-full right-4 mt-2 w-48 bg-white rounded-xl shadow-lg border border-slate-200 z-50 animate-fade-in">
-              <ul className="flex flex-col gap-1 py-2">
-                {navItems.map(item => (
-                  <li key={item.href}>
-                    <Link
-                      href={item.href}
-                      className="block px-5 py-3 text-gray-700 hover:bg-slate-100 rounded-xl font-medium"
-                      onClick={() => setMenuOpen(false)}
-                    >
-                      {item.label}
-                    </Link>
-                  </li>
-                ))}
-                {user && user.isAdmin && (
-                  <li>
-                    <div className="px-5 py-3">
-                      <AdminDropdown />
-                    </div>
-                  </li>
-                )}
-                {user && (
-                  <li>
-                    <div className="px-5 py-3">
-                      <UserMenu user={user} onLogout={logoutUser} />
-                    </div>
-                  </li>
-                )}
-              </ul>
+                </li>
+              )}
+
+              {user && (
+                <li className="px-5 py-3">
+                  <UserMenu user={user} onLogout={logoutUser} />
+                </li>
+              )}
+
               {!user && (
-                <div className="px-5 py-3">
-                  <Link href="/auth" className="block w-full text-center text-gray-700 hover:text-secondary font-medium transition-colors px-3 py-2 rounded border border-slate-300 bg-white hover:bg-slate-100">
+                <li className="px-5 py-3">
+                  <Link
+                    href="/auth"
+                    className="block w-full text-center text-gray-700 hover:text-secondary font-medium px-3 py-2 rounded border border-slate-300 bg-white hover:bg-slate-100"
+                  >
                     Bejelentkezés
                   </Link>
-                </div>
+                </li>
               )}
-            </div>
-          )}
-        </div>
+            </ul>
+          </div>
+        )}
       </div>
     </nav>
   );
