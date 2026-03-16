@@ -77,13 +77,6 @@ export default function Navbar() {
               </Link>
             </div>
           )}
-          {!user && (
-            <div className="flex items-center">
-              <Link href="/auth" className="text-gray-700 hover:text-secondary font-medium transition-colors px-3 py-2 rounded border border-slate-300 bg-white hover:bg-slate-100">
-                Bejelentkezés
-              </Link>
-            </div>
-          )}
         </div>
         {/* Mobile hamburger */}
         <div className="md:hidden flex flex-1 justify-end items-center">
