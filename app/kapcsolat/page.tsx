@@ -42,13 +42,7 @@ export default function Kapcsolat() {
 
   return (
     <main className="max-w-5xl mx-auto py-12 px-4">
-      <div className="flex justify-center mb-6">
-        <img
-          src="/images/tifo-logo.png"
-          alt="TIFO logó"
-          className="h-24 w-auto rounded-xl shadow-sm border border-slate-200 bg-white p-2"
-        />
-      </div>
+      {/* Logó a kör alakú kép helyén, a tetejéről eltávolítva */}
       <section className="rounded-3xl premium-surface p-6 md:p-8 mb-6">
         <div className="grid md:grid-cols-[1.25fr,0.75fr] gap-6 items-center">
           <div>
@@ -70,21 +64,13 @@ export default function Kapcsolat() {
             </div>
           </div>
 
-          <div className="w-fit mx-auto">
-            {user?.profileimage ? (
-              <img
-                src={user.profileimage}
-                alt="Saját profilkép"
-                className="w-full max-w-[240px] h-[240px] mx-auto object-cover rounded-full border border-slate-500/60"
-              />
-            ) : (
-              <img
-                src="/images/logo.jpg"
-                alt="TIFO logó"
-                className="w-full max-w-[240px] h-[240px] mx-auto object-cover rounded-full border border-slate-500/60"
-              />
-            )}
-          </div>
+           <div className="w-fit mx-auto">
+             <img
+               src="/images/logo.png"
+               alt="TIFO logó"
+               className="w-full max-w-[240px] h-[240px] mx-auto object-cover rounded-full border border-slate-500/60 bg-white p-2"
+             />
+           </div>
         </div>
       </section>
 
