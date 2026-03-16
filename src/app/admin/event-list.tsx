@@ -1,4 +1,4 @@
-  )
+
 
 export default function AdminEventList() {
   const [events, setEvents] = useState<any[]>([]);
