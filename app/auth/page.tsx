@@ -67,17 +67,18 @@ export default function AuthPage() {
 	}
 
 	return (
-		<main className="max-w-md mx-auto py-12 px-4">
-			<h1 className="text-2xl font-bold mb-6 text-center">
-				{isLogin ? "Bejelentkezés" : "Regisztráció"}
-			</h1>
-			<form onSubmit={handleSubmit} className="bg-white rounded-xl shadow p-6 flex flex-col gap-4">
-				{!isLogin && (
-					<label>
-						Nev
-						<input type="text" value={name} onChange={e => setName(e.target.value)} className="mt-1 w-full border rounded px-3 py-2" required={!isLogin} />
-					</label>
-				)}
+		<div className="flex flex-col flex-1 min-h-screen justify-center">
+			<main className="max-w-md mx-auto py-12 px-4 flex-1 flex flex-col justify-center">
+				<h1 className="text-2xl font-bold mb-6 text-center">
+					{isLogin ? "Bejelentkezés" : "Regisztráció"}
+				</h1>
+				<form onSubmit={handleSubmit} className="bg-white rounded-xl shadow p-6 flex flex-col gap-4">
+					{!isLogin && (
+						<label>
+							Nev
+							<input type="text" value={name} onChange={e => setName(e.target.value)} className="mt-1 w-full border rounded px-3 py-2" required={!isLogin} />
+						</label>
+					)}
 				<label>
 					Email
 					<input type="email" value={email} onChange={e => setEmail(e.target.value)} className="mt-1 w-full border rounded px-3 py-2" required />

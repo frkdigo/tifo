@@ -78,49 +78,55 @@ export default function PostsSection() {
 
   return (
     <section className="max-w-6xl mx-auto px-4 py-12">
-      <form onSubmit={handleSubmit} className="mb-6 bg-white rounded-xl shadow p-4 flex flex-col gap-3">
-        <textarea
-          className="w-full border border-slate-200 rounded p-2 min-h-[60px]"
-          placeholder="Oszd meg a gondolataid, képeid vagy élményeid..."
-          value={text}
-          onChange={e => setText(e.target.value)}
-        />
-        <div className="flex flex-col items-start gap-1">
-          <label className="inline-block cursor-pointer">
-            <span className="bg-slate-900 text-white px-6 py-2 rounded-full font-semibold hover:bg-slate-800 transition-colors inline-block">Fájl kiválasztása</span>
-            <input type="file" accept="image/*" onChange={handleFileChange} className="hidden" />
-          </label>
-          {image && (
-            <img
-              src={image}
-              alt="Kép előnézet"
-              className="mt-2 rounded shadow max-h-32 border border-slate-200"
-              style={{ objectFit: "contain", maxWidth: 180 }}
-            />
-          )}
+      {user ? (
+        <form onSubmit={handleSubmit} className="mb-6 bg-white rounded-xl shadow p-4 flex flex-col gap-3">
+          <textarea
+            className="w-full border border-slate-200 rounded p-2 min-h-[60px]"
+            placeholder="Oszd meg a gondolataid, képeid vagy élményeid..."
+            value={text}
+            onChange={e => setText(e.target.value)}
+          />
+          <div className="flex flex-col items-start gap-1">
+            <label className="inline-block cursor-pointer">
+              <span className="bg-slate-900 text-white px-6 py-2 rounded-full font-semibold hover:bg-slate-800 transition-colors inline-block">Fájl kiválasztása</span>
+              <input type="file" accept="image/*" onChange={handleFileChange} className="hidden" />
+            </label>
+            {image && (
+              <img
+                src={image}
+                alt="Kép előnézet"
+                className="mt-2 rounded shadow max-h-32 border border-slate-200"
+                style={{ objectFit: "contain", maxWidth: 180 }}
+              />
+            )}
+          </div>
+          <div className="flex gap-2 flex-wrap">
+            {emojiOptions.map((emoji) => (
+              <button
+                type="button"
+                key={emoji}
+                className="text-2xl"
+                onClick={() => setText(text + emoji)}
+              >
+                {emoji}
+              </button>
+            ))}
+          </div>
+          <button
+            type="submit"
+            className="bg-slate-900 text-white px-6 py-2 rounded-full font-semibold hover:bg-slate-800 transition-colors"
+            disabled={loading}
+          >
+            Poszt beküldése
+          </button>
+          {error && <div className="text-red-500 text-sm mt-2">{error}</div>}
+          {success && <div className="text-green-600 text-sm mt-2">{success}</div>}
+        </form>
+      ) : (
+        <div className="mb-6 bg-white rounded-xl shadow p-4 text-center text-slate-500">
+          <span>Csak bejelentkezett felhasználók posztolhatnak. <br /> <a href="/auth" className="text-sky-600 hover:underline font-semibold">Bejelentkezés</a></span>
         </div>
-        <div className="flex gap-2 flex-wrap">
-          {emojiOptions.map((emoji) => (
-            <button
-              type="button"
-              key={emoji}
-              className="text-2xl"
-              onClick={() => setText(text + emoji)}
-            >
-              {emoji}
-            </button>
-          ))}
-        </div>
-        <button
-          type="submit"
-          className="bg-slate-900 text-white px-6 py-2 rounded-full font-semibold hover:bg-slate-800 transition-colors"
-          disabled={loading}
-        >
-          Poszt beküldése
-        </button>
-        {error && <div className="text-red-500 text-sm mt-2">{error}</div>}
-        {success && <div className="text-green-600 text-sm mt-2">{success}</div>}
-      </form>
+      )}
       <div className="space-y-4">
         {loading ? (
           <div>Betöltés...</div>

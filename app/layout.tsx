@@ -20,12 +20,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="hu">
-      <body className={inter.className + ' min-h-screen bg-site text-slate-900'}>
+      <body className={inter.className + ' min-h-screen bg-site text-slate-900 flex flex-col'}>
         <div className="site-bg-layer" aria-hidden="true" />
         <AuthProvider>
-          <div className="relative z-10">
+          <div className="relative z-10 flex flex-col min-h-screen">
             <Navbar />
-            {children}
+            <main className="flex-1 flex flex-col">{children}</main>
             <Footer />
           </div>
         </AuthProvider>
