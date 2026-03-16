@@ -2,7 +2,16 @@
 // Az Event típust a Supabase-ből kapott adatok alapján határozzuk meg
 import { useAuth } from '../../../app/components/AuthProvider';
 
-export default function EventCard({ event }: { event: Event }) {
+type EventItem = {
+  id: number;
+  title: string;
+  date: string;
+  description?: string;
+  image?: string | null;
+  location?: string | null;
+};
+
+export default function EventCard({ event }: { event: EventItem }) {
   const { user } = useAuth();
   return (
     <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow flex flex-col justify-between">
