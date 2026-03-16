@@ -19,6 +19,9 @@ export default function Navbar() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  // Új statek
+  const [logoutMessage, setLogoutMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -30,9 +33,13 @@ export default function Navbar() {
   }, []);
 
   return (
-    <nav
-      className="sticky top-0 z-50 bg-white shadow-md transition-all duration-300"
-    >
+    <nav className="sticky top-0 z-50 bg-white shadow-md transition-all duration-300">
+      {/* Töltőképernyő overlay */}
+      {loading && (
+        <div className="fixed inset-0 bg-white bg-opacity-70 flex items-center justify-center z-[9999]">
+          <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-secondary"></div>
+        </div>
+      )}
       <div className="max-w-6xl mx-auto px-4 py-3 flex items-center w-full">
         {/* LOGO */}
         <div className="flex items-center min-w-[120px]">
@@ -45,10 +52,15 @@ export default function Navbar() {
           </Link>
         </div>
         {/* MENÜ ÉS LOGIN/USER */}
+        {/* Kijelentkezés üzenet */}
+        {logoutMessage && (
+          <div className="absolute top-16 left-1/2 -translate-x-1/2 bg-green-100 text-green-700 px-6 py-2 rounded shadow font-semibold z-50 animate-fade-in">
+            {logoutMessage}
+          </div>
+        )}
         <div className="flex flex-1 items-center">
           <ul className="flex items-center gap-6 flex-1 justify-end mr-6">
             {navItems.map((item) => {
-              const [loginClicked, setLoginClicked] = useState(false);
               const active = pathname === item.href;
               return (
                 <li key={item.href}>
@@ -85,7 +97,15 @@ export default function Navbar() {
               </Link>
             )}
             {user && (
-              <UserMenu user={user} onLogout={logoutUser} />
+              <UserMenu user={user} onLogout={() => {
+                setLoading(true);
+                logoutUser();
+                setTimeout(() => {
+                  setLoading(false);
+                  setLogoutMessage("Sikeres kijelentkezés!");
+                  setTimeout(() => setLogoutMessage("");, 3000);
+                }, 1200);
+              }} />
             )}
           </div>
         </div>
@@ -106,10 +126,9 @@ export default function Navbar() {
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                d={
-                  menuOpen
-                    ? "M6 18L18 6M6 6l12 12"
-                    : "M4 6h16M4 12h16M4 18h16"
+                d={menuOpen
+                  ? "M6 18L18 6M6 6l12 12"
+                  : "M4 6h16M4 12h16M4 18h16"
                 }
               />
             </svg>
@@ -141,7 +160,15 @@ export default function Navbar() {
 
               {user && (
                 <li className="px-5 py-3">
-                  <UserMenu user={user} onLogout={logoutUser} />
+                  <UserMenu user={user} onLogout={() => {
+                    setLoading(true);
+                    logoutUser();
+                    setTimeout(() => {
+                      setLoading(false);
+                      setLogoutMessage("Sikeres kijelentkezés!");
+                      setTimeout(() => setLogoutMessage("");, 3000);
+                    }, 1200);
+                  }} />
                 </li>
               )}
 
