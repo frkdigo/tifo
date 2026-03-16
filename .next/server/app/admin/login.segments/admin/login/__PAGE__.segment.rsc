@@ -1,5 +1,0 @@
-1:"$Sreact.fragment"
-2:I[97367,["/_next/static/chunks/ff1a16fafef87110.js","/_next/static/chunks/d2be314c3ece3fbe.js"],"OutletBoundary"]
-3:"$Sreact.suspense"
-0:{"buildId":"nnGNwnMjWgUCTBTzNKnMU","rsc":["$","$1","c",{"children":[["$","main",null,{"className":"max-w-md mx-auto py-12 px-4","children":[["$","h1",null,{"className":"text-2xl font-bold mb-6 text-center","children":"Admin bejelentkezés"}],["$","form",null,{"className":"bg-white rounded-xl shadow p-6 flex flex-col gap-4","children":[["$","label",null,{"children":["Email",["$","input",null,{"type":"email","name":"email","className":"mt-1 w-full border rounded px-3 py-2","required":true}]]}],["$","button",null,{"type":"submit","className":"bg-secondary text-white font-semibold px-6 py-2 rounded hover:bg-primary transition","children":"Bejelentkezés"}]]}],["$","p",null,{"className":"text-xs text-gray-400 mt-4 text-center","children":"A bejelentkezéshez Supabase Auth lesz használva."}]]}],null,["$","$L2",null,{"children":["$","$3",null,{"name":"Next.MetadataOutlet","children":"$@4"}]}]]}],"loading":null,"isPartial":false}
-4:null

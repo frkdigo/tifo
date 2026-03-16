@@ -1,6 +1,6 @@
 export default function HeroSection() {
   return (
-    <section className="relative overflow-hidden flex items-center justify-center min-h-[70vh] text-center">
+    <section className="relative overflow-hidden flex items-center justify-center min-h-screen text-center">
       <video
         className="absolute inset-0 w-full h-full object-cover z-0 brightness-[0.45] contrast-90 saturate-75"
         src="/images/hero.mp4"
