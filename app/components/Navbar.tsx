@@ -100,11 +100,13 @@ import { useEffect, useState } from 'react';
                     </div>
                   </li>
                 )}
-                <li>
-                  <div className="px-5 py-3">
-                    <UserMenu />
-                  </div>
-                </li>
+                {user && (
+                  <li>
+                    <div className="px-5 py-3">
+                      <UserMenu />
+                    </div>
+                  </li>
+                )}
               </ul>
             </div>
           )}
