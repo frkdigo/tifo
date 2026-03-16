@@ -32,5 +32,4 @@ export default function AdminEventList() {
       </ul>
     </div>
   )
-      }, []);
-    }
+      // ...existing code...
