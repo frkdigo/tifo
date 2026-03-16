@@ -34,7 +34,7 @@ export default function Navbar() {
         </div>
         {/* Desktop menu */}
         <div className="flex flex-1 justify-end items-center gap-6">
-          <ul className="flex gap-6 items-center">
+          <ul className="flex gap-6 items-center ml-auto">
             {navItems.map(item => (
               <li key={item.href}>
                 {item.href === '/' ? (
@@ -69,8 +69,8 @@ export default function Navbar() {
                 <UserMenu user={user} onLogout={logoutUser} />
               </li>
             ) : (
-              <li>
-                <Link href="/auth" className="bg-slate-900 text-white rounded px-4 py-2 font-semibold hover:bg-slate-700 transition-colors">
+              <li className="ml-2">
+                <Link href="/auth" className="text-gray-700 hover:text-secondary font-medium transition-colors px-3 py-2 rounded border border-slate-300 bg-white hover:bg-slate-100">
                   Bejelentkezés
                 </Link>
               </li>
