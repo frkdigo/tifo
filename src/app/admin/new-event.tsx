@@ -5,6 +5,7 @@ import { useRef, useState } from "react";
 export default function NewEventForm({ onCreated }: { onCreated?: () => void }) {
   const [title, setTitle] = useState("");
   const [date, setDate] = useState("");
+  const [location, setLocation] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -33,7 +34,7 @@ export default function NewEventForm({ onCreated }: { onCreated?: () => void }) 
       const res = await fetch("/api/events", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ title, date, description, image })
+        body: JSON.stringify({ title, date, location, description, image })
       });
       if (!res.ok) {
         const data = await res.json().catch(() => null);
@@ -42,6 +43,7 @@ export default function NewEventForm({ onCreated }: { onCreated?: () => void }) 
       setSuccess(true);
       setTitle("");
       setDate("");
+      setLocation("");
       setDescription("");
       setImage(null);
       if (onCreated) onCreated();
@@ -64,6 +66,10 @@ export default function NewEventForm({ onCreated }: { onCreated?: () => void }) 
       <div className="mb-2">
         <label className="block text-sm mb-1">Dátum</label>
         <input type="date" value={date} onChange={e => setDate(e.target.value)} required className="w-full border rounded px-2 py-1" />
+      </div>
+      <div className="mb-2">
+        <label className="block text-sm mb-1">Helyszín</label>
+        <input value={location} onChange={e => setLocation(e.target.value)} className="w-full border rounded px-2 py-1" placeholder="Pl. Művház udvar" />
       </div>
       <div className="mb-4">
         <label className="block text-sm font-medium mb-2">Kép feltöltése</label>

@@ -172,14 +172,18 @@ export default function Esemeneink() {
 						) : (
 							<div className="grid md:grid-cols-2 gap-4">
 								{upcoming.map((event) => (
-									<article key={event.id} className="premium-surface rounded-2xl overflow-hidden flex flex-col h-full">
+									<article key={event.id} className="premium-surface rounded-2xl overflow-hidden flex flex-col h-[360px]">
 										{event.image && <img src={event.image} alt={event.title} className="w-full h-40 object-cover" />}
-										<div className="p-4 flex-1 flex flex-col">
-											<h4 className="font-bold text-lg text-slate-900 mb-1">{event.title}</h4>
-											<p className="text-sm text-slate-500 mb-2">{new Date(event.date).toLocaleDateString("hu-HU")}</p>
-											<p className="text-slate-700 text-sm line-clamp-3">{event.description || "Részletek hamarosan..."}</p>
+										<div className="p-4 flex-1 min-h-0 flex flex-col">
+											<div className="relative flex-1 min-h-0 overflow-hidden">
+												<h4 className="font-bold text-lg text-slate-900 mb-1">{event.title}</h4>
+												<p className="text-sm text-slate-500 mb-2">{new Date(event.date).toLocaleDateString("hu-HU")}</p>
+												<p className="text-slate-700 text-sm whitespace-pre-line">{event.description || "Részletek hamarosan..."}</p>
+												{event.location && <p className="text-xs text-slate-500 mt-2">Helyszín: {event.location}</p>}
+												<div className="pointer-events-none absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-white to-transparent" />
+											</div>
 											<button
-												className="mt-auto pt-3 w-full bg-slate-900 text-white py-2 rounded-lg hover:bg-slate-800 transition-colors font-semibold"
+												className="mt-3 w-full bg-slate-900 text-white py-2 rounded-lg hover:bg-slate-800 transition-colors font-semibold shrink-0"
 												onClick={() => setSelected(event)}
 											>
 												Érdekel

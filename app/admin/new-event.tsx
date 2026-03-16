@@ -5,6 +5,7 @@ import { useRef, useState } from "react";
 export default function NewEventForm({ onCreated }: { onCreated?: () => void }) {
   const [title, setTitle] = useState("");
   const [date, setDate] = useState("");
+  const [location, setLocation] = useState("");
   const [description, setDescription] = useState("");
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
@@ -42,7 +43,7 @@ export default function NewEventForm({ onCreated }: { onCreated?: () => void }) 
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
-        body: JSON.stringify({ title, date, description, image: uploadedImageUrl })
+        body: JSON.stringify({ title, date, location, description, image: uploadedImageUrl })
       });
       if (!res.ok) {
         const data = await res.json().catch(() => null);
@@ -51,6 +52,7 @@ export default function NewEventForm({ onCreated }: { onCreated?: () => void }) 
       setSuccess(true);
       setTitle("");
       setDate("");
+      setLocation("");
       setDescription("");
       setImageFile(null);
       setImageUrl(null);
@@ -69,6 +71,7 @@ export default function NewEventForm({ onCreated }: { onCreated?: () => void }) 
       <h3 className="font-bold text-lg mb-2">Új esemény felvétele</h3>
       <input type="text" value={title} onChange={e => setTitle(e.target.value)} className="w-full border border-slate-200 rounded-lg p-2 focus:ring-2 focus:ring-slate-300 transition" placeholder="Esemény címe" required />
       <input type="date" value={date} onChange={e => setDate(e.target.value)} className="w-full border border-slate-200 rounded-lg p-2 focus:ring-2 focus:ring-slate-300 transition" required />
+      <input type="text" value={location} onChange={e => setLocation(e.target.value)} className="w-full border border-slate-200 rounded-lg p-2 focus:ring-2 focus:ring-slate-300 transition" placeholder="Helyszín (pl. Művház udvar)" />
       <textarea value={description} onChange={e => setDescription(e.target.value)} className="w-full border border-slate-200 rounded-lg p-2 focus:ring-2 focus:ring-slate-300 transition" placeholder="Leírás" />
       <div className="flex flex-col items-start gap-1">
         <span className="text-sm font-medium text-slate-700">Kép feltöltése</span>
