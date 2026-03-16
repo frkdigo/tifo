@@ -66,7 +66,7 @@ export default function Kapcsolat() {
 
            <div className="w-fit mx-auto">
              <img
-               src="/images/logo.png"
+               src="/images/logo.jpg"
                alt="TIFO logó"
                className="w-full max-w-[240px] h-[240px] mx-auto object-cover rounded-full border border-slate-500/60 bg-white p-2"
              />

@@ -23,7 +23,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     // HTML email body
     // Publikus logó URL (Google Drive vagy más CDN, vagy a tifo.hu/images/tifo-logo.png legyen tényleg elérhető)
-    const logoUrl = 'https://tifo.hu/images/logo.png';
+    const logoUrl = 'https://tifo.hu/images/logo.jpg';
     const html = `
       <div style="font-family: 'Inter', Arial, sans-serif; background: #f8fafc; padding: 32px;">
         <div style="max-width: 520px; margin: 0 auto; background: #fff; border-radius: 18px; box-shadow: 0 8px 32px rgba(15,23,42,0.10); padding: 32px 28px 18px 28px;">
