@@ -33,7 +33,7 @@ export default function Navbar() {
           <img src="/images/logo.jpg" alt="TIFO logó" className="h-16 w-auto -mt-3" />
         </div>
         {/* Desktop menu */}
-        <div className="hidden md:flex flex-1 justify-end items-center gap-6">
+        <div className="flex flex-1 justify-end items-center gap-6">
           <ul className="flex gap-6 items-center">
             {navItems.map(item => (
               <li key={item.href}>
