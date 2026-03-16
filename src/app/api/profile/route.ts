@@ -25,7 +25,7 @@ export async function PATCH(req: NextRequest) {
   try {
     const { email, nickname, profileImage } = await req.json();
     if (!email) {
-      return NextResponse.json({ error: 'Email kotelezo' }, { status: 400 });
+      return NextResponse.json({ error: 'Email kötelező' }, { status: 400 });
     }
     if (typeof nickname === 'string' || profileImage !== undefined) {
       const { error: updateError } = await supabase

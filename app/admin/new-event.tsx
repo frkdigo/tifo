@@ -1,7 +1,6 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { supabase } from "../../lib/supabaseClient";
 
 export default function NewEventForm({ onCreated }: { onCreated?: () => void }) {
   const [title, setTitle] = useState("");
@@ -37,22 +36,8 @@ export default function NewEventForm({ onCreated }: { onCreated?: () => void }) 
     setSuccess(false);
     let uploadedImageUrl = imageUrl;
     try {
-      // Ha van új file, töltsük fel Supabase Storage-ba
-      if (imageFile) {
-        const fileExt = imageFile.name.split('.').pop();
-        const fileName = `event_${Date.now()}.${fileExt}`;
-        const { data, error } = await supabase.storage.from('events').upload(fileName, imageFile, {
-          cacheControl: '3600',
-          upsert: true,
-        });
-        if (error) {
-          console.error('Kép feltöltése sikertelen:', error.message, error);
-          throw new Error('Kép feltöltése sikertelen: ' + error.message);
-        }
-        const { data: publicUrlData } = supabase.storage.from('events').getPublicUrl(fileName);
-        uploadedImageUrl = publicUrlData.publicUrl;
-        setImageUrl(uploadedImageUrl);
-      }
+      // RLS hiba elkerülése: a kiválasztott képet base64 formában küldjük az API-nak.
+      // A preview már data URL, így itt nincs külön storage upload lépés.
       const res = await fetch("/api/events", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
