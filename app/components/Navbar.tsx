@@ -74,7 +74,11 @@ export default function Navbar() {
             {!user && (
               <Link
                 href="/auth"
-                className="px-4 py-2 rounded-lg border border-slate-300 bg-white hover:bg-slate-100 transition font-medium"
+                className={`px-4 py-2 rounded-lg border transition font-medium ${
+                  pathname === '/auth'
+                    ? 'bg-green-500 text-white border-green-600 hover:bg-green-600'
+                    : 'border-slate-300 bg-white hover:bg-slate-100'
+                }`}
               >
                 Bejelentkezés
               </Link>
@@ -144,7 +148,11 @@ export default function Navbar() {
                 <li className="px-5 py-3">
                   <Link
                     href="/auth"
-                    className="block w-full text-center px-4 py-2 rounded-lg border border-slate-300 hover:bg-slate-100 font-medium"
+                    className={`block w-full text-center px-4 py-2 rounded-lg border font-medium ${
+                      pathname === '/auth'
+                        ? 'bg-green-500 text-white border-green-600 hover:bg-green-600'
+                        : 'border-slate-300 hover:bg-slate-100'
+                    }`}
                   >
                     Bejelentkezés
                   </Link>
