@@ -29,7 +29,7 @@ export default function Footer() {
         }}
       />
 
-      <div className="relative max-w-6xl mx-auto px-4 py-5">
+      <div className="relative max-w-6xl mx-auto px-4 py-2">
         <div className="grid gap-4 md:grid-cols-[1.2fr_0.8fr_0.8fr]">
           <section>
             <p className="text-[10px] uppercase tracking-[0.2em] text-sky-300 mb-1.5">TIFO</p>
