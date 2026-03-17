@@ -173,7 +173,7 @@ export default function Esemeneink() {
 
 	return (
 		<main className="max-w-6xl mx-auto py-12 px-4 text-black">
-			<section className="rounded-3xl border border-white/15 bg-tifo-dark p-6 md:p-8 mb-8 shadow-[0_24px_60px_-35px_rgba(0,0,0,0.6)]">
+			<section className="rounded-3xl border border-white/15 bg-[#0d3b66] p-6 md:p-8 mb-8 shadow-[0_24px_60px_-35px_rgba(0,0,0,0.6)]">
 				<div className="flex flex-wrap items-end justify-between gap-4">
 					<div>
 						<p className="text-xs uppercase tracking-[0.18em] text-white/75 mb-2">Programok</p>
@@ -233,7 +233,7 @@ export default function Esemeneink() {
 									<div className="mt-4">
 										{featured.location && <p className="text-xs text-gray-500 mb-3">Helyszín: {featured.location}</p>}
 										<button
-											className="w-full bg-tifo-green text-white py-2.5 rounded-xl hover:bg-[#87ceeb] hover:text-black transition-colors font-semibold"
+											className="w-full bg-[#28a745] text-white py-2.5 rounded-xl hover:bg-[#87ceeb] hover:text-black transition-colors font-semibold"
 											onClick={() => setSelected(featured)}
 										>
 											Részletek megnyitása
@@ -271,7 +271,7 @@ export default function Esemeneink() {
 												<div className="pointer-events-none absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-white to-transparent" />
 											</div>
 											<button
-												className="mt-3 w-full bg-tifo-green text-white py-2 rounded-xl hover:bg-[#87ceeb] hover:text-black transition-colors font-semibold shrink-0"
+												className="mt-3 w-full bg-[#28a745] text-white py-2 rounded-xl hover:bg-[#87ceeb] hover:text-black transition-colors font-semibold shrink-0"
 												onClick={() => setSelected(event)}
 											>
 												Érdekel
@@ -296,7 +296,7 @@ export default function Esemeneink() {
 											<div className="text-xs text-gray-500">{new Date(event.date).toLocaleDateString("hu-HU")}</div>
 										</div>
 										<button
-											className="text-sm bg-tifo-green hover:bg-[#87ceeb] hover:text-black text-white px-3 py-1.5 rounded-xl transition-colors"
+											className="text-sm bg-[#28a745] hover:bg-[#87ceeb] hover:text-black text-white px-3 py-1.5 rounded-xl transition-colors"
 											onClick={() => setSelected(event)}
 										>
 											Megnézem

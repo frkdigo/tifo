@@ -146,7 +146,7 @@ export default function Rolunk() {
       <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_18%_8%,rgba(13,59,102,0.16),transparent_40%),linear-gradient(180deg,#0d3b66_0%,#0d3b66_34%,#f6f9fc_34%,#ffffff_100%)]" />
 
       <section className="max-w-6xl mx-auto px-4 pt-10 md:pt-14 pb-8">
-        <div className="rounded-3xl border border-white/15 bg-tifo-dark shadow-[0_30px_70px_-40px_rgba(0,0,0,0.65)] p-8 md:p-12 text-center">
+        <div className="rounded-3xl border border-white/15 bg-[#0d3b66] shadow-[0_30px_70px_-40px_rgba(0,0,0,0.65)] p-8 md:p-12 text-center">
           <p className="inline-flex items-center gap-2 rounded-full bg-white/15 text-white text-xs tracking-[0.18em] uppercase px-5 py-2.5 mb-6 shadow-lg shadow-black/20">
             Törökbálinti Ifjúsági Önkormányzat
           </p>
@@ -312,7 +312,7 @@ export default function Rolunk() {
     {isAdmin && (
                 <button
                   type="button"
-                  className="inline-flex items-center gap-2 bg-tifo-green text-white px-5 py-2.5 rounded-full font-semibold hover:bg-[#87ceeb] hover:text-black transition-colors mt-4"
+                  className="inline-flex items-center gap-2 bg-[#28a745] text-white px-5 py-2.5 rounded-full font-semibold hover:bg-[#87ceeb] hover:text-black transition-colors mt-4"
                   onClick={() => setEditing(true)}
                 >
         Szerkesztés
@@ -328,7 +328,7 @@ export default function Rolunk() {
                   <textarea
                     value={draftBio}
                     onChange={(e) => setDraftBio(e.target.value)}
-                    className="mt-1 w-full border border-gray-200 rounded-xl px-3 py-2 min-h-[130px] focus:outline-none focus:ring-2 focus:ring-tifo-green focus:border-tifo-green transition"
+                    className="mt-1 w-full border border-gray-200 rounded-xl px-3 py-2 min-h-[130px] focus:outline-none focus:ring-2 focus:ring-[#28a745] focus:border-[#28a745] transition"
                     placeholder="Írj ide egy rövid bemutatkozást..."
                   />
                 </label>
@@ -336,7 +336,7 @@ export default function Rolunk() {
                 <div>
                   <label className="block text-sm font-medium text-gray-800 mb-2">Kép feltöltése</label>
                   <div className="flex items-center gap-3 flex-wrap">
-                    <label className="cursor-pointer bg-tifo-green text-white px-4 py-2 rounded-xl hover:bg-[#87ceeb] hover:text-black transition-colors">
+                    <label className="cursor-pointer bg-[#28a745] text-white px-4 py-2 rounded-xl hover:bg-[#87ceeb] hover:text-black transition-colors">
                       Fájl kiválasztása
                       <input type="file" accept="image/*" onChange={onPickImage} className="hidden" />
                     </label>
@@ -360,7 +360,7 @@ export default function Rolunk() {
 
                 <button
                   type="button"
-                  className="inline-flex items-center gap-2 bg-tifo-green text-white font-black px-6 py-2.5 rounded-full hover:bg-[#87ceeb] hover:text-black transition-colors mt-4 disabled:opacity-60"
+                  className="inline-flex items-center gap-2 bg-[#28a745] text-white font-black px-6 py-2.5 rounded-full hover:bg-[#87ceeb] hover:text-black transition-colors mt-4 disabled:opacity-60"
                   onClick={saveMember}
                   disabled={saving}
                 >
