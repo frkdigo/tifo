@@ -49,18 +49,34 @@ export default function Kapcsolat() {
             <p className="inline-flex rounded-full bg-slate-900 text-sky-200 uppercase tracking-[0.18em] text-xs px-4 py-2 mb-4">
               Törökbálinti Ifjúsági Önkormányzat
             </p>
-            <h1 className="text-3xl md:text-5xl font-black text-slate-900">Kapcsolat</h1>
-            <p className="text-slate-600 mt-3 leading-relaxed">
+            <h1 className="text-4xl md:text-6xl font-black text-slate-900 leading-tight">Kapcsolat</h1>
+            <p className="text-slate-600 mt-3 text-base md:text-lg leading-relaxed max-w-lg">
               Kérdésed van, csatlakoznál, vagy ötleted van programra? Írj nekünk, és hamarosan válaszolunk.
             </p>
 
-            <div className="mt-5 space-y-2 text-slate-700">
-              <p>
-                Email: <a href="mailto:info.tifo@gmail.com" className="text-slate-900 font-semibold hover:underline">info.tifo@gmail.com</a>
-              </p>
-              <p>
-                Instagram: <a href="https://www.instagram.com/tifo_2008/" target="_blank" rel="noopener" className="text-slate-900 font-semibold hover:underline">@tifo_2008</a>
-              </p>
+            <div className="mt-6 flex flex-col gap-3">
+              <a
+                href="mailto:info.tifo@gmail.com"
+                className="flex items-center gap-4 rounded-2xl bg-slate-50 border border-slate-200 px-4 py-3.5 hover:bg-sky-50 hover:border-sky-200 transition-all group"
+              >
+                <span className="text-2xl shrink-0">✉️</span>
+                <div>
+                  <div className="text-[10px] uppercase tracking-widest text-slate-400 font-semibold">E-mail</div>
+                  <div className="font-bold text-slate-900 group-hover:text-sky-700 transition-colors">info.tifo@gmail.com</div>
+                </div>
+              </a>
+              <a
+                href="https://www.instagram.com/tifo_2008/"
+                target="_blank"
+                rel="noopener"
+                className="flex items-center gap-4 rounded-2xl bg-slate-50 border border-slate-200 px-4 py-3.5 hover:bg-pink-50 hover:border-pink-200 transition-all group"
+              >
+                <span className="text-2xl shrink-0">📸</span>
+                <div>
+                  <div className="text-[10px] uppercase tracking-widest text-slate-400 font-semibold">Instagram</div>
+                  <div className="font-bold text-slate-900 group-hover:text-pink-600 transition-colors">@tifo_2008</div>
+                </div>
+              </a>
             </div>
           </div>
 
@@ -75,34 +91,35 @@ export default function Kapcsolat() {
       </section>
 
       <section className="rounded-3xl premium-surface p-6 md:p-8">
-        <h2 className="text-xl md:text-2xl font-bold text-slate-900 mb-5">Üzenetküldés</h2>
+        <p className="section-label">Kapcsolatfelvétel</p>
+        <h2 className="text-2xl md:text-3xl font-black text-slate-900 mb-6">Írj nekünk!</h2>
 
         <form className="grid gap-4" onSubmit={handleSubmit}>
-          <label className="text-sm font-medium text-slate-700">
+          <label className="text-sm font-semibold text-slate-700">
             Név
             <input
               type="text"
               name="name"
-              className="mt-1 w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-400"
+              className="mt-1.5 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-sky-400 transition"
               required
             />
           </label>
 
-          <label className="text-sm font-medium text-slate-700">
+          <label className="text-sm font-semibold text-slate-700">
             Email
             <input
               type="email"
               name="email"
-              className="mt-1 w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-400"
+              className="mt-1.5 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-sky-400 transition"
               required
             />
           </label>
 
-          <label className="text-sm font-medium text-slate-700">
+          <label className="text-sm font-semibold text-slate-700">
             Üzenet
             <textarea
               name="message"
-              className="mt-1 w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-400"
+              className="mt-1.5 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-sky-400 transition"
               rows={5}
               required
             />
@@ -110,14 +127,36 @@ export default function Kapcsolat() {
 
           <button
             type="submit"
-            className="inline-flex justify-center items-center rounded-xl bg-slate-900 text-white font-semibold px-6 py-3 hover:bg-slate-800 transition-colors"
+            className="inline-flex justify-center items-center gap-2 rounded-full bg-sky-400 text-slate-900 font-black px-8 py-3.5 hover:bg-sky-300 hover:scale-105 active:scale-95 transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100"
             disabled={sending}
           >
-            {sending ? "Küldés..." : "Küldés"}
+            {sending ? "Küldés..." : (
+              <>
+                Üzenet küldése
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
+              </>
+            )}
           </button>
           {success && <div className="text-green-600 text-sm mt-2">{success}</div>}
           {error && <div className="text-red-600 text-sm mt-2">{error}</div>}
         </form>
+      </section>
+
+      <section className="max-w-5xl mx-auto px-4 pb-16">
+        <div className="rounded-3xl bg-gradient-to-br from-sky-400 to-sky-500 p-8 md:p-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6 shadow-xl">
+          <div>
+            <p className="text-[10px] uppercase tracking-widest font-bold text-sky-900 mb-2">Csatlakozás</p>
+            <h2 className="text-2xl md:text-3xl font-black text-slate-900 leading-tight">Szeretnél aktív tag lenni?</h2>
+            <p className="text-slate-800 mt-2 leading-relaxed max-w-lg">Csatlakozz a TIFO közösségéhez – részt vehetsz programok szervezésében, döntéshozatalban és eseményeken!</p>
+          </div>
+          <a
+            href="/rolunk"
+            className="shrink-0 inline-flex items-center gap-2 rounded-full bg-slate-900 text-white font-black px-8 py-4 hover:bg-slate-800 hover:scale-105 active:scale-95 transition-all duration-200 text-base whitespace-nowrap"
+          >
+            Csatlakozz most
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
+          </a>
+        </div>
       </section>
     </main>
   );

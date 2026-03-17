@@ -26,14 +26,17 @@ export default function Rolunk() {
 
   const values = [
     {
+      icon: "🤝",
       title: "Közösségépítés",
       text: "Olyan közeget teremtünk, ahol a fiatalok kapcsolódhatnak, alkothatnak és hatni tudnak a városukra.",
     },
     {
+      icon: "🗣️",
       title: "Részvétel",
       text: "A helyi döntésekben valódi teret adunk a fiatalok véleményének, ötleteinek és kezdeményezéseinek.",
     },
     {
+      icon: "⚡",
       title: "Lendület",
       text: "Programjaink a modern ifjúsági kultúra ritmusára épülnek: kreatív, nyitott és cselekvő szemléletben.",
     },
@@ -147,7 +150,7 @@ export default function Rolunk() {
           <p className="inline-flex items-center gap-2 rounded-full bg-slate-900 text-sky-200 text-xs tracking-[0.18em] uppercase px-4 py-2 mb-6">
             Törökbálinti Ifjúsági Önkormányzat
           </p>
-          <h1 className="text-4xl md:text-6xl font-black leading-tight text-slate-900">Rólunk</h1>
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-black leading-none text-slate-900">Rólunk</h1>
           <p className="mt-5 text-slate-700 text-lg md:text-xl max-w-3xl leading-relaxed">
             Fiatalok által, fiatalokért dolgozunk. A célunk egy olyan aktív, inspiráló közösség, ahol az ötletekből
             valódi helyi változás lesz.
@@ -174,16 +177,17 @@ export default function Rolunk() {
         </div>
       </section>
 
-      <section className="max-w-6xl mx-auto px-4 py-6">
-        <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-4">Mit képviselünk?</h2>
-        <div className="grid md:grid-cols-3 gap-4">
+      <section className="max-w-6xl mx-auto px-4 py-8">
+        <p className="section-label">Értékeink</p>
+        <h2 className="text-3xl md:text-4xl font-black text-slate-900 mb-6">Mit képviselünk?</h2>
+        <div className="grid md:grid-cols-3 gap-5">
           {values.map((value) => (
             <article
               key={value.title}
               className="group rounded-2xl border border-slate-200 bg-white p-6 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
             >
-              <div className="w-10 h-10 rounded-xl bg-slate-900 text-sky-300 grid place-items-center font-bold text-sm mb-4">
-                {value.title.slice(0, 2).toUpperCase()}
+              <div className="w-12 h-12 rounded-2xl bg-slate-50 border border-slate-200 grid place-items-center text-2xl mb-5 group-hover:bg-sky-50 group-hover:border-sky-200 transition-colors">
+                {value.icon}
               </div>
               <h3 className="text-lg font-semibold text-slate-900 mb-2">{value.title}</h3>
               <p className="text-slate-600 leading-relaxed">{value.text}</p>
@@ -192,10 +196,11 @@ export default function Rolunk() {
         </div>
       </section>
 
-      <section className="max-w-6xl mx-auto px-4 py-6">
-        <div className="rounded-3xl bg-slate-950 text-slate-100 p-8 md:p-10 shadow-2xl">
-          <h2 className="text-2xl md:text-3xl font-bold mb-2">Csapatunk</h2>
-          <p className="text-slate-300 mb-6">Kattints egy kártyára, és megnyílik a részletes bemutatkozás.</p>
+      <section className="max-w-6xl mx-auto px-4 py-8">
+        <div className="rounded-3xl bg-slate-950 text-slate-100 p-8 md:p-12 shadow-2xl">
+          <p className="text-xs uppercase tracking-[0.2em] text-sky-400 font-semibold mb-3">Emberek</p>
+          <h2 className="text-3xl md:text-4xl font-black mb-2">Csapatunk</h2>
+          <p className="text-slate-300 mb-8 text-lg">Kattints egy kártyára, és megnyílik a részletes bemutatkozás.</p>
 
           {loading ? (
             <div className="text-slate-300">Betöltés...</div>
@@ -307,7 +312,7 @@ export default function Rolunk() {
     {isAdmin && (
       <button
         type="button"
-        className="bg-slate-900 text-white px-4 py-2 rounded-lg hover:bg-slate-800 transition-colors mt-4"
+        className="inline-flex items-center gap-2 bg-slate-900 text-white px-5 py-2.5 rounded-full font-semibold hover:bg-slate-800 transition-colors mt-4"
         onClick={() => setEditing(true)}
       >
         Szerkesztés
@@ -355,7 +360,7 @@ export default function Rolunk() {
 
                 <button
                   type="button"
-                  className="bg-sky-600 text-white px-4 py-2 rounded-lg hover:bg-sky-700 transition-colors mt-4"
+                  className="inline-flex items-center gap-2 bg-sky-400 text-slate-900 font-black px-6 py-2.5 rounded-full hover:bg-sky-300 transition-colors mt-4 disabled:opacity-60"
                   onClick={saveMember}
                   disabled={saving}
                 >
@@ -366,6 +371,23 @@ export default function Rolunk() {
           </div>
         </div>
       )}
+
+      <section className="max-w-6xl mx-auto px-4 pb-16 pt-4">
+        <div className="rounded-3xl bg-gradient-to-br from-sky-400 to-sky-500 p-8 md:p-12 flex flex-col md:flex-row md:items-center md:justify-between gap-6 shadow-xl">
+          <div>
+            <p className="text-[10px] uppercase tracking-widest font-bold text-sky-900 mb-2">Csatlakozás</p>
+            <h2 className="text-2xl md:text-3xl font-black text-slate-900 leading-tight">Gyere, csatlakozz hozzánk!</h2>
+            <p className="text-slate-800 mt-2 leading-relaxed max-w-lg">Legyen részed a közösségben – vegyél részt programok szervezésében, döntéshozatalban és eseményeken!</p>
+          </div>
+          <a
+            href="/kapcsolat"
+            className="shrink-0 inline-flex items-center gap-2 rounded-full bg-slate-900 text-white font-black px-8 py-4 hover:bg-slate-800 hover:scale-105 active:scale-95 transition-all duration-200 text-base whitespace-nowrap"
+          >
+            Írj nekünk
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
+          </a>
+        </div>
+      </section>
     </main>
   );
 }
