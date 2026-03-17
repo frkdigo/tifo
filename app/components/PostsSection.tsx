@@ -157,14 +157,14 @@ export default function PostsSection() {
                     )}
                   <span className="text-xs text-slate-500">{new Date(post.createdAt || post.created_at).toLocaleString('hu-HU')}</span>
                 </div>
-                {user?.email === "furkonorbert16@gmail.com" && (
-                  {user?.isAdmin && (
-                    <button
-                      className="ml-auto bg-red-500 hover:bg-red-600 text-white rounded-full px-3 py-1 text-xs font-semibold transition-colors"
-                      title="Poszt törlése"
-                      onClick={() => handleDeletePost(post.id)}
-                    >Törlés</button>
-                  )}
+{user?.email === "furkonorbert16@gmail.com" && user?.isAdmin && (
+  <button
+    className="ml-auto bg-red-500 hover:bg-red-600 text-white rounded-full px-3 py-1 text-xs font-semibold transition-colors"
+    title="Poszt törlése"
+  >
+    Törlés
+  </button>
+)}
                 )}
               </div>
               <div className="text-slate-700 mb-2 line-clamp-3">{post.text}</div>
