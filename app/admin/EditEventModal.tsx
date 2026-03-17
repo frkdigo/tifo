@@ -1,5 +1,13 @@
 
 import { useState, useEffect, useRef } from "react";
+  // Body scroll tiltása modal nyitásakor
+  useEffect(() => {
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, []);
 import { uploadImageToStorage } from "../../lib/uploadImageToStorage";
 
 export default function EditEventModal({ event, onClose, onDeleted, onUpdated }: {

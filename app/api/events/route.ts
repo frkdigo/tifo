@@ -1,3 +1,10 @@
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: '10mb',
+    },
+  },
+};
 import { NextRequest, NextResponse } from 'next/server';
 
 import { createServerClient } from '@supabase/auth-helpers-nextjs';

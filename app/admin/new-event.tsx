@@ -10,6 +10,14 @@ export default function NewEventForm({ onCreated }: { onCreated?: () => void }) 
   const [location, setLocation] = useState("");
   const [description, setDescription] = useState("");
   const descriptionRef = useRef<HTMLTextAreaElement | null>(null);
+
+  // Auto-resize textarea minden rendernél
+  useEffect(() => {
+    if (descriptionRef.current) {
+      descriptionRef.current.style.height = 'auto';
+      descriptionRef.current.style.height = descriptionRef.current.scrollHeight + 'px';
+    }
+  }, [description]);
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -85,17 +93,11 @@ export default function NewEventForm({ onCreated }: { onCreated?: () => void }) 
       <textarea
         ref={descriptionRef}
         value={description}
-        onChange={e => {
-          setDescription(e.target.value);
-          if (descriptionRef.current) {
-            descriptionRef.current.style.height = 'auto';
-            descriptionRef.current.style.height = descriptionRef.current.scrollHeight + 'px';
-          }
-        }}
+        onChange={e => setDescription(e.target.value)}
         className="w-full border border-slate-200 rounded-lg p-2 focus:ring-2 focus:ring-slate-300 transition resize-none overflow-hidden"
         placeholder="Leírás"
         rows={2}
-        style={{ minHeight: 40 }}
+        style={{ minHeight: 40, maxHeight: 400 }}
       />
       <div className="flex flex-col items-start gap-1">
         <span className="text-sm font-medium text-slate-700">Kép feltöltése</span>

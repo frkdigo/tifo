@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { uploadImageToStorage } from "../../../lib/uploadImageToStorage";
 
 export default function EditEventModal({ event, onClose, onDeleted, onUpdated }: {
   event: any,
@@ -14,14 +15,18 @@ export default function EditEventModal({ event, onClose, onDeleted, onUpdated }:
     location: event.location || ""
   });
 
-  function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+  async function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
-    const reader = new FileReader();
-    reader.onload = () => {
-      setForm(f => ({ ...f, image: reader.result as string }));
-    };
-    reader.readAsDataURL(file);
+    try {
+      setLoading(true);
+      const url = await uploadImageToStorage(file, "event");
+      setForm(f => ({ ...f, image: url }));
+    } catch (err) {
+      setError("Nem sikerült feltölteni a képet.");
+    } finally {
+      setLoading(false);
+    }
   }
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
