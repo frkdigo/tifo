@@ -339,8 +339,7 @@ export default function Rolunk() {
                           Kép törlése
                         </button>
                         {/* Modal should be rendered outside the button, if needed */}
-                                onClick={(e) => e.stopPropagation()}
-                              >
+                        {/* The following code was broken by a misplaced comment. If you want to render a modal, do it outside this block. */}
                                 <button
                                   type="button"
                                   className="absolute top-3 right-3 text-slate-400 hover:text-slate-700 text-2xl leading-none z-10"
@@ -466,4 +465,4 @@ export default function Rolunk() {
                                         </>
                                       )}
                                       {/* Modal rendering for activeMember should be outside this block */}
-                                        onClick={() => {
+                                      {/* Removed misplaced onClick or broken code here. */}
