@@ -45,7 +45,7 @@ function EventDescription({ text }: { text: string }) {
 	);
 }
 
-function EventModal({ event, onClose }: { event: any; onClose: () => void }) {
+function EventModal({ event, onClose, onZoomImage }: { event: any; onClose: () => void; onZoomImage: (src: string | null) => void }) {
 	useEffect(() => {
 		const scrollY = window.scrollY;
 		const originalOverflow = document.body.style.overflow;
@@ -113,7 +113,7 @@ function EventModal({ event, onClose }: { event: any; onClose: () => void }) {
 					{event.image && (
 						<button
 							type="button"
-							onClick={() => setZoomedImage(event.image || null)}
+							onClick={() => onZoomImage(event.image || null)}
 							className="block w-full"
 							aria-label="Kép nagyítása"
 						>
@@ -309,7 +309,7 @@ export default function Esemeneink() {
 				</div>
 			)}
 
-			{selected && <EventModal event={selected} onClose={() => setSelected(null)} />}
+			{selected && <EventModal event={selected} onClose={() => setSelected(null)} onZoomImage={setZoomedImage} />}
 			{zoomedImage && (
 				<div className="fixed inset-0 z-[260] bg-black/85 p-4 flex items-center justify-center" onClick={() => setZoomedImage(null)}>
 					<button
