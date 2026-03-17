@@ -141,58 +141,60 @@ export default function Navbar() {
 
         {/* MOBILE MENU */}
         {menuOpen && (
-          <div className="absolute top-full right-4 mt-2 w-56 bg-white rounded-xl shadow-lg border border-slate-200 z-50 animate-fade-in">
-            <ul className="flex flex-col py-2">
-
-              {navItems.map((item) => (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    onClick={() => setMenuOpen(false)}
-                    className="block px-5 py-3 text-gray-700 hover:bg-slate-100 font-medium rounded-lg"
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-
-              {user && user.isAdmin && (
-                <li className="px-5 py-3">
-                  <AdminDropdown />
-                </li>
-              )}
-
-              {user && (
-                <li className="px-5 py-3">
-                  <UserMenu user={user} onLogout={() => {
-                    setLoading(true);
-                    logoutUser();
-                    setTimeout(() => {
-                      setLoading(false);
-                      setLogoutMessage("Sikeres kijelentkezés!");
-                      setTimeout(() => setLogoutMessage(""), 3000);
-                    }, 1200);
-                  }} />
-                </li>
-              )}
-
-              {!user && (
-                <li className="px-5 py-3">
-                  <Link
-                    href="/auth"
-                    className={`block w-full text-center px-4 py-2.5 rounded-full font-semibold transition-all duration-200 shadow-sm active:scale-95 ${
-                      pathname === '/auth'
-                        ? 'bg-slate-900 text-white'
-                        : 'bg-secondary text-white hover:brightness-95'
-                    }`}
-                  >
-                    Bejelentkezés
-                  </Link>
-                </li>
-              )}
-
-            </ul>
-          </div>
+          <>
+            {/* Backdrop for closing menu on outside click */}
+            <div
+              className="fixed inset-0 z-40 bg-transparent"
+              onClick={() => setMenuOpen(false)}
+            />
+            <div className="absolute top-full right-4 mt-2 w-56 bg-white rounded-xl shadow-lg border border-slate-200 z-50 animate-fade-in">
+              <ul className="flex flex-col py-2">
+                {navItems.map((item) => (
+                  <li key={item.href}>
+                    <Link
+                      href={item.href}
+                      onClick={() => setMenuOpen(false)}
+                      className="block px-5 py-3 text-gray-700 hover:bg-slate-100 font-medium rounded-lg"
+                    >
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
+                {user && user.isAdmin && (
+                  <li className="px-5 py-3">
+                    <AdminDropdown />
+                  </li>
+                )}
+                {user && (
+                  <li className="px-5 py-3">
+                    <UserMenu user={user} onLogout={() => {
+                      setLoading(true);
+                      logoutUser();
+                      setTimeout(() => {
+                        setLoading(false);
+                        setLogoutMessage("Sikeres kijelentkezés!");
+                        setTimeout(() => setLogoutMessage("");, 3000);
+                      }, 1200);
+                    }} />
+                  </li>
+                )}
+                {!user && (
+                  <li className="px-5 py-3">
+                    <Link
+                      href="/auth"
+                      className={`block w-full text-center px-4 py-2.5 rounded-full font-semibold transition-all duration-200 shadow-sm active:scale-95 ${
+                        pathname === '/auth'
+                          ? 'bg-slate-900 text-white'
+                          : 'bg-secondary text-white hover:brightness-95'
+                      }`}
+                    >
+                      Bejelentkezés
+                    </Link>
+                  </li>
+                )}
+              </ul>
+            </div>
+          </>
         )}
       </div>
     </nav>
