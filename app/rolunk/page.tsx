@@ -454,34 +454,20 @@ export default function Rolunk() {
                                       className="bg-slate-900 text-white px-4 py-2 rounded-lg hover:bg-slate-800 transition-colors"
                                       onClick={() => setEditing(true)}
                                     >
-                                      Szerkesztés
-                                    </button>
-                                  )}
-
-                                  {isAdmin && editing && (
-                                    <>
-                                      <button
-                                        type="button"
-                                        onClick={saveMember}
-                                        disabled={saving}
-                                        className="bg-slate-900 text-white px-4 py-2 rounded-lg hover:bg-slate-800 transition-colors disabled:opacity-60"
-                                      >
-                                        {saving ? "Mentés..." : "Mentés"}
-                                      </button>
-                                      <button
-                                        type="button"
+                                      {draftImage && (
+                                        <>
+                                          <img
+                                            src={draftImage}
+                                            alt="Előnézet"
+                                            className="w-16 h-16 rounded-full object-cover border border-slate-300 shadow"
+                                          />
+                                          <button
+                                            type="button"
+                                            onClick={() => setDraftImage(null)}
+                                          >
+                                            Kép törlése
+                                          </button>
+                                        </>
+                                      )}
+                                      {/* Modal rendering for activeMember should be outside this block */}
                                         onClick={() => {
-                                          setEditing(false);
-                                          setDraftBio(activeMember.bio || "");
-                                          setDraftImage(activeMember.image || null);
-                                        }}
-                                        className="text-slate-600 hover:text-slate-900"
-                                      >
-                                        Mégse
-                                      </button>
-                                    </>
-                                  )}
-                                </div>
-                              </div>
-                            </div>
-                          )}
