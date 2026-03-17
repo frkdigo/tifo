@@ -33,7 +33,21 @@ export async function GET(req: NextRequest) {
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
-  return NextResponse.json(data);
+
+  // Cache only public approved events; admin pending list should stay fresh.
+  if (pending) {
+    return NextResponse.json(data, {
+      headers: {
+        "Cache-Control": "private, no-store",
+      },
+    });
+  }
+
+  return NextResponse.json(data, {
+    headers: {
+      "Cache-Control": "public, max-age=60, stale-while-revalidate=300",
+    },
+  });
 }
 
 // POST: új esemény létrehozása (admin jogosultság kell, most mock, státusz approved)

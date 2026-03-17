@@ -4,6 +4,7 @@ export default function HeroSection() {
       <video
         className="absolute inset-0 w-full h-full object-cover z-0 brightness-[0.45] contrast-90 saturate-75"
         src="/images/hero.mp4"
+        preload="metadata"
         autoPlay
         loop
         muted

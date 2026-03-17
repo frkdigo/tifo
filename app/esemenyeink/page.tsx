@@ -111,11 +111,18 @@ function EventModal({ event, onClose }: { event: any; onClose: () => void }) {
 
 				<div className="overflow-y-auto px-4 pb-7 pt-4 md:px-5 md:pb-7 space-y-4">
 					{event.image && (
-						<img
-							src={event.image}
-							alt={event.title}
-							className="w-full h-48 md:h-64 object-cover rounded-2xl border border-slate-100"
-						/>
+						<button
+							type="button"
+							onClick={() => setZoomedImage(event.image || null)}
+							className="block w-full"
+							aria-label="Kép nagyítása"
+						>
+							<img
+								src={event.image}
+								alt={event.title}
+								className="w-full h-48 md:h-64 object-cover rounded-2xl border border-slate-100"
+							/>
+						</button>
 					)}
 					<div className="rounded-2xl bg-slate-50 border border-slate-100 p-4 md:p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.6)]">
 						<EventDescription text={event.description || ""} />
@@ -131,6 +138,7 @@ export default function Esemeneink() {
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState("");
 	const [selected, setSelected] = useState<EventItem | null>(null);
+	const [zoomedImage, setZoomedImage] = useState<string | null>(null);
 
 	useEffect(() => {
 		fetchEvents();
@@ -146,7 +154,7 @@ export default function Esemeneink() {
 	async function fetchEvents() {
 		setLoading(true);
 		try {
-			const res = await fetch("/api/events");
+			const res = await fetch("/api/events", { cache: "force-cache" });
 			const data = await res.json();
 			setEvents(
 				data.sort((a: EventItem, b: EventItem) => toLocalDay(a.date).getTime() - toLocalDay(b.date).getTime())
@@ -201,7 +209,14 @@ export default function Esemeneink() {
 							<div className="grid md:grid-cols-[1.2fr,0.8fr]">
 								<div className="relative min-h-[260px] md:min-h-[320px]">
 									{featured.image ? (
-										<img src={featured.image} alt={featured.title} className="absolute inset-0 w-full h-full object-cover" />
+										<button
+											type="button"
+											onClick={() => setZoomedImage(featured.image || null)}
+											className="absolute inset-0 block w-full h-full"
+											aria-label="Kép nagyítása"
+										>
+											<img src={featured.image} alt={featured.title} className="absolute inset-0 w-full h-full object-cover" decoding="async" fetchPriority="high" />
+										</button>
 									) : (
 										<div className="absolute inset-0 bg-slate-900" />
 									)}
@@ -237,7 +252,16 @@ export default function Esemeneink() {
 							<div className="grid md:grid-cols-2 gap-4">
 								{upcoming.map((event) => (
 									<article key={event.id} className="premium-surface rounded-2xl overflow-hidden flex flex-col h-[360px]">
-										{event.image && <img src={event.image} alt={event.title} className="w-full h-40 object-cover" />}
+										{event.image && (
+											<button
+												type="button"
+												onClick={() => setZoomedImage(event.image || null)}
+												className="block w-full"
+												aria-label="Kép nagyítása"
+											>
+												<img src={event.image} alt={event.title} className="w-full h-40 object-cover" loading="lazy" decoding="async" />
+											</button>
+										)}
 										<div className="p-4 flex-1 min-h-0 flex flex-col">
 											<div className="relative flex-1 min-h-0 overflow-hidden">
 												<h4 className="font-bold text-lg text-slate-900 mb-1">{event.title}</h4>
@@ -286,6 +310,24 @@ export default function Esemeneink() {
 			)}
 
 			{selected && <EventModal event={selected} onClose={() => setSelected(null)} />}
+			{zoomedImage && (
+				<div className="fixed inset-0 z-[260] bg-black/85 p-4 flex items-center justify-center" onClick={() => setZoomedImage(null)}>
+					<button
+						type="button"
+						onClick={() => setZoomedImage(null)}
+						className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/15 hover:bg-white/25 text-white text-3xl leading-none"
+						aria-label="Kép bezárása"
+					>
+						&times;
+					</button>
+					<img
+						src={zoomedImage}
+						alt="Nagyított eseménykép"
+						className="max-w-full max-h-[88dvh] rounded-2xl shadow-2xl"
+						onClick={(e) => e.stopPropagation()}
+					/>
+				</div>
+			)}
 		</main>
 	);
 }

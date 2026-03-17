@@ -109,6 +109,8 @@ export default function PostsSection() {
                 alt="Kép előnézet"
                 className="mt-2 rounded shadow max-h-32 border border-slate-200"
                 style={{ objectFit: "contain", maxWidth: 180 }}
+                loading="lazy"
+                decoding="async"
               />
             )}
           </div>
@@ -168,7 +170,7 @@ export default function PostsSection() {
 )}
               </div>
               <div className="text-slate-700 mb-2 line-clamp-3">{post.text}</div>
-              {post.image && <img src={post.image} alt="post" className="max-h-20 rounded mt-1" style={{objectFit:'contain', maxWidth:'100%'}} />}
+              {post.image && <img src={post.image} alt="post" className="max-h-20 rounded mt-1" style={{objectFit:'contain', maxWidth:'100%'}} loading="lazy" decoding="async" />}
               {user && (
                 <button
                   type="button"
@@ -215,7 +217,7 @@ export default function PostsSection() {
             </div>
             {selectedPost.image && (
               <div className="flex justify-center">
-                <img src={selectedPost.image} alt="Poszt képe" className="max-h-96 rounded-2xl border border-sky-200 shadow-lg mt-2 object-contain" style={{maxWidth:'100%'}} />
+                <img src={selectedPost.image} alt="Poszt képe" className="max-h-96 rounded-2xl border border-sky-200 shadow-lg mt-2 object-contain" style={{maxWidth:'100%'}} loading="lazy" decoding="async" />
               </div>
             )}
           </div>

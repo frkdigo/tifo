@@ -164,8 +164,8 @@ function AdminPageContent() {
         </div>
       </section>
       {selectedPost && (
-        <div className="fixed inset-0 bg-black/45 z-50 flex items-center justify-center p-4">
-          <div className="w-full max-w-2xl rounded-2xl bg-white shadow-2xl border border-slate-200 p-5 relative max-h-[85vh] overflow-y-auto">
+        <div className="fixed inset-0 bg-black/45 z-50 flex items-center justify-center p-4" onClick={() => setSelectedPost(null)}>
+          <div className="w-full max-w-2xl rounded-2xl bg-white shadow-2xl border border-slate-200 p-5 relative max-h-[85vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
             <button
               type="button"
               onClick={() => setSelectedPost(null)}

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Sora } from "next/font/google";
 import UserMenu from "./UserMenu";
 import { useAuth } from "./AuthProvider";
@@ -21,19 +21,9 @@ export default function Navbar() {
   const { user, logoutUser } = useAuth();
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   // Új statek
   const [logoutMessage, setLogoutMessage] = useState("");
   const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 10);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   return (
     <nav className="sticky top-0 z-[100] bg-white shadow-lg min-h-[64px] flex items-center transition-all duration-300">

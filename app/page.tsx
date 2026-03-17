@@ -1,4 +1,3 @@
-"use client";
 import HeroSection from './components/HeroSection'
 import PostsSection from './components/PostsSection'
 import HomeHighlights from './components/HomeHighlights'
