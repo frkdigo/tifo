@@ -1,12 +1,15 @@
 "use client";
 
+
 import { useEffect, useRef, useState } from "react";
+import { uploadImageToStorage } from "../../lib/uploadImageToStorage";
 
 export default function NewEventForm({ onCreated }: { onCreated?: () => void }) {
   const [title, setTitle] = useState("");
   const [date, setDate] = useState("");
   const [location, setLocation] = useState("");
   const [description, setDescription] = useState("");
+  const descriptionRef = useRef<HTMLTextAreaElement | null>(null);
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -41,10 +44,11 @@ export default function NewEventForm({ onCreated }: { onCreated?: () => void }) 
     setLoading(true);
     setError("");
     setSuccess(false);
-    let uploadedImageUrl = imageUrl;
+    let uploadedImageUrl = null;
     try {
-      // RLS hiba elkerülése: a kiválasztott képet base64 formában küldjük az API-nak.
-      // A preview már data URL, így itt nincs külön storage upload lépés.
+      if (imageFile) {
+        uploadedImageUrl = await uploadImageToStorage(imageFile, "event");
+      }
       const res = await fetch("/api/events", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -78,7 +82,21 @@ export default function NewEventForm({ onCreated }: { onCreated?: () => void }) 
       <input type="text" value={title} onChange={e => setTitle(e.target.value)} className="w-full border border-slate-200 rounded-lg p-2 focus:ring-2 focus:ring-slate-300 transition" placeholder="Esemény címe" required />
       <input type="date" value={date} onChange={e => setDate(e.target.value)} className="w-full border border-slate-200 rounded-lg p-2 focus:ring-2 focus:ring-slate-300 transition" required />
       <input type="text" value={location} onChange={e => setLocation(e.target.value)} className="w-full border border-slate-200 rounded-lg p-2 focus:ring-2 focus:ring-slate-300 transition" placeholder="Helyszín (pl. Művház udvar)" />
-      <textarea value={description} onChange={e => setDescription(e.target.value)} className="w-full border border-slate-200 rounded-lg p-2 focus:ring-2 focus:ring-slate-300 transition" placeholder="Leírás" />
+      <textarea
+        ref={descriptionRef}
+        value={description}
+        onChange={e => {
+          setDescription(e.target.value);
+          if (descriptionRef.current) {
+            descriptionRef.current.style.height = 'auto';
+            descriptionRef.current.style.height = descriptionRef.current.scrollHeight + 'px';
+          }
+        }}
+        className="w-full border border-slate-200 rounded-lg p-2 focus:ring-2 focus:ring-slate-300 transition resize-none overflow-hidden"
+        placeholder="Leírás"
+        rows={2}
+        style={{ minHeight: 40 }}
+      />
       <div className="flex flex-col items-start gap-1">
         <span className="text-sm font-medium text-slate-700">Kép feltöltése</span>
         <label className="inline-block cursor-pointer">

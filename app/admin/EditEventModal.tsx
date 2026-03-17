@@ -1,4 +1,6 @@
+
 import { useState, useEffect, useRef } from "react";
+import { uploadImageToStorage } from "../../lib/uploadImageToStorage";
 
 export default function EditEventModal({ event, onClose, onDeleted, onUpdated }: {
   event: any,
@@ -25,14 +27,18 @@ export default function EditEventModal({ event, onClose, onDeleted, onUpdated }:
     location: event.location || ""
   });
 
-  function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+  async function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
-    const reader = new FileReader();
-    reader.onload = () => {
-      setForm(f => ({ ...f, image: reader.result as string }));
-    };
-    reader.readAsDataURL(file);
+    setLoading(true);
+    try {
+      const url = await uploadImageToStorage(file, "event");
+      setForm(f => ({ ...f, image: url }));
+    } catch (err) {
+      setError("Nem sikerült feltölteni a képet.");
+    } finally {
+      setLoading(false);
+    }
   }
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -79,6 +85,7 @@ export default function EditEventModal({ event, onClose, onDeleted, onUpdated }:
         ref={modalRef}
         tabIndex={-1}
         className="bg-white rounded-2xl shadow-lg p-6 w-full max-w-2xl max-h-[85vh] overflow-y-auto relative outline-none"
+        style={{ marginTop: 'clamp(32px, 8vw, 64px)' }}
       >
         <button className="absolute top-2 right-2 text-gray-400 hover:text-black text-2xl" onClick={onClose}>&times;</button>
         <form onSubmit={handleUpdate} className="flex flex-col gap-4">
