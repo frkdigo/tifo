@@ -108,7 +108,6 @@ export default function Rolunk() {
       return;
     }
 
-    // Frissítsd újra a teljes csapatlistát, hogy a kártyák is azonnal frissüljenek!
     await fetchTeam();
     setActiveMember(data.member);
     setEditing(false);
@@ -343,4 +342,10 @@ export default function Rolunk() {
                   </div>
                 </div>
               </div>
-
+            )}
+          </div>
+        </div>
+      )}
+    </main>
+  );
+}
