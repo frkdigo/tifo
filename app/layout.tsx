@@ -9,8 +9,13 @@ import Footer from './components/Footer'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Törökbálinti Ifjúsági Önkormányzat',
+  title: 'TIFO',
   description: 'TIFO hivatalos weboldala',
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+    apple: '/favicon.png',
+  },
 }
 
 export default function RootLayout({
@@ -20,6 +25,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="hu">
+      <head>
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="apple-touch-icon" href="/favicon.png" />
+        <title>TIFO</title>
+      </head>
       <body className={inter.className + ' min-h-screen bg-site text-slate-900 flex flex-col'}>
         <div className="site-bg-layer" aria-hidden="true" />
         <AuthProvider>

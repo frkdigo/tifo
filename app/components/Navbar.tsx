@@ -49,7 +49,7 @@ export default function Navbar() {
               alt="TIFO logó"
               className="h-12 w-12 object-contain rounded-full shadow-md"
             />
-            <span className="text-2xl font-bold text-secondary tracking-wide select-none">TIFO</span>
+            <span className="text-2xl font-bold text-secondary tracking-wide select-none"></span>
           </Link>
         </div>
         {/* MENÜ ÉS LOGIN/USER */}
