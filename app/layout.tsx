@@ -9,7 +9,7 @@ import Footer from './components/Footer'
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' })
 const jakarta = Plus_Jakarta_Sans({
   subsets: ['latin'],
-  weight: ['700', '800', '900'],
+  weight: ['700', '800'],
   variable: '--font-display',
 })
 
