@@ -335,14 +335,10 @@ export default function Rolunk() {
                         <button
                           type="button"
                           onClick={() => setDraftImage(null)}
-                          {activeMember && (
-                            <div
-                              className="fixed inset-0 z-50 bg-black/60 p-4 flex items-center justify-center"
-                              onClick={closeModal}
-                            >
-                              <div
-                                className="w-full max-w-2xl rounded-2xl bg-white shadow-2xl p-6 md:p-7 relative max-h-[90vh] flex flex-col"
-                                style={{ maxHeight: '90vh' }}
+                        >
+                          Kép törlése
+                        </button>
+                        {/* Modal should be rendered outside the button, if needed */}
                                 onClick={(e) => e.stopPropagation()}
                               >
                                 <button
