@@ -1,12 +1,17 @@
 import './globals.css'
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Inter, Plus_Jakarta_Sans } from 'next/font/google'
 
 import Navbar from './components/Navbar'
 import { AuthProvider } from './components/AuthProvider'
 import Footer from './components/Footer'
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ['latin'], variable: '--font-sans' })
+const jakarta = Plus_Jakarta_Sans({
+  subsets: ['latin'],
+  weight: ['700', '800', '900'],
+  variable: '--font-display',
+})
 
 export const metadata: Metadata = {
   title: 'TIFO',
@@ -30,7 +35,7 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/favicon.png" />
         <title>TIFO</title>
       </head>
-      <body className={inter.className + ' min-h-screen bg-site text-slate-900 flex flex-col'}>
+      <body className={`${inter.variable} ${jakarta.variable} ${inter.className} min-h-screen bg-site text-slate-900 flex flex-col`}>
         <div className="site-bg-layer" aria-hidden="true" />
         <AuthProvider>
           <div className="relative z-10 flex flex-col min-h-screen">

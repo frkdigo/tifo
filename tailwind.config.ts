@@ -15,7 +15,8 @@ const config: Config = {
         accent: '#f472b6',
       },
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
+        sans: ['var(--font-sans)', 'Inter', 'sans-serif'],
+        display: ['var(--font-display)', 'Plus Jakarta Sans', 'sans-serif'],
       },
     },
   },
