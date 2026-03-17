@@ -28,13 +28,13 @@ function EventDescription({ text }: { text: string }) {
 	const lines = text.split(/\r?\n/).map((line) => line.trim()).filter(Boolean);
 
 	return (
-		<div className="space-y-3 text-slate-700 text-[17px] leading-8 md:text-base md:leading-7">
+		<div className="space-y-3 text-gray-700 text-[17px] leading-[1.58] md:text-base md:leading-[1.58]">
 			{lines.map((line, index) => {
 				const bullet = line.match(/^[-*]\s+(.+)$/);
 				if (bullet) {
 					return (
 						<div key={index} className="flex items-start gap-2.5">
-							<span className="mt-[9px] text-slate-500 text-sm">•</span>
+							<span className="mt-[9px] text-tifo-green text-sm">•</span>
 							<span>{renderInlineFormatting(bullet[1])}</span>
 						</div>
 					);
@@ -78,29 +78,29 @@ function EventModal({ event, onClose, onZoomImage }: { event: any; onClose: () =
 	}, [onClose]);
 
 	return (
-		<div className="fixed inset-0 z-[220] bg-slate-950/45 backdrop-blur-[2px] md:flex md:items-center md:justify-center md:p-4" onClick={onClose}>
+		<div className="fixed inset-0 z-[220] bg-black/55 backdrop-blur-[2px] md:flex md:items-center md:justify-center md:p-4" onClick={onClose}>
 			<div
 				className="absolute inset-x-0 bottom-0 md:static bg-white rounded-t-3xl md:rounded-2xl shadow-2xl w-full md:max-w-2xl h-[92dvh] md:h-auto md:max-h-[88vh] overflow-hidden flex flex-col"
 				onClick={(e) => e.stopPropagation()}
 			>
-				<div className="sticky top-0 z-10 bg-white/95 backdrop-blur border-b border-slate-100 px-4 pt-3 pb-3 md:px-5 md:pt-4 md:pb-4">
-					<div className="w-10 h-1.5 rounded-full bg-slate-300 mx-auto mb-3 md:hidden" />
+				<div className="sticky top-0 z-10 bg-white/95 backdrop-blur border-b border-gray-100 px-4 pt-3 pb-3 md:px-5 md:pt-4 md:pb-4">
+					<div className="w-10 h-1.5 rounded-full bg-gray-300 mx-auto mb-3 md:hidden" />
 					<div className="flex items-start justify-between gap-3">
 						<div>
-							<h2 className="text-xl md:text-2xl font-black text-slate-900 leading-tight">{event.title}</h2>
-							<div className="mt-2 flex flex-wrap items-center gap-2 text-xs sm:text-sm text-slate-600">
-								<span className="inline-flex items-center rounded-full bg-slate-100 px-2.5 py-1 font-semibold">
+							<h2 className="text-xl md:text-2xl font-black text-tifo-dark leading-tight">{event.title}</h2>
+							<div className="mt-2 flex flex-wrap items-center gap-2 text-xs sm:text-sm text-gray-600">
+								<span className="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-1 font-semibold">
 									{new Date(event.date).toLocaleDateString("hu-HU")}
 								</span>
 								{event.location && (
-									<span className="inline-flex items-center rounded-full bg-emerald-50 text-emerald-700 px-2.5 py-1 font-semibold">
+									<span className="inline-flex items-center rounded-full bg-green-50 text-tifo-green px-2.5 py-1 font-semibold">
 										{event.location}
 									</span>
 								)}
 							</div>
 						</div>
 						<button
-							className="shrink-0 w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 text-2xl leading-none"
+							className="shrink-0 w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 text-2xl leading-none"
 							onClick={onClose}
 							aria-label="Bezárás"
 						>
@@ -124,7 +124,7 @@ function EventModal({ event, onClose, onZoomImage }: { event: any; onClose: () =
 							/>
 						</button>
 					)}
-					<div className="rounded-2xl bg-slate-50 border border-slate-100 p-4 md:p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.6)]">
+					<div className="rounded-2xl bg-gray-50 border border-gray-100 p-4 md:p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.6)]">
 						<EventDescription text={event.description || ""} />
 					</div>
 				</div>
@@ -172,25 +172,25 @@ export default function Esemeneink() {
 	const featured = upcoming[0] || events[0] || null;
 
 	return (
-		<main className="max-w-6xl mx-auto py-12 px-4">
-			<section className="premium-surface rounded-3xl p-6 md:p-8 mb-8">
+		<main className="max-w-6xl mx-auto py-12 px-4 text-black">
+			<section className="rounded-3xl border border-white/15 bg-tifo-dark p-6 md:p-8 mb-8 shadow-[0_24px_60px_-35px_rgba(0,0,0,0.6)]">
 				<div className="flex flex-wrap items-end justify-between gap-4">
 					<div>
-						<p className="text-xs uppercase tracking-[0.18em] text-slate-500 mb-2">Programok</p>
-						<h1 className="text-3xl md:text-5xl font-black text-slate-900">Eseményeink</h1>
-						<p className="mt-2 text-slate-600 max-w-2xl">
+						<p className="text-xs uppercase tracking-[0.18em] text-green-200 mb-2">Programok</p>
+						<h1 className="text-3xl md:text-5xl font-black text-white">Eseményeink</h1>
+						<p className="mt-2 text-white/85 max-w-2xl leading-[1.58]">
 							Kövesd a közelgő programokat, nézd vissza a korábbi eseményeket, és csatlakozz a közösséghez.
 						</p>
 					</div>
 
 					<div className="grid grid-cols-2 gap-2 text-sm">
-						<div className="rounded-xl bg-slate-900 text-white px-4 py-3 min-w-[120px]">
+						<div className="rounded-xl bg-tifo-green text-white px-4 py-3 min-w-[120px] shadow-md">
 							<div className="text-xl font-bold">{upcoming.length}</div>
-							<div className="text-slate-300 text-xs">Közelgő</div>
+							<div className="text-green-100 text-xs">Közelgő</div>
 						</div>
-						<div className="rounded-xl border border-slate-200 bg-white px-4 py-3 min-w-[120px]">
-							<div className="text-xl font-bold text-slate-900">{past.length}</div>
-							<div className="text-slate-500 text-xs">Korábbi</div>
+						<div className="rounded-xl border border-white/25 bg-white/10 px-4 py-3 min-w-[120px]">
+							<div className="text-xl font-bold text-white">{past.length}</div>
+							<div className="text-white/70 text-xs">Korábbi</div>
 						</div>
 					</div>
 				</div>
@@ -205,7 +205,7 @@ export default function Esemeneink() {
 			) : (
 				<div className="space-y-8">
 					{featured && (
-						<section className="rounded-3xl overflow-hidden shadow-[0_24px_55px_-30px_rgba(15,23,42,0.55)] border border-slate-200 bg-white">
+						<section className="rounded-3xl overflow-hidden shadow-[0_24px_55px_-30px_rgba(13,59,102,0.35)] border border-gray-200 bg-white">
 							<div className="grid md:grid-cols-[1.2fr,0.8fr]">
 								<div className="relative min-h-[260px] md:min-h-[320px]">
 									{featured.image ? (
@@ -220,20 +220,20 @@ export default function Esemeneink() {
 									) : (
 										<div className="absolute inset-0 bg-slate-900" />
 									)}
-									<div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/35 to-transparent" />
+									<div className="absolute inset-0 bg-gradient-to-t from-[#0d3b66]/90 via-[#0d3b66]/35 to-transparent" />
 									<div className="absolute bottom-0 left-0 right-0 p-6 md:p-7 text-white">
-										<p className="text-xs uppercase tracking-[0.16em] text-sky-200 mb-2">Kiemelt esemény</p>
+										<p className="text-xs uppercase tracking-[0.16em] text-green-200 mb-2">Kiemelt esemény</p>
 										<h2 className="text-2xl md:text-3xl font-black mb-2">{featured.title}</h2>
-										<p className="text-sm text-slate-200">{new Date(featured.date).toLocaleDateString("hu-HU")}</p>
+										<p className="text-sm text-white/80">{new Date(featured.date).toLocaleDateString("hu-HU")}</p>
 									</div>
 								</div>
 
 								<div className="p-6 flex flex-col justify-between">
-									<p className="text-slate-700 leading-relaxed line-clamp-6">{featured.description || "Részletek hamarosan..."}</p>
+									<p className="text-gray-700 leading-[1.58] line-clamp-6">{featured.description || "Részletek hamarosan..."}</p>
 									<div className="mt-4">
-										{featured.location && <p className="text-xs text-slate-500 mb-3">Helyszín: {featured.location}</p>}
+										{featured.location && <p className="text-xs text-gray-500 mb-3">Helyszín: {featured.location}</p>}
 										<button
-											className="w-full bg-slate-900 text-white py-2.5 rounded-lg hover:bg-slate-800 transition-colors font-semibold"
+											className="w-full bg-tifo-green text-white py-2.5 rounded-xl hover:bg-tifo-green-light transition-colors font-semibold"
 											onClick={() => setSelected(featured)}
 										>
 											Részletek megnyitása
@@ -245,13 +245,13 @@ export default function Esemeneink() {
 					)}
 
 					<section>
-						<h3 className="text-xl md:text-2xl font-bold text-slate-900 mb-4">Közelgő események</h3>
+						<h3 className="text-xl md:text-2xl font-bold text-tifo-dark mb-4">Közelgő események</h3>
 						{upcoming.length === 0 ? (
 							<div className="text-gray-500">Jelenleg nincs közelgő esemény.</div>
 						) : (
-							<div className="grid md:grid-cols-2 gap-4">
+							<div className="grid md:grid-cols-2 gap-5">
 								{upcoming.map((event) => (
-									<article key={event.id} className="premium-surface rounded-2xl overflow-hidden flex flex-col h-[360px]">
+									<article key={event.id} className="rounded-2xl border border-gray-200 bg-white shadow-[0_14px_35px_-22px_rgba(13,59,102,0.22)] overflow-hidden flex flex-col h-[360px]">
 										{event.image && (
 											<button
 												type="button"
@@ -264,14 +264,14 @@ export default function Esemeneink() {
 										)}
 										<div className="p-4 flex-1 min-h-0 flex flex-col">
 											<div className="relative flex-1 min-h-0 overflow-hidden">
-												<h4 className="font-bold text-lg text-slate-900 mb-1">{event.title}</h4>
-												<p className="text-sm text-slate-500 mb-2">{new Date(event.date).toLocaleDateString("hu-HU")}</p>
-												<p className="text-slate-700 text-sm whitespace-pre-line">{event.description || "Részletek hamarosan..."}</p>
-												{event.location && <p className="text-xs text-slate-500 mt-2">Helyszín: {event.location}</p>}
+												<h4 className="font-bold text-lg text-black mb-1">{event.title}</h4>
+												<p className="text-sm text-gray-500 mb-2">{new Date(event.date).toLocaleDateString("hu-HU")}</p>
+												<p className="text-gray-700 text-sm whitespace-pre-line leading-[1.58]">{event.description || "Részletek hamarosan..."}</p>
+												{event.location && <p className="text-xs text-gray-500 mt-2">Helyszín: {event.location}</p>}
 												<div className="pointer-events-none absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-white to-transparent" />
 											</div>
 											<button
-												className="mt-3 w-full bg-slate-900 text-white py-2 rounded-lg hover:bg-slate-800 transition-colors font-semibold shrink-0"
+												className="mt-3 w-full bg-tifo-green text-white py-2 rounded-xl hover:bg-tifo-green-light transition-colors font-semibold shrink-0"
 												onClick={() => setSelected(event)}
 											>
 												Érdekel
@@ -284,19 +284,19 @@ export default function Esemeneink() {
 					</section>
 
 					<section>
-						<h3 className="text-xl md:text-2xl font-bold text-slate-900 mb-4">Korábbi események</h3>
+						<h3 className="text-xl md:text-2xl font-bold text-tifo-dark mb-4">Korábbi események</h3>
 						{past.length === 0 ? (
 							<div className="text-gray-500">Még nincsenek korábbi események.</div>
 						) : (
 							<div className="space-y-3">
 								{past.slice(0, 6).map((event) => (
-									<div key={event.id} className="rounded-xl border border-slate-200 bg-white px-4 py-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+									<div key={event.id} className="rounded-xl border border-gray-200 bg-white px-4 py-3 shadow-sm flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
 										<div>
-											<div className="font-semibold text-slate-900">{event.title}</div>
-											<div className="text-xs text-slate-500">{new Date(event.date).toLocaleDateString("hu-HU")}</div>
+											<div className="font-semibold text-black">{event.title}</div>
+											<div className="text-xs text-gray-500">{new Date(event.date).toLocaleDateString("hu-HU")}</div>
 										</div>
 										<button
-											className="text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-lg transition-colors"
+											className="text-sm bg-tifo-green hover:bg-tifo-green-light text-white px-3 py-1.5 rounded-xl transition-colors"
 											onClick={() => setSelected(event)}
 										>
 											Megnézem
