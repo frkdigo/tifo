@@ -13,6 +13,11 @@ const config: Config = {
         primary: '#1e293b',
         secondary: '#38bdf8',
         accent: '#f472b6',
+        tifo: {
+          green: '#28a745',
+          'green-light': '#34ce57',
+          dark: '#0d3b66',
+        },
       },
       fontFamily: {
         sans: ['var(--font-sans)', 'Inter', 'sans-serif'],
