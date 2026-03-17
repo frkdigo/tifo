@@ -146,7 +146,9 @@ export default function Rolunk() {
       <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_18%_8%,rgba(15,23,42,0.22),transparent_40%),linear-gradient(180deg,#020617_0%,#020617_34%,#f6f9fc_34%,#ffffff_100%)]" />
 
       <section className="max-w-6xl mx-auto px-4 pt-10 md:pt-14 pb-8">
-        <div className="rounded-3xl border border-white/15 bg-slate-950 shadow-[0_30px_70px_-40px_rgba(0,0,0,0.65)] p-8 md:p-12 text-center">
+        <div className="relative overflow-hidden rounded-3xl border border-white/15 bg-slate-950 shadow-[0_30px_70px_-40px_rgba(0,0,0,0.65)] p-8 md:p-12 text-center">
+          <div className="absolute inset-0 opacity-80 pointer-events-none" aria-hidden="true" style={{ background: 'radial-gradient(circle at 14% -6%, rgba(135,206,235,0.22), transparent 28%), radial-gradient(circle at 88% 8%, rgba(40,167,69,0.18), transparent 25%), radial-gradient(circle at 52% 120%, rgba(13,59,102,0.35), transparent 40%)' }} />
+          <div className="relative">
           <p className="inline-flex items-center gap-2 rounded-full bg-white/15 text-white text-xs tracking-[0.18em] uppercase px-5 py-2.5 mb-6 shadow-lg shadow-black/20">
             Törökbálinti Ifjúsági Önkormányzat
           </p>
@@ -173,6 +175,7 @@ export default function Rolunk() {
               <div className="text-2xl font-extrabold">1</div>
               <div className="text-xs text-white/80 uppercase tracking-wide">Küldetés</div>
             </div>
+          </div>
           </div>
         </div>
       </section>

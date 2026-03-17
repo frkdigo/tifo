@@ -175,8 +175,9 @@ export default function Esemeneink() {
 
 	return (
 		<main className="max-w-6xl mx-auto py-12 px-4 text-black">
-			<section className="rounded-3xl border border-white/15 bg-slate-950 p-6 md:p-8 mb-8 shadow-[0_24px_60px_-35px_rgba(0,0,0,0.6)]">
-				<div className="flex flex-wrap items-end justify-between gap-4">
+			<section className="relative overflow-hidden rounded-3xl border border-white/15 bg-slate-950 p-6 md:p-8 mb-8 shadow-[0_24px_60px_-35px_rgba(0,0,0,0.6)]">
+				<div className="absolute inset-0 opacity-80 pointer-events-none" aria-hidden="true" style={{ background: 'radial-gradient(circle at 14% -6%, rgba(135,206,235,0.22), transparent 28%), radial-gradient(circle at 88% 8%, rgba(40,167,69,0.18), transparent 25%), radial-gradient(circle at 52% 120%, rgba(13,59,102,0.35), transparent 40%)' }} />
+				<div className="relative flex flex-wrap items-end justify-between gap-4">
 					<div>
 						<p className="text-xs uppercase tracking-[0.18em] text-white/75 mb-2">Programok</p>
 						<h1 className="text-3xl md:text-5xl font-black text-white">Eseményeink</h1>

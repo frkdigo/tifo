@@ -43,8 +43,9 @@ export default function Kapcsolat() {
   return (
     <main className="max-w-5xl mx-auto py-12 px-4">
       {/* Logó a kör alakú kép helyén, a tetejéről eltávolítva */}
-      <section className="rounded-3xl bg-slate-950 border border-white/15 shadow-[0_24px_55px_-30px_rgba(0,0,0,0.55)] p-6 md:p-8 mb-6">
-        <div className="grid md:grid-cols-[1.25fr,0.75fr] gap-6 items-center">
+      <section className="relative overflow-hidden rounded-3xl bg-slate-950 border border-white/15 shadow-[0_24px_55px_-30px_rgba(0,0,0,0.55)] p-6 md:p-8 mb-6">
+        <div className="absolute inset-0 opacity-80 pointer-events-none" aria-hidden="true" style={{ background: 'radial-gradient(circle at 14% -6%, rgba(135,206,235,0.22), transparent 28%), radial-gradient(circle at 88% 8%, rgba(40,167,69,0.18), transparent 25%), radial-gradient(circle at 52% 120%, rgba(13,59,102,0.35), transparent 40%)' }} />
+        <div className="relative grid md:grid-cols-[1.25fr,0.75fr] gap-6 items-center">
           <div>
             <p className="inline-flex rounded-full bg-white/15 text-white uppercase tracking-[0.18em] text-xs px-4 py-2 mb-4">
               Törökbálinti Ifjúsági Önkormányzat
@@ -53,11 +54,16 @@ export default function Kapcsolat() {
             <p className="text-white/85 mt-3 text-base md:text-lg leading-[1.58] max-w-lg">
               Kérdésed van, csatlakoznál, vagy ötleted van programra? Írj nekünk, és hamarosan válaszolunk.
             </p>
+            <div className="mt-4 flex flex-wrap gap-2">
+              <span className="inline-flex items-center rounded-full bg-white/12 border border-white/25 text-white text-xs font-semibold px-3 py-1.5">Gyors válasz</span>
+              <span className="inline-flex items-center rounded-full bg-[#87ceeb]/15 border border-[#87ceeb]/30 text-[#d7f1ff] text-xs font-semibold px-3 py-1.5">Közvetlen kapcsolat</span>
+              <span className="inline-flex items-center rounded-full bg-[#28a745]/18 border border-[#28a745]/35 text-[#d8ffe2] text-xs font-semibold px-3 py-1.5">Közösségi csatornák</span>
+            </div>
 
             <div className="mt-6 flex flex-col gap-3">
               <a
                 href="mailto:info.tifo@gmail.com"
-                className="flex items-center gap-4 rounded-2xl bg-[#28a745]/25 border border-[#28a745]/45 px-4 py-3.5 hover:bg-[#87ceeb]/20 hover:border-[#87ceeb]/60 transition-all group"
+                className="flex items-center gap-4 rounded-2xl bg-[#28a745]/22 border border-[#28a745]/40 px-4 py-3.5 hover:bg-[#87ceeb]/22 hover:border-[#87ceeb]/60 transition-all group"
               >
                 <span className="text-2xl shrink-0">✉️</span>
                 <div>
@@ -69,7 +75,7 @@ export default function Kapcsolat() {
                 href="https://www.instagram.com/tifo_2008/"
                 target="_blank"
                 rel="noopener"
-                className="flex items-center gap-4 rounded-2xl bg-[#28a745]/25 border border-[#28a745]/45 px-4 py-3.5 hover:bg-[#87ceeb]/20 hover:border-[#87ceeb]/60 transition-all group"
+                className="flex items-center gap-4 rounded-2xl bg-[#28a745]/22 border border-[#28a745]/40 px-4 py-3.5 hover:bg-[#87ceeb]/22 hover:border-[#87ceeb]/60 transition-all group"
               >
                 <span className="text-2xl shrink-0">📸</span>
                 <div>
@@ -90,7 +96,7 @@ export default function Kapcsolat() {
         </div>
       </section>
 
-      <section className="rounded-3xl bg-white border border-gray-200 shadow-[0_18px_45px_-28px_rgba(13,59,102,0.22)] p-6 md:p-8">
+      <section className="rounded-3xl bg-[linear-gradient(180deg,#ffffff_0%,#f8fbff_100%)] border border-gray-200 shadow-[0_18px_45px_-28px_rgba(13,59,102,0.22)] p-6 md:p-8">
         <p className="section-label">Kapcsolatfelvétel</p>
         <h2 className="text-2xl md:text-3xl font-black text-tifo-dark mb-6">Írj nekünk!</h2>
 
