@@ -52,7 +52,7 @@ export default function UserMenu({
           <img src={userAvatar} alt="Profilkep" className="w-8 h-8 rounded-full object-cover border" />
         ) : (
           <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-xs text-gray-700 border">
-            {(user.nickname || user.name || user.email).charAt(0).toUpperCase()}
+            {(user.nickname || user.name).charAt(0).toUpperCase()}
           </div>
         )}
         <span className="text-sm text-gray-700 whitespace-nowrap">
@@ -62,7 +62,7 @@ export default function UserMenu({
       </button>
       {open && (
         <div className="absolute right-0 mt-2 w-48 bg-white border rounded shadow-lg z-50">
-          <div className="px-4 py-2 text-xs text-gray-500">{user.email}</div>
+            {user.isAdmin && <div className="px-4 py-2 text-xs text-gray-500">{user.email}</div>}
           <Link href="/profilom" className="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors">Profilom</Link>
           <button
             onClick={onLogout}
