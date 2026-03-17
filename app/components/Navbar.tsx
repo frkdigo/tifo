@@ -63,8 +63,8 @@ export default function Navbar() {
                     href={item.href}
                     className={`px-3 py-2 rounded font-medium transition-colors ${
                       active
-                        ? "text-secondary"
-                        : "text-gray-700 hover:text-secondary"
+                        ? "text-sky-500"
+                        : "text-gray-700 hover:text-sky-500"
                     }`}
                   >
                     {item.label}
@@ -157,7 +157,11 @@ export default function Navbar() {
                     <Link
                       href={item.href}
                       onClick={() => setMenuOpen(false)}
-                      className="block px-5 py-3 text-gray-700 hover:bg-slate-100 font-medium rounded-lg"
+                      className={`block px-5 py-3 font-medium rounded-lg transition-colors ${
+                        pathname === item.href
+                          ? "text-sky-500 bg-sky-50"
+                          : "text-gray-700 hover:bg-slate-100 hover:text-sky-500"
+                      }`}
                     >
                       {item.label}
                     </Link>
