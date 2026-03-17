@@ -173,7 +173,7 @@ export default function Esemeneink() {
 
 	return (
 		<main className="max-w-6xl mx-auto py-12 px-4 text-black">
-			<section className="rounded-3xl border border-white/15 bg-[#0d3b66] p-6 md:p-8 mb-8 shadow-[0_24px_60px_-35px_rgba(0,0,0,0.6)]">
+			<section className="rounded-3xl border border-white/15 bg-slate-950 p-6 md:p-8 mb-8 shadow-[0_24px_60px_-35px_rgba(0,0,0,0.6)]">
 				<div className="flex flex-wrap items-end justify-between gap-4">
 					<div>
 						<p className="text-xs uppercase tracking-[0.18em] text-white/75 mb-2">Programok</p>

@@ -43,7 +43,7 @@ export default function Kapcsolat() {
   return (
     <main className="max-w-5xl mx-auto py-12 px-4">
       {/* Logó a kör alakú kép helyén, a tetejéről eltávolítva */}
-      <section className="rounded-3xl bg-[#0d3b66] border border-white/15 shadow-[0_24px_55px_-30px_rgba(0,0,0,0.55)] p-6 md:p-8 mb-6">
+      <section className="rounded-3xl bg-slate-950 border border-white/15 shadow-[0_24px_55px_-30px_rgba(0,0,0,0.55)] p-6 md:p-8 mb-6">
         <div className="grid md:grid-cols-[1.25fr,0.75fr] gap-6 items-center">
           <div>
             <p className="inline-flex rounded-full bg-white/15 text-white uppercase tracking-[0.18em] text-xs px-4 py-2 mb-4">

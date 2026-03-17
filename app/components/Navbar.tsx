@@ -26,7 +26,7 @@ export default function Navbar() {
   const [loading, setLoading] = useState(false);
 
   return (
-    <nav className="sticky top-0 z-[100] bg-slate-950 shadow-lg min-h-[64px] flex items-center transition-all duration-300">
+    <nav className="sticky top-0 z-[100] bg-black shadow-lg min-h-[64px] flex items-center transition-all duration-300">
       {/* Töltőképernyő overlay */}
       {loading && (
         <div className="fixed inset-0 bg-white bg-opacity-70 flex items-center justify-center z-[9999]">
@@ -150,7 +150,7 @@ export default function Navbar() {
               className="fixed inset-0 z-40 bg-transparent"
               onClick={() => setMenuOpen(false)}
             />
-            <div className="absolute top-full right-4 mt-2 w-56 bg-slate-950 rounded-xl shadow-lg border border-slate-800 z-50 animate-fade-in">
+            <div className="absolute top-full right-4 mt-2 w-56 bg-black rounded-xl shadow-lg border border-white/15 z-50 animate-fade-in">
               <ul className="flex flex-col py-2">
                 {navItems.map((item) => (
                   <li key={item.href}>

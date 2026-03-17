@@ -143,10 +143,10 @@ export default function Rolunk() {
 
   return (
     <main className="relative overflow-hidden bg-white text-black">
-      <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_18%_8%,rgba(13,59,102,0.16),transparent_40%),linear-gradient(180deg,#0d3b66_0%,#0d3b66_34%,#f6f9fc_34%,#ffffff_100%)]" />
+      <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_18%_8%,rgba(15,23,42,0.22),transparent_40%),linear-gradient(180deg,#020617_0%,#020617_34%,#f6f9fc_34%,#ffffff_100%)]" />
 
       <section className="max-w-6xl mx-auto px-4 pt-10 md:pt-14 pb-8">
-        <div className="rounded-3xl border border-white/15 bg-[#0d3b66] shadow-[0_30px_70px_-40px_rgba(0,0,0,0.65)] p-8 md:p-12 text-center">
+        <div className="rounded-3xl border border-white/15 bg-slate-950 shadow-[0_30px_70px_-40px_rgba(0,0,0,0.65)] p-8 md:p-12 text-center">
           <p className="inline-flex items-center gap-2 rounded-full bg-white/15 text-white text-xs tracking-[0.18em] uppercase px-5 py-2.5 mb-6 shadow-lg shadow-black/20">
             Törökbálinti Ifjúsági Önkormányzat
           </p>
@@ -198,30 +198,31 @@ export default function Rolunk() {
 
       <section className="max-w-6xl mx-auto px-4 py-10">
         <div className="rounded-3xl bg-white border border-gray-200 p-8 md:p-12 shadow-[0_24px_55px_-35px_rgba(13,59,102,0.35)]">
-          <p className="text-xs uppercase tracking-[0.2em] text-tifo-dark font-semibold mb-3">Emberek</p>
+          <p className="text-xs uppercase tracking-[0.2em] text-[#87ceeb] font-semibold mb-3">Emberek</p>
           <h2 className="text-3xl md:text-4xl font-black text-tifo-dark mb-2">Csapatunk</h2>
-          <p className="text-gray-700 mb-8 text-lg leading-[1.58]">Kattints egy kártyára, és megnyílik a részletes bemutatkozás.</p>
+          <p className="text-gray-700 mb-8 text-lg leading-[1.58] max-w-2xl">Ismerd meg a TIFO mögött álló csapatot. Válassz egy kártyát, és megnyílik a részletes bemutatkozás.</p>
 
           {loading ? (
             <div className="text-gray-500">Betöltés...</div>
           ) : (
-            <ul className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <ul className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 items-stretch">
               {team.map((member) => (
-                <li key={member.id}>
+                <li key={member.id} className="h-full">
                   <button
                     type="button"
                     onClick={() => openMember(member)}
-                    className="w-full text-left rounded-2xl bg-white border border-gray-200 p-5 shadow-sm hover:shadow-md hover:border-[#87ceeb]/60 hover:-translate-y-0.5 transition-all duration-200"
+                    className="group relative w-full h-full text-left rounded-[1.5rem] overflow-hidden bg-[linear-gradient(180deg,#ffffff_0%,#f8fbff_100%)] border border-slate-200/90 p-5 md:p-6 shadow-[0_16px_35px_-26px_rgba(15,23,42,0.4)] hover:shadow-[0_24px_45px_-24px_rgba(13,59,102,0.28)] hover:border-[#87ceeb]/70 hover:-translate-y-1 transition-all duration-200"
                   >
-                    <div className="flex items-center gap-3">
+                    <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-[#0d3b66] via-[#87ceeb] to-[#28a745] opacity-80" />
+                    <div className="flex items-start gap-4 pt-2 h-full">
                       {member.image ? (
                         <img
                           src={member.image}
                           alt={member.name}
-                          className="w-10 h-10 rounded-full object-cover border border-gray-200"
+                          className="w-14 h-14 rounded-2xl object-cover border border-slate-200 shadow-sm shrink-0 transition-transform duration-200 group-hover:scale-[1.03]"
                         />
                       ) : (
-                        <div className="w-10 h-10 rounded-full bg-tifo-dark text-white font-bold grid place-items-center">
+                        <div className="w-14 h-14 rounded-2xl bg-slate-950 text-white font-bold grid place-items-center shadow-sm shrink-0 transition-transform duration-200 group-hover:scale-[1.03]">
                           {member.name
                             .split(" ")
                             .map((part) => part[0])
@@ -230,9 +231,12 @@ export default function Rolunk() {
                             .toUpperCase()}
                         </div>
                       )}
-                      <div>
-                        <div className="font-semibold text-black">{member.name}</div>
-                        <div className="text-sm text-gray-600">{member.role}</div>
+                      <div className="min-w-0 flex-1 flex flex-col justify-center">
+                        <div className="font-semibold text-black text-base md:text-lg leading-tight tracking-tight">{member.name}</div>
+                        <div className="mt-1.5 inline-flex w-fit max-w-full items-center rounded-full bg-slate-100 text-slate-700 text-xs font-semibold px-2.5 py-1 border border-slate-200 truncate transition-colors duration-200 group-hover:bg-[#87ceeb]/15 group-hover:border-[#87ceeb]/40 group-hover:text-[#0d3b66]">{member.role}</div>
+                        <div className="mt-3 text-sm leading-[1.55] text-slate-500 line-clamp-2">
+                          {member.bio?.trim() || "Kattints a részletes bemutatkozás megnyitásához."}
+                        </div>
                       </div>
                     </div>
                   </button>
