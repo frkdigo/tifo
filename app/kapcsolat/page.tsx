@@ -57,24 +57,24 @@ export default function Kapcsolat() {
             <div className="mt-6 flex flex-col gap-3">
               <a
                 href="mailto:info.tifo@gmail.com"
-                className="flex items-center gap-4 rounded-2xl bg-white/10 border border-white/20 px-4 py-3.5 hover:bg-white/15 hover:border-white/40 transition-all group"
+                className="flex items-center gap-4 rounded-2xl bg-tifo-green/25 border border-tifo-green/45 px-4 py-3.5 hover:bg-[#87ceeb]/20 hover:border-[#87ceeb]/60 transition-all group"
               >
                 <span className="text-2xl shrink-0">✉️</span>
                 <div>
                   <div className="text-[10px] uppercase tracking-widest text-white/65 font-semibold">E-mail</div>
-                  <div className="font-bold text-white group-hover:text-white transition-colors">info.tifo@gmail.com</div>
+                  <div className="font-bold text-white group-hover:text-[#87ceeb] transition-colors">info.tifo@gmail.com</div>
                 </div>
               </a>
               <a
                 href="https://www.instagram.com/tifo_2008/"
                 target="_blank"
                 rel="noopener"
-                className="flex items-center gap-4 rounded-2xl bg-white/10 border border-white/20 px-4 py-3.5 hover:bg-white/15 hover:border-white/40 transition-all group"
+                className="flex items-center gap-4 rounded-2xl bg-tifo-green/25 border border-tifo-green/45 px-4 py-3.5 hover:bg-[#87ceeb]/20 hover:border-[#87ceeb]/60 transition-all group"
               >
                 <span className="text-2xl shrink-0">📸</span>
                 <div>
                   <div className="text-[10px] uppercase tracking-widest text-white/65 font-semibold">Instagram</div>
-                  <div className="font-bold text-white group-hover:text-white transition-colors">@tifo_2008</div>
+                  <div className="font-bold text-white group-hover:text-[#87ceeb] transition-colors">@tifo_2008</div>
                 </div>
               </a>
             </div>
@@ -100,7 +100,7 @@ export default function Kapcsolat() {
             <input
               type="text"
               name="name"
-              className="mt-1.5 w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-black focus:outline-none focus:ring-2 focus:ring-tifo-dark focus:border-tifo-dark transition"
+              className="mt-1.5 w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-black focus:outline-none focus:ring-2 focus:ring-tifo-green focus:border-tifo-green transition"
               required
             />
           </label>
@@ -110,7 +110,7 @@ export default function Kapcsolat() {
             <input
               type="email"
               name="email"
-              className="mt-1.5 w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-black focus:outline-none focus:ring-2 focus:ring-tifo-dark focus:border-tifo-dark transition"
+              className="mt-1.5 w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-black focus:outline-none focus:ring-2 focus:ring-tifo-green focus:border-tifo-green transition"
               required
             />
           </label>
@@ -119,7 +119,7 @@ export default function Kapcsolat() {
             Üzenet
             <textarea
               name="message"
-              className="mt-1.5 w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-black focus:outline-none focus:ring-2 focus:ring-tifo-dark focus:border-tifo-dark transition"
+              className="mt-1.5 w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-black focus:outline-none focus:ring-2 focus:ring-tifo-green focus:border-tifo-green transition"
               rows={5}
               required
             />
@@ -127,7 +127,7 @@ export default function Kapcsolat() {
 
           <button
             type="submit"
-            className="inline-flex justify-center items-center gap-2 rounded-full bg-tifo-dark text-white font-black px-8 py-3.5 hover:bg-black hover:scale-105 active:scale-95 transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100"
+            className="inline-flex justify-center items-center gap-2 rounded-full bg-tifo-green text-white font-black px-8 py-3.5 hover:bg-[#87ceeb] hover:text-black hover:scale-105 active:scale-95 transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100"
             disabled={sending}
           >
             {sending ? "Küldés..." : (

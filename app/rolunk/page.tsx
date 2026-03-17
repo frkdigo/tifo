@@ -186,7 +186,7 @@ export default function Rolunk() {
               key={value.title}
               className="group rounded-2xl border border-gray-200 bg-white p-6 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
             >
-              <div className="w-12 h-12 rounded-2xl bg-gray-50 border border-gray-200 grid place-items-center text-2xl mb-5 group-hover:bg-slate-100 group-hover:border-tifo-dark/30 transition-colors">
+              <div className="w-12 h-12 rounded-2xl bg-gray-50 border border-gray-200 grid place-items-center text-2xl mb-5 group-hover:bg-[#87ceeb]/15 group-hover:border-[#87ceeb]/60 transition-colors">
                 {value.icon}
               </div>
               <h3 className="text-lg font-semibold text-black mb-2">{value.title}</h3>
@@ -211,7 +211,7 @@ export default function Rolunk() {
                   <button
                     type="button"
                     onClick={() => openMember(member)}
-                    className="w-full text-left rounded-2xl bg-white border border-gray-200 p-5 shadow-sm hover:shadow-md hover:border-tifo-dark/40 hover:-translate-y-0.5 transition-all duration-200"
+                    className="w-full text-left rounded-2xl bg-white border border-gray-200 p-5 shadow-sm hover:shadow-md hover:border-[#87ceeb]/60 hover:-translate-y-0.5 transition-all duration-200"
                   >
                     <div className="flex items-center gap-3">
                       {member.image ? (
@@ -281,7 +281,7 @@ export default function Rolunk() {
                 type="button"
                 onClick={() => navigateMember(-1)}
                 disabled={editing || team.length < 2}
-                className="text-sm px-3 py-2 rounded-lg border border-gray-200 text-gray-700 hover:bg-gray-50 hover:border-tifo-dark disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="text-sm px-3 py-2 rounded-lg border border-gray-200 text-gray-700 hover:bg-[#87ceeb]/10 hover:border-[#87ceeb] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
                 Előző személy
               </button>
@@ -292,7 +292,7 @@ export default function Rolunk() {
                 type="button"
                 onClick={() => navigateMember(1)}
                 disabled={editing || team.length < 2}
-                className="text-sm px-3 py-2 rounded-lg border border-gray-200 text-gray-700 hover:bg-gray-50 hover:border-tifo-dark disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="text-sm px-3 py-2 rounded-lg border border-gray-200 text-gray-700 hover:bg-[#87ceeb]/10 hover:border-[#87ceeb] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
                 Következő személy
               </button>
@@ -312,7 +312,7 @@ export default function Rolunk() {
     {isAdmin && (
                 <button
                   type="button"
-                  className="inline-flex items-center gap-2 bg-tifo-dark text-white px-5 py-2.5 rounded-full font-semibold hover:bg-black transition-colors mt-4"
+                  className="inline-flex items-center gap-2 bg-tifo-green text-white px-5 py-2.5 rounded-full font-semibold hover:bg-[#87ceeb] hover:text-black transition-colors mt-4"
                   onClick={() => setEditing(true)}
                 >
         Szerkesztés
@@ -328,7 +328,7 @@ export default function Rolunk() {
                   <textarea
                     value={draftBio}
                     onChange={(e) => setDraftBio(e.target.value)}
-                    className="mt-1 w-full border border-gray-200 rounded-xl px-3 py-2 min-h-[130px] focus:outline-none focus:ring-2 focus:ring-tifo-dark focus:border-tifo-dark transition"
+                    className="mt-1 w-full border border-gray-200 rounded-xl px-3 py-2 min-h-[130px] focus:outline-none focus:ring-2 focus:ring-tifo-green focus:border-tifo-green transition"
                     placeholder="Írj ide egy rövid bemutatkozást..."
                   />
                 </label>
@@ -336,7 +336,7 @@ export default function Rolunk() {
                 <div>
                   <label className="block text-sm font-medium text-gray-800 mb-2">Kép feltöltése</label>
                   <div className="flex items-center gap-3 flex-wrap">
-                    <label className="cursor-pointer bg-tifo-dark text-white px-4 py-2 rounded-xl hover:bg-black transition-colors">
+                    <label className="cursor-pointer bg-tifo-green text-white px-4 py-2 rounded-xl hover:bg-[#87ceeb] hover:text-black transition-colors">
                       Fájl kiválasztása
                       <input type="file" accept="image/*" onChange={onPickImage} className="hidden" />
                     </label>
@@ -360,7 +360,7 @@ export default function Rolunk() {
 
                 <button
                   type="button"
-                  className="inline-flex items-center gap-2 bg-tifo-dark text-white font-black px-6 py-2.5 rounded-full hover:bg-black transition-colors mt-4 disabled:opacity-60"
+                  className="inline-flex items-center gap-2 bg-tifo-green text-white font-black px-6 py-2.5 rounded-full hover:bg-[#87ceeb] hover:text-black transition-colors mt-4 disabled:opacity-60"
                   onClick={saveMember}
                   disabled={saving}
                 >
