@@ -335,57 +335,153 @@ export default function Rolunk() {
                         <button
                           type="button"
                           onClick={() => setDraftImage(null)}
-                          className="text-sm text-slate-600 hover:text-slate-900"
-                        >
-                          Kép törlése
-                        </button>
-                      </>
-                    )}
-                  </div>
-                </div>
-              </div>
-            )}
+                          {activeMember && (
+                            <div
+                              className="fixed inset-0 z-50 bg-black/60 p-4 flex items-center justify-center"
+                              onClick={closeModal}
+                            >
+                              <div
+                                className="w-full max-w-2xl rounded-2xl bg-white shadow-2xl p-6 md:p-7 relative max-h-[90vh] flex flex-col"
+                                style={{ maxHeight: '90vh' }}
+                                onClick={(e) => e.stopPropagation()}
+                              >
+                                <button
+                                  type="button"
+                                  className="absolute top-3 right-3 text-slate-400 hover:text-slate-700 text-2xl leading-none z-10"
+                                  onClick={closeModal}
+                                  aria-label="Bezárás"
+                                >
+                                  &times;
+                                </button>
+                                <div className="overflow-y-auto flex-1 pr-1" style={{ maxHeight: 'calc(80vh - 48px)' }}>
+                                  <div className="flex items-start gap-4 mb-5">
+                                    {activeMember.image ? (
+                                      <img
+                                        src={activeMember.image}
+                                        alt={activeMember.name}
+                                        className="w-20 h-20 rounded-full object-cover border border-slate-200"
+                                      />
+                                    ) : (
+                                      <div className="w-20 h-20 rounded-full bg-slate-900 text-sky-300 grid place-items-center font-bold text-xl">
+                                        {memberInitials}
+                                      </div>
+                                    )}
+                                    <div>
+                                      <h3 className="text-2xl font-bold text-slate-900">{activeMember.name}</h3>
+                                      <p className="text-slate-500">{activeMember.role}</p>
+                                    </div>
+                                  </div>
 
-            {error && <div className="text-red-600 text-sm mt-4">{error}</div>}
+                                  <div className="flex items-center justify-between mb-5">
+                                    <button
+                                      type="button"
+                                      onClick={() => navigateMember(-1)}
+                                      disabled={editing || team.length < 2}
+                                      className="text-sm px-3 py-2 rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                                    >
+                                      Előző személy
+                                    </button>
+                                    <div className="text-xs text-slate-500">
+                                      {activeIndex >= 0 ? `${activeIndex + 1} / ${team.length}` : ""}
+                                    </div>
+                                    <button
+                                      type="button"
+                                      onClick={() => navigateMember(1)}
+                                      disabled={editing || team.length < 2}
+                                      className="text-sm px-3 py-2 rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                                    >
+                                      Következő személy
+                                    </button>
+                                  </div>
 
-            <div className="mt-6 flex items-center gap-3">
-              {isAdmin && !editing && (
-                <button
-                  type="button"
-                  className="bg-slate-900 text-white px-4 py-2 rounded-lg hover:bg-slate-800 transition-colors"
-                  onClick={() => setEditing(true)}
-                >
-                  Szerkesztés
-                </button>
-              )}
+                                  {editing && (
+                                    <div className="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 mb-4">
+                                      Szerkesztés közben a személyváltás ideiglenesen le van tiltva.
+                                    </div>
+                                  )}
 
-              {isAdmin && editing && (
-                <>
-                  <button
-                    type="button"
-                    onClick={saveMember}
-                    disabled={saving}
-                    className="bg-slate-900 text-white px-4 py-2 rounded-lg hover:bg-slate-800 transition-colors disabled:opacity-60"
-                  >
-                    {saving ? "Mentés..." : "Mentés"}
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setEditing(false);
-                      setDraftBio(activeMember.bio || "");
-                      setDraftImage(activeMember.image || null);
-                    }}
-                    className="text-slate-600 hover:text-slate-900"
-                  >
-                    Mégse
-                  </button>
-                </>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
-    </main>
-  );
-}
+                                  {!editing && (
+                                    <p className="text-slate-700 leading-relaxed whitespace-pre-line">
+                                      {activeMember.bio?.trim() || "Még nincs megadva bemutatkozás ehhez a személyhez."}
+                                    </p>
+                                  )}
+
+                                  {editing && (
+                                    <div className="space-y-4">
+                                      <label className="block text-sm font-medium text-slate-700">
+                                        Rövid bemutatkozás
+                                        <textarea
+                                          value={draftBio}
+                                          onChange={(e) => setDraftBio(e.target.value)}
+                                          className="mt-1 w-full border border-slate-300 rounded-xl px-3 py-2 min-h-[130px]"
+                                          placeholder="Írj ide egy rövid bemutatkozást..."
+                                        />
+                                      </label>
+                                      <div>
+                                        <label className="block text-sm font-medium text-slate-700 mb-2">Kép feltöltése</label>
+                                        <div className="flex items-center gap-3 flex-wrap">
+                                          <label className="cursor-pointer bg-slate-900 text-white px-4 py-2 rounded-lg hover:bg-slate-800 transition-colors">
+                                            Fájl kiválasztása
+                                            <input type="file" accept="image/*" onChange={onPickImage} className="hidden" />
+                                          </label>
+                                          {draftImage && (
+                                            <>
+                                              <img
+                                                src={draftImage}
+                                                alt="Előnézet"
+                                                className="w-16 h-16 rounded-full object-cover border border-slate-300 shadow"
+                                              />
+                                              <button
+                                                type="button"
+                                                onClick={() => setDraftImage(null)}
+                                                className="text-sm text-slate-600 hover:text-slate-900"
+                                              >
+                                                Kép törlése
+                                              </button>
+                                            </>
+                                          )}
+                                        </div>
+                                      </div>
+                                    </div>
+                                  )}
+
+                                  {error && <div className="text-red-600 text-sm mt-4">{error}</div>}
+                                </div>
+                                <div className="mt-6 flex items-center gap-3">
+                                  {isAdmin && !editing && (
+                                    <button
+                                      type="button"
+                                      className="bg-slate-900 text-white px-4 py-2 rounded-lg hover:bg-slate-800 transition-colors"
+                                      onClick={() => setEditing(true)}
+                                    >
+                                      Szerkesztés
+                                    </button>
+                                  )}
+
+                                  {isAdmin && editing && (
+                                    <>
+                                      <button
+                                        type="button"
+                                        onClick={saveMember}
+                                        disabled={saving}
+                                        className="bg-slate-900 text-white px-4 py-2 rounded-lg hover:bg-slate-800 transition-colors disabled:opacity-60"
+                                      >
+                                        {saving ? "Mentés..." : "Mentés"}
+                                      </button>
+                                      <button
+                                        type="button"
+                                        onClick={() => {
+                                          setEditing(false);
+                                          setDraftBio(activeMember.bio || "");
+                                          setDraftImage(activeMember.image || null);
+                                        }}
+                                        className="text-slate-600 hover:text-slate-900"
+                                      >
+                                        Mégse
+                                      </button>
+                                    </>
+                                  )}
+                                </div>
+                              </div>
+                            </div>
+                          )}
