@@ -143,11 +143,11 @@ export default function Rolunk() {
 
   return (
     <main className="relative overflow-hidden bg-white text-black">
-      <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_18%_8%,rgba(40,167,69,0.08),transparent_40%),linear-gradient(180deg,#0d3b66_0%,#0d3b66_34%,#f8fbf8_34%,#ffffff_100%)]" />
+      <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_18%_8%,rgba(13,59,102,0.16),transparent_40%),linear-gradient(180deg,#0d3b66_0%,#0d3b66_34%,#f6f9fc_34%,#ffffff_100%)]" />
 
       <section className="max-w-6xl mx-auto px-4 pt-10 md:pt-14 pb-8">
         <div className="rounded-3xl border border-white/15 bg-tifo-dark shadow-[0_30px_70px_-40px_rgba(0,0,0,0.65)] p-8 md:p-12 text-center">
-          <p className="inline-flex items-center gap-2 rounded-full bg-tifo-green text-white text-xs tracking-[0.18em] uppercase px-5 py-2.5 mb-6 shadow-lg shadow-black/20">
+          <p className="inline-flex items-center gap-2 rounded-full bg-white/15 text-white text-xs tracking-[0.18em] uppercase px-5 py-2.5 mb-6 shadow-lg shadow-black/20">
             Törökbálinti Ifjúsági Önkormányzat
           </p>
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-black leading-tight text-white">Rólunk</h1>
@@ -169,9 +169,9 @@ export default function Rolunk() {
               <div className="text-2xl font-extrabold text-tifo-dark">1000+</div>
               <div className="text-xs text-gray-600 uppercase tracking-wide">Elérés</div>
             </div>
-            <div className="rounded-2xl bg-tifo-green text-white p-4 shadow-md">
+            <div className="rounded-2xl bg-white/15 border border-white/20 text-white p-4 shadow-md">
               <div className="text-2xl font-extrabold">1</div>
-              <div className="text-xs text-green-100 uppercase tracking-wide">Küldetés</div>
+              <div className="text-xs text-white/80 uppercase tracking-wide">Küldetés</div>
             </div>
           </div>
         </div>
@@ -186,7 +186,7 @@ export default function Rolunk() {
               key={value.title}
               className="group rounded-2xl border border-gray-200 bg-white p-6 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
             >
-              <div className="w-12 h-12 rounded-2xl bg-gray-50 border border-gray-200 grid place-items-center text-2xl mb-5 group-hover:bg-green-50 group-hover:border-tifo-green transition-colors">
+              <div className="w-12 h-12 rounded-2xl bg-gray-50 border border-gray-200 grid place-items-center text-2xl mb-5 group-hover:bg-slate-100 group-hover:border-tifo-dark/30 transition-colors">
                 {value.icon}
               </div>
               <h3 className="text-lg font-semibold text-black mb-2">{value.title}</h3>
@@ -198,7 +198,7 @@ export default function Rolunk() {
 
       <section className="max-w-6xl mx-auto px-4 py-10">
         <div className="rounded-3xl bg-white border border-gray-200 p-8 md:p-12 shadow-[0_24px_55px_-35px_rgba(13,59,102,0.35)]">
-          <p className="text-xs uppercase tracking-[0.2em] text-tifo-green font-semibold mb-3">Emberek</p>
+          <p className="text-xs uppercase tracking-[0.2em] text-tifo-dark font-semibold mb-3">Emberek</p>
           <h2 className="text-3xl md:text-4xl font-black text-tifo-dark mb-2">Csapatunk</h2>
           <p className="text-gray-700 mb-8 text-lg leading-[1.58]">Kattints egy kártyára, és megnyílik a részletes bemutatkozás.</p>
 
@@ -211,7 +211,7 @@ export default function Rolunk() {
                   <button
                     type="button"
                     onClick={() => openMember(member)}
-                    className="w-full text-left rounded-2xl bg-white border border-gray-200 p-5 shadow-sm hover:shadow-md hover:border-tifo-green/50 hover:-translate-y-0.5 transition-all duration-200"
+                    className="w-full text-left rounded-2xl bg-white border border-gray-200 p-5 shadow-sm hover:shadow-md hover:border-tifo-dark/40 hover:-translate-y-0.5 transition-all duration-200"
                   >
                     <div className="flex items-center gap-3">
                       {member.image ? (
@@ -221,7 +221,7 @@ export default function Rolunk() {
                           className="w-10 h-10 rounded-full object-cover border border-gray-200"
                         />
                       ) : (
-                        <div className="w-10 h-10 rounded-full bg-tifo-green text-white font-bold grid place-items-center">
+                        <div className="w-10 h-10 rounded-full bg-tifo-dark text-white font-bold grid place-items-center">
                           {member.name
                             .split(" ")
                             .map((part) => part[0])
@@ -266,7 +266,7 @@ export default function Rolunk() {
                   className="w-20 h-20 rounded-full object-cover border border-slate-200"
                 />
               ) : (
-                <div className="w-20 h-20 rounded-full bg-tifo-dark text-tifo-green grid place-items-center font-bold text-xl border-2 border-tifo-green/30">
+                <div className="w-20 h-20 rounded-full bg-tifo-dark text-white grid place-items-center font-bold text-xl border-2 border-white/30">
                   {memberInitials}
                 </div>
               )}
@@ -281,7 +281,7 @@ export default function Rolunk() {
                 type="button"
                 onClick={() => navigateMember(-1)}
                 disabled={editing || team.length < 2}
-                className="text-sm px-3 py-2 rounded-lg border border-gray-200 text-gray-700 hover:bg-gray-50 hover:border-tifo-green disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="text-sm px-3 py-2 rounded-lg border border-gray-200 text-gray-700 hover:bg-gray-50 hover:border-tifo-dark disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
                 Előző személy
               </button>
@@ -292,7 +292,7 @@ export default function Rolunk() {
                 type="button"
                 onClick={() => navigateMember(1)}
                 disabled={editing || team.length < 2}
-                className="text-sm px-3 py-2 rounded-lg border border-gray-200 text-gray-700 hover:bg-gray-50 hover:border-tifo-green disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="text-sm px-3 py-2 rounded-lg border border-gray-200 text-gray-700 hover:bg-gray-50 hover:border-tifo-dark disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
                 Következő személy
               </button>
@@ -312,7 +312,7 @@ export default function Rolunk() {
     {isAdmin && (
                 <button
                   type="button"
-                  className="inline-flex items-center gap-2 bg-tifo-green text-white px-5 py-2.5 rounded-full font-semibold hover:bg-tifo-green-light transition-colors mt-4"
+                  className="inline-flex items-center gap-2 bg-tifo-dark text-white px-5 py-2.5 rounded-full font-semibold hover:bg-black transition-colors mt-4"
                   onClick={() => setEditing(true)}
                 >
         Szerkesztés
@@ -328,7 +328,7 @@ export default function Rolunk() {
                   <textarea
                     value={draftBio}
                     onChange={(e) => setDraftBio(e.target.value)}
-                    className="mt-1 w-full border border-gray-200 rounded-xl px-3 py-2 min-h-[130px] focus:outline-none focus:ring-2 focus:ring-tifo-green focus:border-tifo-green transition"
+                    className="mt-1 w-full border border-gray-200 rounded-xl px-3 py-2 min-h-[130px] focus:outline-none focus:ring-2 focus:ring-tifo-dark focus:border-tifo-dark transition"
                     placeholder="Írj ide egy rövid bemutatkozást..."
                   />
                 </label>
@@ -336,7 +336,7 @@ export default function Rolunk() {
                 <div>
                   <label className="block text-sm font-medium text-gray-800 mb-2">Kép feltöltése</label>
                   <div className="flex items-center gap-3 flex-wrap">
-                    <label className="cursor-pointer bg-tifo-green text-white px-4 py-2 rounded-xl hover:bg-tifo-green-light transition-colors">
+                    <label className="cursor-pointer bg-tifo-dark text-white px-4 py-2 rounded-xl hover:bg-black transition-colors">
                       Fájl kiválasztása
                       <input type="file" accept="image/*" onChange={onPickImage} className="hidden" />
                     </label>
@@ -360,7 +360,7 @@ export default function Rolunk() {
 
                 <button
                   type="button"
-                  className="inline-flex items-center gap-2 bg-tifo-green text-white font-black px-6 py-2.5 rounded-full hover:bg-tifo-green-light transition-colors mt-4 disabled:opacity-60"
+                  className="inline-flex items-center gap-2 bg-tifo-dark text-white font-black px-6 py-2.5 rounded-full hover:bg-black transition-colors mt-4 disabled:opacity-60"
                   onClick={saveMember}
                   disabled={saving}
                 >
@@ -372,22 +372,6 @@ export default function Rolunk() {
         </div>
       )}
 
-      <section className="max-w-6xl mx-auto px-4 pb-16 pt-6">
-        <div className="rounded-3xl bg-tifo-green p-8 md:p-12 flex flex-col md:flex-row md:items-center md:justify-between gap-6 shadow-xl">
-          <div>
-            <p className="text-[10px] uppercase tracking-widest font-bold text-green-900/90 mb-2">Csatlakozás</p>
-            <h2 className="text-2xl md:text-3xl font-black text-white leading-tight">Gyere, csatlakozz hozzánk!</h2>
-            <p className="text-green-50 mt-2 leading-[1.58] max-w-lg">Legyen részed a közösségben – vegyél részt programok szervezésében, döntéshozatalban és eseményeken!</p>
-          </div>
-          <a
-            href="/kapcsolat"
-            className="shrink-0 inline-flex items-center gap-2 rounded-full bg-tifo-dark text-white font-black px-8 py-4 hover:bg-black hover:scale-105 active:scale-95 transition-all duration-200 text-base whitespace-nowrap"
-          >
-            Írj nekünk
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
-          </a>
-        </div>
-      </section>
     </main>
   );
 }

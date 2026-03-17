@@ -34,7 +34,7 @@ function EventDescription({ text }: { text: string }) {
 				if (bullet) {
 					return (
 						<div key={index} className="flex items-start gap-2.5">
-							<span className="mt-[9px] text-tifo-green text-sm">•</span>
+							<span className="mt-[9px] text-tifo-dark text-sm">•</span>
 							<span>{renderInlineFormatting(bullet[1])}</span>
 						</div>
 					);
@@ -93,7 +93,7 @@ function EventModal({ event, onClose, onZoomImage }: { event: any; onClose: () =
 									{new Date(event.date).toLocaleDateString("hu-HU")}
 								</span>
 								{event.location && (
-									<span className="inline-flex items-center rounded-full bg-green-50 text-tifo-green px-2.5 py-1 font-semibold">
+									<span className="inline-flex items-center rounded-full bg-slate-100 text-tifo-dark px-2.5 py-1 font-semibold">
 										{event.location}
 									</span>
 								)}
@@ -176,7 +176,7 @@ export default function Esemeneink() {
 			<section className="rounded-3xl border border-white/15 bg-tifo-dark p-6 md:p-8 mb-8 shadow-[0_24px_60px_-35px_rgba(0,0,0,0.6)]">
 				<div className="flex flex-wrap items-end justify-between gap-4">
 					<div>
-						<p className="text-xs uppercase tracking-[0.18em] text-green-200 mb-2">Programok</p>
+						<p className="text-xs uppercase tracking-[0.18em] text-white/75 mb-2">Programok</p>
 						<h1 className="text-3xl md:text-5xl font-black text-white">Eseményeink</h1>
 						<p className="mt-2 text-white/85 max-w-2xl leading-[1.58]">
 							Kövesd a közelgő programokat, nézd vissza a korábbi eseményeket, és csatlakozz a közösséghez.
@@ -184,9 +184,9 @@ export default function Esemeneink() {
 					</div>
 
 					<div className="grid grid-cols-2 gap-2 text-sm">
-						<div className="rounded-xl bg-tifo-green text-white px-4 py-3 min-w-[120px] shadow-md">
+						<div className="rounded-xl bg-white/15 border border-white/25 text-white px-4 py-3 min-w-[120px] shadow-md">
 							<div className="text-xl font-bold">{upcoming.length}</div>
-							<div className="text-green-100 text-xs">Közelgő</div>
+							<div className="text-white/75 text-xs">Közelgő</div>
 						</div>
 						<div className="rounded-xl border border-white/25 bg-white/10 px-4 py-3 min-w-[120px]">
 							<div className="text-xl font-bold text-white">{past.length}</div>
@@ -222,7 +222,7 @@ export default function Esemeneink() {
 									)}
 									<div className="absolute inset-0 bg-gradient-to-t from-[#0d3b66]/90 via-[#0d3b66]/35 to-transparent" />
 									<div className="absolute bottom-0 left-0 right-0 p-6 md:p-7 text-white">
-										<p className="text-xs uppercase tracking-[0.16em] text-green-200 mb-2">Kiemelt esemény</p>
+										<p className="text-xs uppercase tracking-[0.16em] text-white/75 mb-2">Kiemelt esemény</p>
 										<h2 className="text-2xl md:text-3xl font-black mb-2">{featured.title}</h2>
 										<p className="text-sm text-white/80">{new Date(featured.date).toLocaleDateString("hu-HU")}</p>
 									</div>
@@ -233,7 +233,7 @@ export default function Esemeneink() {
 									<div className="mt-4">
 										{featured.location && <p className="text-xs text-gray-500 mb-3">Helyszín: {featured.location}</p>}
 										<button
-											className="w-full bg-tifo-green text-white py-2.5 rounded-xl hover:bg-tifo-green-light transition-colors font-semibold"
+											className="w-full bg-tifo-dark text-white py-2.5 rounded-xl hover:bg-black transition-colors font-semibold"
 											onClick={() => setSelected(featured)}
 										>
 											Részletek megnyitása
@@ -271,7 +271,7 @@ export default function Esemeneink() {
 												<div className="pointer-events-none absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-white to-transparent" />
 											</div>
 											<button
-												className="mt-3 w-full bg-tifo-green text-white py-2 rounded-xl hover:bg-tifo-green-light transition-colors font-semibold shrink-0"
+												className="mt-3 w-full bg-tifo-dark text-white py-2 rounded-xl hover:bg-black transition-colors font-semibold shrink-0"
 												onClick={() => setSelected(event)}
 											>
 												Érdekel
@@ -296,7 +296,7 @@ export default function Esemeneink() {
 											<div className="text-xs text-gray-500">{new Date(event.date).toLocaleDateString("hu-HU")}</div>
 										</div>
 										<button
-											className="text-sm bg-tifo-green hover:bg-tifo-green-light text-white px-3 py-1.5 rounded-xl transition-colors"
+											className="text-sm bg-tifo-dark hover:bg-black text-white px-3 py-1.5 rounded-xl transition-colors"
 											onClick={() => setSelected(event)}
 										>
 											Megnézem
