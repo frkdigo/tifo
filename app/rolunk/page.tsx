@@ -303,6 +303,15 @@ export default function Rolunk() {
               <p className="text-slate-700 leading-relaxed whitespace-pre-line">
                 {activeMember.bio?.trim() || "Még nincs megadva bemutatkozás ehhez a személyhez."}
               </p>
+              {isAdmin && (
+                <button
+                  type="button"
+                  className="bg-slate-900 text-white px-4 py-2 rounded-lg hover:bg-slate-800 transition-colors mt-4"
+                  onClick={() => setEditing(true)}
+                >
+                  Szerkesztés
+                </button>
+              )}
             )}
 
             {editing && (
@@ -348,4 +357,4 @@ export default function Rolunk() {
       )}
     </main>
   );
-}
+}ká
