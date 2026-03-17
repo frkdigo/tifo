@@ -56,7 +56,7 @@ export default function Kapcsolat() {
 
             <div className="mt-5 space-y-2 text-slate-700">
               <p>
-                Email: <a href="mailto:info@tifo.hu" className="text-slate-900 font-semibold hover:underline">info@tifo.hu</a>
+                Email: <a href="mailto:info.tifo@gmail.com" className="text-slate-900 font-semibold hover:underline">info.tifo@gmail.com</a>
               </p>
               <p>
                 Instagram: <a href="https://www.instagram.com/tifo_2008/" target="_blank" rel="noopener" className="text-slate-900 font-semibold hover:underline">@tifo_2008</a>
