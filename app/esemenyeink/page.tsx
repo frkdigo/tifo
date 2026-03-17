@@ -78,29 +78,31 @@ function EventModal({ event, onClose, onZoomImage }: { event: any; onClose: () =
 	}, [onClose]);
 
 	return (
-		<div className="fixed inset-0 z-[220] bg-black/55 backdrop-blur-[2px] md:flex md:items-center md:justify-center md:p-4" onClick={onClose}>
+		<div className="fixed inset-0 z-[220] bg-black/65 backdrop-blur-[3px] md:flex md:items-center md:justify-center md:p-4" onClick={onClose}>
 			<div
-				className="absolute inset-x-0 bottom-0 md:static bg-white rounded-t-3xl md:rounded-2xl shadow-2xl w-full md:max-w-2xl h-[92dvh] md:h-auto md:max-h-[88vh] overflow-hidden flex flex-col"
+				className="absolute inset-x-0 bottom-0 md:static w-full md:max-w-2xl h-[92dvh] md:h-auto md:max-h-[88vh] overflow-hidden flex flex-col rounded-t-3xl md:rounded-[1.75rem] bg-white border border-slate-200 shadow-[0_30px_80px_-35px_rgba(0,0,0,0.55)]"
 				onClick={(e) => e.stopPropagation()}
 			>
-				<div className="sticky top-0 z-10 bg-white/95 backdrop-blur border-b border-gray-100 px-4 pt-3 pb-3 md:px-5 md:pt-4 md:pb-4">
+				<div className="h-1.5 bg-gradient-to-r from-slate-950 via-[#87ceeb] to-[#28a745]" />
+				<div className="sticky top-0 z-10 bg-white/95 backdrop-blur border-b border-gray-100 px-4 pt-3 pb-3 md:px-6 md:pt-5 md:pb-5">
 					<div className="w-10 h-1.5 rounded-full bg-gray-300 mx-auto mb-3 md:hidden" />
 					<div className="flex items-start justify-between gap-3">
-						<div>
-							<h2 className="text-xl md:text-2xl font-black text-tifo-dark leading-tight">{event.title}</h2>
-							<div className="mt-2 flex flex-wrap items-center gap-2 text-xs sm:text-sm text-gray-600">
-								<span className="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-1 font-semibold">
+						<div className="min-w-0">
+							<p className="text-[11px] uppercase tracking-[0.18em] text-[#87ceeb] font-semibold mb-2">Esemény részletei</p>
+							<h2 className="text-xl md:text-3xl font-black text-tifo-dark leading-tight tracking-tight">{event.title}</h2>
+							<div className="mt-3 flex flex-wrap items-center gap-2 text-xs sm:text-sm text-gray-600">
+								<span className="inline-flex items-center rounded-full bg-slate-100 border border-slate-200 px-3 py-1.5 font-semibold">
 									{new Date(event.date).toLocaleDateString("hu-HU")}
 								</span>
 								{event.location && (
-									<span className="inline-flex items-center rounded-full bg-slate-100 text-tifo-dark px-2.5 py-1 font-semibold">
+									<span className="inline-flex items-center rounded-full bg-[#87ceeb]/12 border border-[#87ceeb]/35 text-[#0d3b66] px-3 py-1.5 font-semibold">
 										{event.location}
 									</span>
 								)}
 							</div>
 						</div>
 						<button
-							className="shrink-0 w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 text-2xl leading-none"
+							className="shrink-0 w-10 h-10 rounded-full bg-white/90 hover:bg-slate-100 text-gray-700 text-2xl leading-none border border-slate-200 shadow-sm"
 							onClick={onClose}
 							aria-label="Bezárás"
 						>
@@ -109,7 +111,7 @@ function EventModal({ event, onClose, onZoomImage }: { event: any; onClose: () =
 					</div>
 				</div>
 
-				<div className="overflow-y-auto px-4 pb-7 pt-4 md:px-5 md:pb-7 space-y-4">
+				<div className="overflow-y-auto px-4 pb-7 pt-4 md:px-6 md:pb-7 space-y-5">
 					{event.image && (
 						<button
 							type="button"
@@ -120,11 +122,11 @@ function EventModal({ event, onClose, onZoomImage }: { event: any; onClose: () =
 							<img
 								src={event.image}
 								alt={event.title}
-								className="w-full h-48 md:h-64 object-cover rounded-2xl border border-slate-100"
+								className="w-full h-52 md:h-72 object-cover rounded-[1.35rem] border border-slate-200 shadow-sm"
 							/>
 						</button>
 					)}
-					<div className="rounded-2xl bg-gray-50 border border-gray-100 p-4 md:p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.6)]">
+					<div className="rounded-[1.35rem] border border-slate-200 bg-[linear-gradient(180deg,#ffffff_0%,#f8fbff_100%)] p-5 md:p-6 shadow-[0_14px_35px_-26px_rgba(15,23,42,0.22)]">
 						<EventDescription text={event.description || ""} />
 					</div>
 				</div>
