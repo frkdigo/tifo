@@ -165,7 +165,6 @@ export default function PostsSection() {
     Törlés
   </button>
 )}
-                )}
               </div>
               <div className="text-slate-700 mb-2 line-clamp-3">{post.text}</div>
               {post.image && <img src={post.image} alt="post" className="max-h-20 rounded mt-1" style={{objectFit:'contain', maxWidth:'100%'}} />}
