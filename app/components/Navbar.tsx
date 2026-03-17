@@ -41,14 +41,15 @@ export default function Navbar() {
         </div>
       )}
       <div className="max-w-6xl mx-auto px-4 py-3 flex items-center w-full">
-        {/* LOGO */}
+        {/* LOGO és TIFO felirat */}
         <div className="flex items-center min-w-[120px]">
-          <Link href="/">
+          <Link href="/" className="flex items-center gap-3">
             <img
               src="/images/logo.jpg"
               alt="TIFO logó"
-              className="h-16 w-auto -mt-3 cursor-pointer"
+              className="h-12 w-12 object-contain rounded-full shadow-md"
             />
+            <span className="text-2xl font-bold text-secondary tracking-wide select-none">TIFO</span>
           </Link>
         </div>
         {/* MENÜ ÉS LOGIN/USER */}
