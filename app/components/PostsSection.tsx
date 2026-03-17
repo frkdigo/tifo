@@ -183,33 +183,39 @@ export default function PostsSection() {
       </div>
 
       {selectedPost && (
-        <div className="fixed inset-0 bg-black/45 z-50 flex items-center justify-center p-4">
-          <div className="w-full max-w-2xl rounded-2xl bg-white shadow-2xl border border-slate-200 p-5 relative max-h-[85vh] overflow-y-auto">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-gradient-to-br from-sky-100 via-white to-pink-100 backdrop-blur-sm">
+          <div className="w-full max-w-2xl rounded-3xl bg-white/95 shadow-[0_8px_32px_rgba(0,0,0,0.18)] border border-slate-200 p-7 relative max-h-[85vh] overflow-y-auto animate-fade-in">
             <button
               type="button"
               onClick={() => setSelectedPost(null)}
-              className="absolute top-2 right-3 text-2xl text-slate-400 hover:text-slate-700"
+              className="absolute top-3 right-4 text-3xl text-slate-400 hover:text-slate-700 bg-white/80 rounded-full w-10 h-10 flex items-center justify-center shadow-md border border-slate-200"
+              style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}
             >
               &times;
             </button>
-            <h3 className="text-xl font-bold text-slate-900 mb-3">Poszt megtekintése</h3>
-            <div className="flex items-center gap-2 mb-3">
-              {getPostAuthorImage(selectedPost) && (
-                <img src={getPostAuthorImage(selectedPost)} alt="Profilkép" className="w-9 h-9 rounded-full border border-slate-200 object-cover" />
+            <div className="flex items-center gap-5 mb-6">
+              {getPostAuthorImage(selectedPost) ? (
+                <img src={getPostAuthorImage(selectedPost)} alt="Profilkép" className="w-16 h-16 rounded-full border-4 border-sky-200 object-cover shadow-lg" />
+              ) : (
+                <div className="w-16 h-16 rounded-full bg-sky-200 text-sky-700 flex items-center justify-center text-3xl font-bold border-4 border-sky-200 shadow-lg">
+                  {getPostAuthorName(selectedPost).charAt(0).toUpperCase()}
+                </div>
               )}
-              <div>
-                <div className="font-semibold text-slate-900">{getPostAuthorName(selectedPost)}</div>
+              <div className="flex flex-col justify-center min-w-0">
+                <div className="font-extrabold text-2xl text-slate-900 mb-1">{getPostAuthorName(selectedPost)}</div>
                 {getPostNickname(selectedPost) && (
-                  <div className="text-xs text-sky-700">@{getPostNickname(selectedPost)}</div>
+                  <div className="text-lg text-sky-700 font-semibold">@{getPostNickname(selectedPost)}</div>
                 )}
-                <div className="text-xs text-slate-500">{new Date(selectedPost.createdAt || selectedPost.created_at).toLocaleString('hu-HU')}</div>
+                <div className="text-xs text-slate-500 mt-1">{new Date(selectedPost.createdAt || selectedPost.created_at).toLocaleString('hu-HU')}</div>
               </div>
             </div>
-            <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 text-slate-800 whitespace-pre-line">
+            <div className="rounded-2xl border border-sky-100 bg-sky-50/60 p-6 text-slate-800 whitespace-pre-line text-lg font-medium shadow-sm mb-4">
               {selectedPost.text || "Nincs szöveg."}
             </div>
             {selectedPost.image && (
-              <img src={selectedPost.image} alt="Poszt képe" className="w-full max-h-80 object-contain rounded-lg border border-slate-200 mt-4" />
+              <div className="flex justify-center">
+                <img src={selectedPost.image} alt="Poszt képe" className="max-h-96 rounded-2xl border border-sky-200 shadow-lg mt-2 object-contain" style={{maxWidth:'100%'}} />
+              </div>
             )}
           </div>
         </div>
