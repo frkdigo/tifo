@@ -352,6 +352,15 @@ export default function Rolunk() {
                     )}
                   </div>
                 </div>
+
+                <button
+                  type="button"
+                  className="bg-sky-600 text-white px-4 py-2 rounded-lg hover:bg-sky-700 transition-colors mt-4"
+                  onClick={saveMember}
+                  disabled={saving}
+                >
+                  {saving ? "Mentés..." : "Mentés"}
+                </button>
               </div>
             )}
           </div>
