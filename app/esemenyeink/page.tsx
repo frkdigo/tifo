@@ -28,35 +28,99 @@ function EventDescription({ text }: { text: string }) {
 	const lines = text.split(/\r?\n/).map((line) => line.trim()).filter(Boolean);
 
 	return (
-		<div className="space-y-2 text-gray-700">
+		<div className="space-y-3 text-slate-700 text-[17px] leading-8 md:text-base md:leading-7">
 			{lines.map((line, index) => {
 				const bullet = line.match(/^[-*]\s+(.+)$/);
 				if (bullet) {
 					return (
-						<div key={index} className="flex items-start gap-2">
-							<span className="mt-1 text-primary">•</span>
+						<div key={index} className="flex items-start gap-2.5">
+							<span className="mt-[9px] text-slate-500 text-sm">•</span>
 							<span>{renderInlineFormatting(bullet[1])}</span>
 						</div>
 					);
 				}
-				return <p key={index}>{renderInlineFormatting(line)}</p>;
+				return <p key={index} className="text-balance">{renderInlineFormatting(line)}</p>;
 			})}
 		</div>
 	);
 }
 
 function EventModal({ event, onClose }: { event: any; onClose: () => void }) {
+	useEffect(() => {
+		const scrollY = window.scrollY;
+		const originalOverflow = document.body.style.overflow;
+		const originalPosition = document.body.style.position;
+		const originalTop = document.body.style.top;
+		const originalWidth = document.body.style.width;
+
+		// Lock body scroll (iOS-safe) while the modal is open.
+		document.body.style.overflow = "hidden";
+		document.body.style.position = "fixed";
+		document.body.style.top = `-${scrollY}px`;
+		document.body.style.width = "100%";
+
+		const onKeyDown = (e: KeyboardEvent) => {
+			if (e.key === "Escape") {
+				onClose();
+			}
+		};
+
+		window.addEventListener("keydown", onKeyDown);
+
+		return () => {
+			window.removeEventListener("keydown", onKeyDown);
+			document.body.style.overflow = originalOverflow;
+			document.body.style.position = originalPosition;
+			document.body.style.top = originalTop;
+			document.body.style.width = originalWidth;
+			window.scrollTo(0, scrollY);
+		};
+	}, [onClose]);
+
 	return (
-		<div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 p-4">
-			<div className="bg-white rounded-xl shadow-lg p-5 w-full max-w-2xl max-h-[85vh] overflow-y-auto relative">
-				<button className="absolute top-2 right-2 text-gray-400 hover:text-black text-2xl" onClick={onClose}>
-					&times;
-				</button>
-				{event.image && <img src={event.image} alt={event.title} className="w-full h-44 object-cover rounded mb-4" />}
-				<h2 className="text-xl font-bold mb-2 text-center">{event.title}</h2>
-				<p className="text-sm text-gray-500 mb-2">{new Date(event.date).toLocaleDateString("hu-HU")}</p>
-				<EventDescription text={event.description || ""} />
-				{event.location && <p className="text-xs text-gray-400 mb-2">Helyszín: {event.location}</p>}
+		<div className="fixed inset-0 z-50 bg-slate-950/45 backdrop-blur-[2px] md:flex md:items-center md:justify-center md:p-4" onClick={onClose}>
+			<div
+				className="absolute inset-x-0 bottom-0 md:static bg-white rounded-t-3xl md:rounded-2xl shadow-2xl w-full md:max-w-2xl h-[92vh] md:h-auto md:max-h-[88vh] overflow-hidden flex flex-col"
+				onClick={(e) => e.stopPropagation()}
+			>
+				<div className="sticky top-0 z-10 bg-white/95 backdrop-blur border-b border-slate-100 px-4 pt-3 pb-3 md:px-5 md:pt-4 md:pb-4">
+					<div className="w-10 h-1.5 rounded-full bg-slate-300 mx-auto mb-3 md:hidden" />
+					<div className="flex items-start justify-between gap-3">
+						<div>
+							<h2 className="text-xl md:text-2xl font-black text-slate-900 leading-tight">{event.title}</h2>
+							<div className="mt-2 flex flex-wrap items-center gap-2 text-xs sm:text-sm text-slate-600">
+								<span className="inline-flex items-center rounded-full bg-slate-100 px-2.5 py-1 font-semibold">
+									{new Date(event.date).toLocaleDateString("hu-HU")}
+								</span>
+								{event.location && (
+									<span className="inline-flex items-center rounded-full bg-emerald-50 text-emerald-700 px-2.5 py-1 font-semibold">
+										{event.location}
+									</span>
+								)}
+							</div>
+						</div>
+						<button
+							className="shrink-0 w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 text-2xl leading-none"
+							onClick={onClose}
+							aria-label="Bezárás"
+						>
+							&times;
+						</button>
+					</div>
+				</div>
+
+				<div className="overflow-y-auto px-4 pb-7 pt-4 md:px-5 md:pb-7 space-y-4">
+					{event.image && (
+						<img
+							src={event.image}
+							alt={event.title}
+							className="w-full h-48 md:h-64 object-cover rounded-2xl border border-slate-100"
+						/>
+					)}
+					<div className="rounded-2xl bg-slate-50 border border-slate-100 p-4 md:p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.6)]">
+						<EventDescription text={event.description || ""} />
+					</div>
+				</div>
 			</div>
 		</div>
 	);

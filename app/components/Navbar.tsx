@@ -3,9 +3,12 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { Sora } from "next/font/google";
 import UserMenu from "./UserMenu";
 import { useAuth } from "./AuthProvider";
 import AdminDropdown from "./AdminDropdown";
+
+const sora = Sora({ subsets: ["latin-ext"], weight: ["600", "700"] });
 
 const navItems = [
   { href: "/", label: "Főoldal" },
@@ -40,7 +43,7 @@ export default function Navbar() {
           <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-secondary"></div>
         </div>
       )}
-      <div className="max-w-6xl mx-auto px-4 py-3 flex items-center w-full">
+      <div className="max-w-6xl mx-auto px-4 py-3 flex items-center w-full gap-2">
         {/* LOGO és TIFO felirat */}
         <div className="flex items-center min-w-[120px]">
           <Link href="/" className="flex items-center gap-3">
@@ -59,7 +62,7 @@ export default function Navbar() {
             {logoutMessage}
           </div>
         )}
-        <div className="flex flex-1 items-center flex-row md:flex-row">
+        <div className="hidden md:flex flex-1 items-center flex-row">
           {/* Menü csak desktopon */}
           <ul className="hidden md:flex items-center gap-6 flex-1 justify-end mr-6">
             {navItems.map((item) => {
@@ -114,8 +117,18 @@ export default function Navbar() {
           </div>
         </div>
 
+        {/* Mobil középső felirat */}
+        <div className="md:hidden flex-1 text-center px-2">
+          <div className={`${sora.className} inline-flex flex-col items-center leading-tight`}>
+            <span className="text-[10px] uppercase tracking-[0.2em] text-emerald-600 font-bold">TIFO</span>
+            <span className="text-[11px] text-slate-700 font-semibold tracking-[0.015em]">
+              Törökbálinti Ifjúsági Önkormányzat
+            </span>
+          </div>
+        </div>
+
         {/* MOBILE BUTTON */}
-        <div className="md:hidden ml-auto">
+        <div className="md:hidden ml-auto shrink-0">
           <button
             onClick={() => setMenuOpen(!menuOpen)}
             className="p-2 rounded-md hover:bg-gray-100 transition"
