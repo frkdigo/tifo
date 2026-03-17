@@ -339,4 +339,8 @@ export default function Rolunk() {
                           Kép törlése
                         </button>
                       </>
+                    )}
+                  </div>
+                </div>
+              </div>
 
