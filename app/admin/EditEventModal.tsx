@@ -1,6 +1,13 @@
 
 import { useState, useEffect, useRef } from "react";
 import { uploadImageToStorage } from "../../lib/uploadImageToStorage";
+
+export default function EditEventModal({ event, onClose, onDeleted, onUpdated }: {
+  event: any,
+  onClose: () => void,
+  onDeleted: () => void,
+  onUpdated: () => void
+}) {
   // Body scroll tiltása modal nyitásakor
   useEffect(() => {
     const prev = document.body.style.overflow;
@@ -9,13 +16,6 @@ import { uploadImageToStorage } from "../../lib/uploadImageToStorage";
       document.body.style.overflow = prev;
     };
   }, []);
-
-export default function EditEventModal({ event, onClose, onDeleted, onUpdated }: {
-  event: any,
-  onClose: () => void,
-  onDeleted: () => void,
-  onUpdated: () => void
-}) {
   // Ref a modal fő konténeréhez
   const modalRef = useRef<HTMLDivElement>(null);
 
