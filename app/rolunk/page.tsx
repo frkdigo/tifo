@@ -248,55 +248,58 @@ export default function Rolunk() {
       </section>
 
       {activeMember && (
-        <div className="fixed inset-0 z-50 bg-black/60 p-4 flex items-center justify-center" onClick={closeModal}>
+        <div className="fixed inset-0 z-50 bg-black/65 backdrop-blur-[3px] p-4 flex items-center justify-center" onClick={closeModal}>
           <div
-            className="w-full max-w-2xl rounded-2xl bg-white shadow-2xl p-6 md:p-7 relative"
+            className="w-full max-w-2xl rounded-[1.75rem] overflow-hidden bg-white shadow-[0_30px_80px_-35px_rgba(0,0,0,0.55)] border border-slate-200 relative"
             onClick={(e) => e.stopPropagation()}
           >
+            <div className="h-1.5 bg-gradient-to-r from-slate-950 via-[#87ceeb] to-[#28a745]" />
             <button
               type="button"
-              className="absolute top-3 right-3 text-slate-400 hover:text-slate-700 text-2xl leading-none"
+              className="absolute top-4 right-4 text-slate-400 hover:text-slate-700 text-2xl leading-none bg-white/90 rounded-full w-10 h-10 flex items-center justify-center shadow-sm border border-slate-200"
               onClick={closeModal}
               aria-label="Bezárás"
             >
               &times;
             </button>
 
-            <div className="flex items-start gap-4 mb-5">
+            <div className="p-6 md:p-7">
+            <div className="flex items-start gap-4 mb-6">
               {activeMember.image ? (
                 <img
                   src={activeMember.image}
                   alt={activeMember.name}
-                  className="w-20 h-20 rounded-full object-cover border border-slate-200"
+                  className="w-20 h-20 rounded-[1.35rem] object-cover border border-slate-200 shadow-sm"
                 />
               ) : (
-                <div className="w-20 h-20 rounded-full bg-tifo-dark text-white grid place-items-center font-bold text-xl border-2 border-white/30">
+                <div className="w-20 h-20 rounded-[1.35rem] bg-slate-950 text-white grid place-items-center font-bold text-xl shadow-sm">
                   {memberInitials}
                 </div>
               )}
-              <div>
-                <h3 className="text-2xl font-bold text-black">{activeMember.name}</h3>
-                <p className="text-gray-600">{activeMember.role}</p>
+              <div className="min-w-0 pt-1">
+                <p className="text-[11px] uppercase tracking-[0.18em] text-[#87ceeb] font-semibold mb-2">Csapattag</p>
+                <h3 className="text-2xl md:text-[2rem] font-black text-black leading-tight tracking-tight">{activeMember.name}</h3>
+                <p className="mt-2 inline-flex items-center rounded-full bg-slate-100 text-slate-700 text-sm font-semibold px-3 py-1.5 border border-slate-200">{activeMember.role}</p>
               </div>
             </div>
 
-            <div className="flex items-center justify-between mb-5">
+            <div className="flex items-center justify-between gap-3 mb-6 rounded-2xl border border-slate-200 bg-slate-50 p-3">
               <button
                 type="button"
                 onClick={() => navigateMember(-1)}
                 disabled={editing || team.length < 2}
-                className="text-sm px-3 py-2 rounded-lg border border-gray-200 text-gray-700 hover:bg-[#87ceeb]/10 hover:border-[#87ceeb] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="text-sm px-3.5 py-2 rounded-xl border border-gray-200 bg-white text-gray-700 hover:bg-[#87ceeb]/10 hover:border-[#87ceeb] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
                 Előző személy
               </button>
-              <div className="text-xs text-gray-500">
+              <div className="text-xs text-gray-500 font-medium">
                 {activeIndex >= 0 ? `${activeIndex + 1} / ${team.length}` : ""}
               </div>
               <button
                 type="button"
                 onClick={() => navigateMember(1)}
                 disabled={editing || team.length < 2}
-                className="text-sm px-3 py-2 rounded-lg border border-gray-200 text-gray-700 hover:bg-[#87ceeb]/10 hover:border-[#87ceeb] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="text-sm px-3.5 py-2 rounded-xl border border-gray-200 bg-white text-gray-700 hover:bg-[#87ceeb]/10 hover:border-[#87ceeb] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
                 Következő személy
               </button>
@@ -310,13 +313,15 @@ export default function Rolunk() {
 
 {!editing && (
   <>
-    <p className="text-gray-700 leading-relaxed whitespace-pre-line">
+    <div className="rounded-[1.35rem] border border-slate-200 bg-[linear-gradient(180deg,#ffffff_0%,#f8fbff_100%)] p-5 md:p-6 shadow-[0_14px_35px_-26px_rgba(15,23,42,0.22)]">
+    <p className="text-gray-700 leading-[1.65] whitespace-pre-line text-[15px] md:text-base">
       {activeMember.bio?.trim() || "Még nincs megadva bemutatkozás ehhez a személyhez."}
     </p>
+    </div>
     {isAdmin && (
                 <button
                   type="button"
-                  className="inline-flex items-center gap-2 bg-[#28a745] text-white px-5 py-2.5 rounded-full font-semibold hover:bg-[#87ceeb] hover:text-black transition-colors mt-4"
+                  className="inline-flex items-center gap-2 bg-[#28a745] text-white px-5 py-2.5 rounded-full font-semibold hover:bg-[#87ceeb] hover:text-black transition-colors mt-4 shadow-sm"
                   onClick={() => setEditing(true)}
                 >
         Szerkesztés
@@ -326,13 +331,13 @@ export default function Rolunk() {
 )}
 
             {editing && (
-              <div className="space-y-4">
+              <div className="space-y-4 rounded-[1.35rem] border border-slate-200 bg-[linear-gradient(180deg,#ffffff_0%,#f8fbff_100%)] p-5 md:p-6 shadow-[0_14px_35px_-26px_rgba(15,23,42,0.22)]">
                 <label className="block text-sm font-medium text-gray-800">
                   Rövid bemutatkozás
                   <textarea
                     value={draftBio}
                     onChange={(e) => setDraftBio(e.target.value)}
-                    className="mt-1 w-full border border-gray-200 rounded-xl px-3 py-2 min-h-[130px] focus:outline-none focus:ring-2 focus:ring-[#28a745] focus:border-[#28a745] transition"
+                    className="mt-1.5 w-full border border-gray-200 rounded-2xl px-4 py-3 min-h-[160px] leading-[1.58] focus:outline-none focus:ring-2 focus:ring-[#28a745] focus:border-[#28a745] transition"
                     placeholder="Írj ide egy rövid bemutatkozást..."
                   />
                 </label>
@@ -340,7 +345,7 @@ export default function Rolunk() {
                 <div>
                   <label className="block text-sm font-medium text-gray-800 mb-2">Kép feltöltése</label>
                   <div className="flex items-center gap-3 flex-wrap">
-                    <label className="cursor-pointer bg-[#28a745] text-white px-4 py-2 rounded-xl hover:bg-[#87ceeb] hover:text-black transition-colors">
+                    <label className="cursor-pointer bg-[#28a745] text-white px-4 py-2.5 rounded-full font-semibold hover:bg-[#87ceeb] hover:text-black transition-colors shadow-sm">
                       Fájl kiválasztása
                       <input type="file" accept="image/*" onChange={onPickImage} className="hidden" />
                     </label>
@@ -349,11 +354,12 @@ export default function Rolunk() {
                         <img
                           src={draftImage}
                           alt="Előnézet"
-                          className="w-16 h-16 rounded-full object-cover border border-slate-300 shadow"
+                          className="w-16 h-16 rounded-2xl object-cover border border-slate-300 shadow"
                         />
                         <button
                           type="button"
                           onClick={() => setDraftImage(null)}
+                          className="text-sm text-slate-600 hover:text-black underline underline-offset-4"
                         >
                           Kép törlése
                         </button>
@@ -364,7 +370,7 @@ export default function Rolunk() {
 
                 <button
                   type="button"
-                  className="inline-flex items-center gap-2 bg-[#28a745] text-white font-black px-6 py-2.5 rounded-full hover:bg-[#87ceeb] hover:text-black transition-colors mt-4 disabled:opacity-60"
+                  className="inline-flex items-center gap-2 bg-[#28a745] text-white font-black px-6 py-3 rounded-full hover:bg-[#87ceeb] hover:text-black transition-colors mt-2 disabled:opacity-60 shadow-sm"
                   onClick={saveMember}
                   disabled={saving}
                 >
@@ -372,6 +378,7 @@ export default function Rolunk() {
                 </button>
               </div>
             )}
+            </div>
           </div>
         </div>
       )}
