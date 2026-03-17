@@ -8,6 +8,23 @@ export default function EditEventModal({ event, onClose, onDeleted, onUpdated }:
   onDeleted: () => void,
   onUpdated: () => void
 }) {
+  const descriptionRef = useRef<HTMLTextAreaElement>(null);
+
+  function resizeDescription() {
+    if (!descriptionRef.current) return;
+    const textarea = descriptionRef.current;
+    const maxHeight = Math.round(window.innerHeight * 0.45);
+
+    textarea.style.height = "auto";
+    if (textarea.scrollHeight > maxHeight) {
+      textarea.style.height = `${maxHeight}px`;
+      textarea.style.overflowY = "auto";
+    } else {
+      textarea.style.height = `${textarea.scrollHeight}px`;
+      textarea.style.overflowY = "hidden";
+    }
+  }
+
   // Body scroll tiltása modal nyitásakor
   useEffect(() => {
     const prev = document.body.style.overflow;
@@ -34,6 +51,10 @@ export default function EditEventModal({ event, onClose, onDeleted, onUpdated }:
     image: event.image || "",
     location: event.location || ""
   });
+
+  useEffect(() => {
+    resizeDescription();
+  }, [form.description]);
 
   async function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
@@ -99,7 +120,17 @@ export default function EditEventModal({ event, onClose, onDeleted, onUpdated }:
         <form onSubmit={handleUpdate} className="flex flex-col gap-4">
           <input type="text" value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value }))} className="w-full border border-slate-200 rounded-lg p-2 focus:ring-2 focus:ring-slate-300 transition" placeholder="Esemény címe" required />
           <input type="date" value={form.date} onChange={e => setForm(f => ({ ...f, date: e.target.value }))} className="w-full border border-slate-200 rounded-lg p-2 focus:ring-2 focus:ring-slate-300 transition" required />
-          <textarea value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} className="w-full border border-slate-200 rounded-lg p-2 focus:ring-2 focus:ring-slate-300 transition" placeholder="Leírás" />
+          <textarea
+            ref={descriptionRef}
+            value={form.description}
+            onChange={e => {
+              setForm(f => ({ ...f, description: e.target.value }));
+              resizeDescription();
+            }}
+            rows={5}
+            className="w-full border border-slate-200 rounded-lg p-2 focus:ring-2 focus:ring-slate-300 transition resize-none"
+            placeholder="Leírás"
+          />
           <div className="flex flex-col items-start gap-1">
             <span className="text-sm font-medium text-slate-700">Kép feltöltése</span>
             <label className="inline-block cursor-pointer">

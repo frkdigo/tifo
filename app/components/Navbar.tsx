@@ -43,7 +43,7 @@ export default function Navbar() {
           <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-secondary"></div>
         </div>
       )}
-      <div className="max-w-6xl mx-auto px-4 py-3 flex items-center w-full gap-2">
+      <div className="relative max-w-6xl mx-auto px-4 py-3 flex items-center w-full gap-2">
         {/* LOGO és TIFO felirat */}
         <div className="flex items-center min-w-[120px]">
           <Link href="/" className="flex items-center gap-3">
@@ -118,7 +118,7 @@ export default function Navbar() {
         </div>
 
         {/* Mobil középső felirat */}
-        <div className="md:hidden flex-1 text-center px-2">
+        <div className="md:hidden absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[min(54vw,250px)] text-center pointer-events-none">
           <div className={`${sora.className} inline-flex flex-col items-center leading-tight`}>
             <span className="text-[10px] uppercase tracking-[0.2em] text-emerald-600 font-bold">TIFO</span>
             <span className="text-[11px] text-slate-700 font-semibold tracking-[0.015em]">

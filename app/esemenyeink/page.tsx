@@ -78,9 +78,9 @@ function EventModal({ event, onClose }: { event: any; onClose: () => void }) {
 	}, [onClose]);
 
 	return (
-		<div className="fixed inset-0 z-50 bg-slate-950/45 backdrop-blur-[2px] md:flex md:items-center md:justify-center md:p-4" onClick={onClose}>
+		<div className="fixed inset-0 z-[220] bg-slate-950/45 backdrop-blur-[2px] md:flex md:items-center md:justify-center md:p-4" onClick={onClose}>
 			<div
-				className="absolute inset-x-0 bottom-0 md:static bg-white rounded-t-3xl md:rounded-2xl shadow-2xl w-full md:max-w-2xl h-[92vh] md:h-auto md:max-h-[88vh] overflow-hidden flex flex-col"
+				className="absolute inset-x-0 bottom-0 md:static bg-white rounded-t-3xl md:rounded-2xl shadow-2xl w-full md:max-w-2xl h-[92dvh] md:h-auto md:max-h-[88vh] overflow-hidden flex flex-col"
 				onClick={(e) => e.stopPropagation()}
 			>
 				<div className="sticky top-0 z-10 bg-white/95 backdrop-blur border-b border-slate-100 px-4 pt-3 pb-3 md:px-5 md:pt-4 md:pb-4">
