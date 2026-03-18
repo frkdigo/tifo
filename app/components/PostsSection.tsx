@@ -2,13 +2,15 @@
 
 import { useEffect, useState } from "react";
 import { useAuth } from "./AuthProvider";
+import { uploadImageToStorage } from "../../lib/uploadImageToStorage";
 
 export default function PostsSection() {
   const emojiOptions = ["😀", "😂", "😍", "🥳", "🔥", "❤️", "👍", "🎉", "😎", "🙏"];
   const { user } = useAuth();
   const [posts, setPosts] = useState<any[]>([]);
   const [text, setText] = useState("");
-  const [image, setImage] = useState<string | null>(null);
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(true);
@@ -29,13 +31,8 @@ export default function PostsSection() {
   function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
-    const reader = new FileReader();
-    reader.onload = () => {
-      if (typeof reader.result === "string") {
-        setImage(reader.result);
-      }
-    };
-    reader.readAsDataURL(file);
+    setImageFile(file);
+    setImageUrl(null);
   }
 
   useEffect(() => {
@@ -58,17 +55,28 @@ export default function PostsSection() {
       setError("Bejelentkezés szükséges a posztoláshoz.");
       return;
     }
+    let imageUrlToSend = null;
+    if (imageFile) {
+      try {
+        imageUrlToSend = await uploadImageToStorage(imageFile, user.id);
+        setImageUrl(imageUrlToSend);
+      } catch (err) {
+        setError("Kép feltöltési hiba: " + (err instanceof Error ? err.message : "Ismeretlen hiba"));
+        return;
+      }
+    }
     const res = await fetch("/api/posts", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text, image }), // email maradhat, de csak az admin UI-t cseréljük
+      body: JSON.stringify({ text, image: imageUrlToSend }),
     });
     if (!res.ok) {
       setError("Hiba történt a poszt létrehozásakor.");
     } else {
       setSuccess("A poszt elküldve, jóváhagyásra vár!");
       setText("");
-      setImage(null);
+      setImageFile(null);
+      setImageUrl(null);
       fetchPosts();
     }
   }
