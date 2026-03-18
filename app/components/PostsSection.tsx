@@ -1,3 +1,6 @@
+  function handleImageClick(imageUrl: string) {
+    setSelectedImage(imageUrl);
+  }
 "use client";
 import { useEffect, useState } from "react";
 import { useAuth } from "./AuthProvider";
