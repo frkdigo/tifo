@@ -11,17 +11,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (!token || !password) {
     return res.status(400).json({ error: 'Token és jelszó szükséges' });
   }
-  // Token ellenőrzése
+  // Token ellenőrzése - debug logokkal
+  console.log('Kapott token:', token);
   const { data: tokenRow, error: tokenError } = await supabase
     .from('password_reset_tokens')
-    .select('user_id, expires_at')
+    .select('user_id, expires_at, token')
     .eq('token', token)
     .single();
+  console.log('Token lekérdezés eredménye:', { tokenRow, tokenError });
   if (tokenError || !tokenRow) {
-    return res.status(400).json({ error: 'Érvénytelen vagy lejárt token' });
+    return res.status(400).json({ error: 'Érvénytelen vagy lejárt token', debug: { token, tokenRow, tokenError } });
   }
   if (new Date(tokenRow.expires_at) < new Date()) {
-    return res.status(400).json({ error: 'Token lejárt' });
+    return res.status(400).json({ error: 'Token lejárt', debug: { expires_at: tokenRow.expires_at, now: new Date() } });
   }
   // Jelszó frissítése
   const { error: updateError } = await supabase
