@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 const heroImages = [
   "/images/herokep_1.jpg",
@@ -14,21 +14,35 @@ const heroImages = [
 
 export default function HeroSection() {
   const [current, setCurrent] = useState(0);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Automatikus váltás 5 másodpercenként
   useEffect(() => {
-    const interval = setInterval(() => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    timeoutRef.current = setTimeout(() => {
       setCurrent((prev) => (prev + 1) % heroImages.length);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, []);
+    }, 5000);
+    return () => timeoutRef.current && clearTimeout(timeoutRef.current);
+  }, [current]);
+
+  // Pont navigáció kattintás
+  const goTo = (idx: number) => setCurrent(idx);
 
   return (
     <section className="relative overflow-hidden flex items-center justify-center min-h-screen text-center">
-      <img
-        src={heroImages[current]}
-        alt="Hero background"
-        className="absolute inset-0 w-full h-full object-cover z-0 brightness-[0.38] contrast-95 saturate-80 transition-opacity duration-700"
-        style={{transition: 'opacity 0.7s'}}
-      />
+      {/* Képek fade animációval */}
+      <div className="absolute inset-0 w-full h-full z-0">
+        {heroImages.map((src, idx) => (
+          <img
+            key={src}
+            src={src}
+            alt="Hero background"
+            className={`w-full h-full object-cover absolute inset-0 brightness-[0.38] contrast-95 saturate-80 transition-opacity duration-1000 ${idx === current ? 'opacity-100' : 'opacity-0'}`}
+            style={{zIndex: idx === current ? 1 : 0}}
+            draggable={false}
+          />
+        ))}
+      </div>
       {/* Gradient overlay */}
       <div className="absolute inset-0 z-10 bg-gradient-to-b from-black/20 via-black/40 to-black/65" aria-hidden="true" />
 
@@ -63,6 +77,19 @@ export default function HeroSection() {
           >
             Eseményeink megtekintése
           </a>
+        </div>
+
+        {/* Pont navigáció */}
+        <div className="flex gap-2 mt-10">
+          {heroImages.map((_, idx) => (
+            <button
+              key={idx}
+              onClick={() => goTo(idx)}
+              aria-label={`Kép ${idx + 1}`}
+              className={`w-4 h-4 rounded-full border-2 border-white/60 bg-white/20 transition-all duration-300 ${idx === current ? 'bg-sky-400 border-sky-400 scale-110 shadow-lg' : 'hover:bg-white/40'}`}
+              style={{outline: 'none'}}
+            />
+          ))}
         </div>
       </div>
 
