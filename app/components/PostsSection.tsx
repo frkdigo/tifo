@@ -217,7 +217,18 @@ export default function PostsSection() {
           ) : (
             posts.map(post => (
               <article key={post.id} className="h-full rounded-[1.5rem] overflow-hidden border border-slate-200 bg-[linear-gradient(180deg,#ffffff_0%,#f8fbff_100%)] shadow-[0_16px_35px_-26px_rgba(15,23,42,0.4)] p-5 flex flex-col">
-                {/* Article content... */}
+                {/* Posztoló neve/beceneve */}
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center text-lg font-bold text-slate-700">
+                    {getPostAuthorName(post).charAt(0).toUpperCase()}
+                  </div>
+                  <div className="flex flex-col min-w-0">
+                    <span className="font-semibold text-slate-900 truncate">{getPostAuthorName(post)}</span>
+                    {getPostNickname(post) && (
+                      <span className="text-xs text-[#0d3b66] font-medium truncate">@{getPostNickname(post)}</span>
+                    )}
+                  </div>
+                </div>
                 <div className="text-slate-700 mb-3 line-clamp-4 leading-[1.58] flex-1">{post.text}</div>
                 {post.image && (
                   <img
