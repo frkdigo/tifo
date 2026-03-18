@@ -175,6 +175,7 @@ export default function Navbar() {
                 {user && (
                   <li className="px-5 py-3">
                     <UserMenu user={user} onLogout={() => {
+                      setMenuOpen(false); // Menü bezárása mobilon
                       setLoading(true);
                       logoutUser();
                       setTimeout(() => {
