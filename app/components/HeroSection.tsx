@@ -22,7 +22,9 @@ export default function HeroSection() {
     timeoutRef.current = setTimeout(() => {
       setCurrent((prev) => (prev + 1) % heroImages.length);
     }, 5000);
-    return () => timeoutRef.current && clearTimeout(timeoutRef.current);
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
   }, [current]);
 
   // Pont navigáció kattintás
