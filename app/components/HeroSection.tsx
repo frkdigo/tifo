@@ -32,7 +32,7 @@ export default function HeroSection() {
   const nextImage = () => setCurrent((prev) => (prev + 1) % heroImages.length);
 
   return (
-    <section className="relative overflow-hidden flex items-center justify-center min-h-[90svh] text-center" onClick={nextImage} style={{cursor: 'pointer'}}>
+    <section className="relative overflow-hidden flex items-center justify-center min-h-[87svh] text-center" onClick={nextImage} style={{cursor: 'pointer'}}>
       {/* Képek fade animációval */}
       <div className="absolute inset-0 w-full h-full z-0">
         {heroImages.map((src, idx) => (
