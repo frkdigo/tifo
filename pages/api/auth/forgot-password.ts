@@ -8,15 +8,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
-  const { name, email } = req.body;
-  if (!name || !email) {
-    return res.status(400).json({ error: 'Név és email szükséges' });
+  const { email } = req.body;
+  if (!email) {
+    return res.status(400).json({ error: 'Email szükséges' });
   }
-  // Ellenőrizd, hogy létezik-e user
+  // Ellenőrizd, hogy létezik-e user csak email alapján
   const { data: user, error: userError } = await supabase
     .from('users')
     .select('id')
-    .eq('name', name)
     .eq('email', email)
     .single();
   if (userError || !user) {
