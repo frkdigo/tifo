@@ -250,7 +250,11 @@ export default function PostsSection() {
                     {getPostNickname(post) && (
                       <span className="text-xs text-[#0d3b66] truncate max-w-[160px]">@{getPostNickname(post)}</span>
                     )}
-                  <span className="text-xs text-slate-500">{new Date(post.createdAt || post.created_at).toLocaleString('hu-HU')}</span>
+                  <span className="text-xs text-slate-500">{
+                    new Date(
+                      post.createdAt || post.created_at || 0
+                    ).toLocaleString('hu-HU')
+                  }</span>
                 </div>
 {user?.isAdmin && (
   <button
@@ -326,7 +330,11 @@ export default function PostsSection() {
                 {getPostNickname(selectedPost) && (
                   <div className="text-lg text-[#0d3b66] font-semibold">@{getPostNickname(selectedPost)}</div>
                 )}
-                <div className="text-xs text-slate-500 mt-1">{new Date(selectedPost.createdAt || selectedPost.created_at).toLocaleString('hu-HU')}</div>
+                <div className="text-xs text-slate-500 mt-1">{
+                  new Date(
+                    selectedPost.createdAt || selectedPost.created_at || 0
+                  ).toLocaleString('hu-HU')
+                }</div>
               </div>
             </div>
             <div className="rounded-2xl border border-slate-200 bg-slate-50 p-6 text-slate-800 whitespace-pre-line text-lg font-medium leading-[1.58] shadow-sm mb-4">
