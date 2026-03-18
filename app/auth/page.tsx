@@ -26,31 +26,31 @@ export default function AuthPage() {
 		}
 	}, [user, router]);
 
-	async function handleSubmit(e: React.FormEvent) {
-			async function handleForgotSubmit(e: React.FormEvent) {
-				e.preventDefault();
-				if (forgotSubmitting) return;
-				setForgotSubmitting(true);
-				setForgotError("");
-				setForgotSuccess("");
-				try {
-					const res = await fetch("/api/auth/forgot-password", {
-						method: "POST",
-						headers: { "Content-Type": "application/json" },
-						body: JSON.stringify({ name: forgotName, email: forgotEmail }),
-					});
-					const data = await res.json();
-					if (!res.ok) {
-						setForgotError(data?.error || "Hiba történt");
-					} else {
-						setForgotSuccess("Jelszó-visszaállító email elküldve!");
-					}
-				} catch (err) {
-					setForgotError("Hálózati vagy szerver hiba");
-				} finally {
-					setForgotSubmitting(false);
-				}
+	async function handleForgotSubmit(e: React.FormEvent) {
+		e.preventDefault();
+		if (forgotSubmitting) return;
+		setForgotSubmitting(true);
+		setForgotError("");
+		setForgotSuccess("");
+		try {
+			const res = await fetch("/api/auth/forgot-password", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ name: forgotName, email: forgotEmail }),
+			});
+			const data = await res.json();
+			if (!res.ok) {
+				setForgotError(data?.error || "Hiba történt");
+			} else {
+				setForgotSuccess("Jelszó-visszaállító email elküldve!");
 			}
+		} catch (err) {
+			setForgotError("Hálózati vagy szerver hiba");
+		} finally {
+			setForgotSubmitting(false);
+		}
+	}
+	async function handleSubmit(e: React.FormEvent) {
 		e.preventDefault();
 		if (submitting) return;
 		setSubmitting(true);
