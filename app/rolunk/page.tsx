@@ -221,7 +221,7 @@ export default function Rolunk() {
                   <button
                     type="button"
                     onClick={() => openMember(member)}
-                    className="group relative w-full h-full text-left rounded-[1.5rem] overflow-hidden bg-[linear-gradient(180deg,#ffffff_0%,#f8fbff_58%,#f7fff8_100%)] border border-slate-200/90 p-5 md:p-6 shadow-[0_16px_35px_-26px_rgba(15,23,42,0.4)] hover:shadow-[0_24px_45px_-24px_rgba(13,59,102,0.28)] hover:border-[#87ceeb]/70 hover:-translate-y-1 transition-all duration-200"
+                    className="group relative w-full h-full text-left rounded-[1.5rem] overflow-hidden bg-[linear-gradient(180deg,#ffffff_0%,#f8fbff_58%,#f7fff8_100%)] border border-slate-200/90 p-5 md:p-6 shadow-[0_16px_35px_-26px_rgba(15,23,42,0.4)] hover:shadow-[0_24px_45px_-24px_rgba(13,59,102,0.28)] hover:border-[#87ceeb]/70 hover:-translate-y-1 transition-all duration-200 min-h-[160px] max-h-[180px] md:min-h-[unset] md:max-h-[unset]"
                   >
                     <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none bg-[radial-gradient(circle_at_top_right,rgba(135,206,235,0.16),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(40,167,69,0.12),transparent_26%)]" />
                     <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-[#0d3b66] via-[#87ceeb] to-[#28a745] opacity-80" />
@@ -245,7 +245,7 @@ export default function Rolunk() {
                       <div className="min-w-0 flex-1 flex flex-col justify-center">
                         <div className="font-semibold text-black text-base md:text-lg leading-tight tracking-tight">{member.name}</div>
                         <div className="mt-1.5 inline-flex w-fit max-w-full items-center rounded-full bg-slate-100 text-slate-700 text-xs font-semibold px-2.5 py-1 border border-slate-200 truncate transition-colors duration-200 group-hover:bg-[#87ceeb]/15 group-hover:border-[#87ceeb]/40 group-hover:text-[#0d3b66]">{member.role}</div>
-                        <div className="mt-3 text-sm leading-[1.55] text-slate-500 line-clamp-2">
+                        <div className="mt-3 text-sm leading-[1.55] text-slate-500 line-clamp-2 max-h-[3.2em]">
                           {member.bio?.trim() || "Kattints a részletes bemutatkozás megnyitásához."}
                         </div>
                       </div>
