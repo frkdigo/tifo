@@ -164,7 +164,7 @@ export default function Rolunk() {
               <div className="text-xs text-white/80 uppercase tracking-wide">Alapítás</div>
             </div>
             <div className="rounded-2xl bg-white border border-white/20 shadow-sm p-4">
-              <div className="text-2xl font-extrabold text-tifo-dark">50+</div>
+              <div className="text-2xl font-extrabold text-tifo-dark">10+</div>
               <div className="text-xs text-gray-600 uppercase tracking-wide">Éves esemény</div>
             </div>
             <div className="rounded-2xl bg-white border border-white/20 shadow-sm p-4">
