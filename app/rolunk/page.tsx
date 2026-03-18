@@ -320,6 +320,8 @@ export default function Rolunk() {
                   onClick={() => navigateMember(-1)}
                   disabled={editing || team.length < 2}
                   className="text-sm px-3.5 py-2 rounded-xl border border-blue-900/30 bg-blue-900 text-white hover:bg-blue-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                >
+                  Előző személy
                 </button>
                 <div className="text-xs text-gray-500 font-medium text-center min-w-[48px]">
                   {activeIndex >= 0 ? `${activeIndex + 1} / ${team.length}` : ""}
@@ -329,6 +331,8 @@ export default function Rolunk() {
                   onClick={() => navigateMember(1)}
                   disabled={editing || team.length < 2}
                   className="text-sm px-3.5 py-2 rounded-xl border border-blue-900/30 bg-blue-900 text-white hover:bg-blue-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                >
+                  Következő személy
                 </button>
               </div>
             </div>
