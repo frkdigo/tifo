@@ -68,7 +68,7 @@ export default function PostsSection() {
     const res = await fetch("/api/posts", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text, image: imageUrlToSend }),
+      body: JSON.stringify({ text, image: imageUrlToSend, email: user.email }),
     });
     if (!res.ok) {
       setError("Hiba történt a poszt létrehozásakor.");
