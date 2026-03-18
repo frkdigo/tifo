@@ -215,7 +215,14 @@ export default function Rolunk() {
           {loading ? (
             <div className="text-gray-500">Betöltés...</div>
           ) : (
-            <ul className="grid sm:grid-cols-2 lg:grid-cols-3 gap-1 items-stretch">
+            <ul className="team-list grid sm:grid-cols-2 lg:grid-cols-3 gap-1 items-stretch">
+                    <style>{`
+                      @media (max-width: 640px) {
+                        .team-list {
+                          gap: 0.25rem !important;
+                        }
+                      }
+                    `}</style>
               {team.map((member) => (
                 <li key={member.id} className="h-full">
                   <button
