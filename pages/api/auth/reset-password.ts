@@ -8,7 +8,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const allTokensResult = await supabase
       .from('password_reset_tokens')
       .select('id, user_id, token, expires_at');
-    console.log('Összes token a táblában (API-ból):', allTokensResult.data);
+    console.log('Összes token a táblában (API-ból):', allTokensResult);
+    if (allTokensResult.error) {
+      console.error('Token lista lekérdezési hiba:', allTokensResult.error);
+      return res.status(500).json({ error: 'Token lista lekérdezési hiba', details: allTokensResult.error });
+    }
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
