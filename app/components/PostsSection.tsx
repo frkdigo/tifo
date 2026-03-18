@@ -219,9 +219,17 @@ export default function PostsSection() {
               <article key={post.id} className="h-full rounded-[1.5rem] overflow-hidden border border-slate-200 bg-[linear-gradient(180deg,#ffffff_0%,#f8fbff_100%)] shadow-[0_16px_35px_-26px_rgba(15,23,42,0.4)] p-5 flex flex-col">
                 {/* Posztoló neve/beceneve */}
                 <div className="flex items-center gap-3 mb-2">
-                  <div className="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center text-lg font-bold text-slate-700">
-                    {getPostAuthorName(post).charAt(0).toUpperCase()}
-                  </div>
+                  {getPostAuthorImage(post) ? (
+                    <img
+                      src={getPostAuthorImage(post) ?? undefined}
+                      alt="Profilkép"
+                      className="w-10 h-10 rounded-full object-cover border-2 border-slate-200 shadow"
+                    />
+                  ) : (
+                    <div className="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center text-lg font-bold text-slate-700">
+                      {getPostAuthorName(post).charAt(0).toUpperCase()}
+                    </div>
+                  )}
                   <div className="flex flex-col min-w-0">
                     <span className="font-semibold text-slate-900 truncate">{getPostAuthorName(post)}</span>
                     {getPostNickname(post) && (
