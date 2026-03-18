@@ -130,9 +130,9 @@ export default function PostsSection() {
               <span className="bg-[#28a745] text-white px-6 py-2.5 rounded-full font-semibold hover:bg-[#87ceeb] hover:text-black transition-colors inline-block">Fájl kiválasztása</span>
               <input type="file" accept="image/*" onChange={handleFileChange} className="hidden" />
             </label>
-            {image && (
+            {imageUrl && (
               <img
-                src={image}
+                src={imageUrl}
                 alt="Kép előnézet"
                 className="mt-2 rounded-2xl shadow max-h-32 border border-slate-200"
                 style={{ objectFit: "contain", maxWidth: 180 }}
