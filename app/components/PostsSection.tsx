@@ -1,16 +1,4 @@
-   "use client";
-   import { useEffect, useState } from "react";
-   import { useAuth } from "./AuthProvider";
-   import { uploadImageToStorage } from "../../lib/uploadImageToStorage";
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  function handleImageClick(imageUrl: string) {
-    setSelectedImage(imageUrl);
-  }
-  function handleCloseModal() {
-    setSelectedImage(null);
-  }
 "use client";
-
 import { useEffect, useState } from "react";
 import { useAuth } from "./AuthProvider";
 import { uploadImageToStorage } from "../../lib/uploadImageToStorage";
