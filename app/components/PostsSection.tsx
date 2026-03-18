@@ -1,32 +1,56 @@
+```tsx
 "use client";
 import { useEffect, useState } from "react";
 import { useAuth } from "./AuthProvider";
 import { uploadImageToStorage } from "../../lib/uploadImageToStorage";
 
+type Post = {
+  id: string;
+  text: string;
+  image?: string | null;
+  createdAt?: string;
+  created_at?: string;
+  authorName?: string;
+  authorNickname?: string;
+  authorProfileImage?: string;
+  email?: string;
+  users?: {
+    name?: string;
+    nickname?: string;
+    profileImage?: string;
+  };
+};
+
 export default function PostsPage() {
   const { user } = useAuth();
 
-  const [posts, setPosts] = useState<any[]>([]);
+  const [posts, setPosts] = useState<Post[]>([]);
   const [text, setText] = useState("");
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const [loading, setLoading] = useState(true);
-  const [selectedPost, setSelectedPost] = useState<any | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [selectedPost, setSelectedPost] = useState<Post | null>(null);
 
-  const emojiOptions = ["😀","😂","😍","🔥","👍","🎉"];
+  const emojiOptions = ["😀", "😂", "😍", "🔥", "👍", "🎉"];
 
-  function getPostNickname(post: any) {
+  function getPostNickname(post: Post) {
     return post.authorNickname || post.users?.nickname || null;
   }
 
-  function getPostAuthorName(post: any) {
-    return getPostNickname(post) || post.authorName || post.users?.name || post.email || "Ismeretlen";
+  function getPostAuthorName(post: Post) {
+    return (
+      getPostNickname(post) ||
+      post.authorName ||
+      post.users?.name ||
+      post.email ||
+      "Ismeretlen"
+    );
   }
 
-  function getPostAuthorImage(post: any) {
+  function getPostAuthorImage(post: Post) {
     return post.authorProfileImage || post.users?.profileImage || null;
   }
 
@@ -41,6 +65,7 @@ export default function PostsPage() {
   function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
+
     setImageFile(file);
 
     const reader = new FileReader();
@@ -57,11 +82,19 @@ export default function PostsPage() {
   }, []);
 
   async function fetchPosts() {
-    setLoading(true);
-    const res = await fetch("/api/posts", { cache: "no-store" });
-    const data = await res.json();
-    setPosts(data);
-    setLoading(false);
+    try {
+      setLoading(true);
+      const res = await fetch("/api/posts", { cache: "no-store" });
+
+      if (!res.ok) throw new Error("Fetch hiba");
+
+      const data = await res.json();
+      setPosts(Array.isArray(data) ? data : []);
+    } catch (err) {
+      setError("Nem sikerült betölteni a posztokat.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   async function handleSubmit(e: React.FormEvent) {
@@ -70,92 +103,99 @@ export default function PostsPage() {
     setSuccess("");
 
     if (!user) {
-      setError("Bejelentkezés szükséges a posztoláshoz.");
+      setError("Bejelentkezés szükséges.");
       return;
     }
 
-    let imageUrlToSend = null;
+    let imageUrlToSend: string | null = null;
 
-    if (imageFile) {
-      try {
+    try {
+      setLoading(true);
+
+      if (imageFile) {
         imageUrlToSend = await uploadImageToStorage(imageFile, user.id);
-        setImageUrl(imageUrlToSend);
-      } catch (err) {
-        setError("Kép feltöltési hiba");
-        return;
       }
-    }
 
-    const res = await fetch("/api/posts", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text, image: imageUrlToSend, email: user.email }),
-    });
+      const res = await fetch("/api/posts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          text,
+          image: imageUrlToSend,
+          email: user.email,
+        }),
+      });
 
-    if (!res.ok) {
-      setError("Hiba történt a poszt létrehozásakor.");
-    } else {
-      setSuccess("A poszt elküldve, jóváhagyásra vár!");
+      if (!res.ok) throw new Error();
+
+      setSuccess("Poszt elküldve!");
       setText("");
       setImageFile(null);
       setImageUrl(null);
       fetchPosts();
+    } catch {
+      setError("Hiba történt a feltöltéskor.");
+    } finally {
+      setLoading(false);
     }
   }
 
   async function handleDeletePost(postId: string) {
-    if (!window.confirm("Biztosan törlöd ezt a posztot?")) return;
+    if (!window.confirm("Biztos törlés?")) return;
 
-    const res = await fetch(`/api/posts`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id: postId, action: "delete" }),
-    });
+    try {
+      const res = await fetch("/api/posts", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: postId, action: "delete" }),
+      });
 
-    if (!res.ok) {
-      setError("Hiba történt a poszt törlésekor.");
-    } else {
-      setSuccess("A poszt törölve!");
+      if (!res.ok) throw new Error();
+
+      setSuccess("Törölve!");
       fetchPosts();
+    } catch {
+      setError("Törlés sikertelen.");
     }
   }
 
   return (
-    <section className="max-w-6xl mx-auto px-4 py-12">
+    <section className="max-w-4xl mx-auto px-4 py-10">
+      <h2 className="text-2xl font-bold mb-6">Posztok ({posts.length})</h2>
 
-      {/* HEADER */}
-      <div className="mb-6">
-        <h2 className="text-3xl font-bold">Posztok ({posts.length})</h2>
-      </div>
-
-      {/* FORM */}
       {user && (
-        <form onSubmit={handleSubmit} className="mb-6 flex flex-col gap-4">
+        <form onSubmit={handleSubmit} className="mb-6 flex flex-col gap-3">
           <textarea
             value={text}
             onChange={(e) => setText(e.target.value)}
             placeholder="Írj valamit..."
-            className="border p-2"
+            className="border rounded p-3"
           />
 
           <input type="file" accept="image/*" onChange={handleFileChange} />
 
-          {imageUrl && <img src={imageUrl} className="max-h-32" />}
+          {imageUrl && (
+            <img src={imageUrl} className="max-h-32 rounded" />
+          )}
 
-          <div>
+          <div className="flex gap-2">
             {emojiOptions.map((emoji) => (
               <button
                 key={emoji}
                 type="button"
-                onClick={() => setText(text + emoji)}
+                onClick={() => setText((prev) => prev + emoji)}
               >
                 {emoji}
               </button>
             ))}
           </div>
 
-          <button type="submit" disabled={loading}>
-            Küldés
+          <button
+            type="submit"
+            disabled={loading}
+            className="bg-black text-white px-4 py-2 rounded"
+          >
+            {loading ? "Küldés..." : "Küldés"}
           </button>
 
           {error && <p className="text-red-500">{error}</p>}
@@ -163,12 +203,10 @@ export default function PostsPage() {
         </form>
       )}
 
-      {/* POSTS */}
-      <div className="grid gap-4">
+      <div className="flex flex-col gap-4">
         {posts.map((post) => (
-          <div key={post.id} className="border p-4">
-
-            <div className="flex justify-between">
+          <div key={post.id} className="border rounded p-4">
+            <div className="flex justify-between mb-2">
               <strong>{getPostAuthorName(post)}</strong>
 
               {user?.isAdmin && (
@@ -178,18 +216,21 @@ export default function PostsPage() {
               )}
             </div>
 
-            <p>{post.text}</p>
+            <p className="mb-2">{post.text}</p>
 
             {post.image && (
               <img
                 src={post.image}
-                className="max-h-40 cursor-pointer"
-                onClick={() => handleImageClick(post.image)}
+                className="max-h-60 rounded cursor-pointer"
+                onClick={() => handleImageClick(post.image!)}
               />
             )}
 
             {user && (
-              <button onClick={() => setSelectedPost(post)}>
+              <button
+                onClick={() => setSelectedPost(post)}
+                className="mt-2 text-sm underline"
+              >
                 Megtekintés
               </button>
             )}
@@ -197,32 +238,40 @@ export default function PostsPage() {
         ))}
       </div>
 
-      {/* IMAGE MODAL */}
       {selectedImage && (
         <div
           className="fixed inset-0 bg-black/70 flex items-center justify-center"
           onClick={handleCloseModal}
         >
-          <img src={selectedImage} className="max-h-[90vh]" />
+          <img src={selectedImage} className="max-h-[90vh] rounded" />
         </div>
       )}
 
-      {/* POST MODAL */}
       {selectedPost && (
         <div className="fixed inset-0 bg-black/70 flex items-center justify-center">
-          <div className="bg-white p-6 max-w-lg w-full relative">
-            <button onClick={() => setSelectedPost(null)}>X</button>
+          <div className="bg-white p-6 rounded max-w-lg w-full relative">
+            <button
+              onClick={() => setSelectedPost(null)}
+              className="absolute top-2 right-3"
+            >
+              ✕
+            </button>
 
-            <h2>{getPostAuthorName(selectedPost)}</h2>
+            <h3 className="font-bold mb-2">
+              {getPostAuthorName(selectedPost)}
+            </h3>
+
             <p>{selectedPost.text}</p>
 
             {selectedPost.image && (
-              <img src={selectedPost.image} className="max-h-60" />
+              <img
+                src={selectedPost.image}
+                className="mt-3 max-h-60 rounded"
+              />
             )}
           </div>
         </div>
       )}
-
     </section>
   );
 }
