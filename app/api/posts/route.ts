@@ -1,23 +1,7 @@
-// Import statements
-import { NextRequest, NextResponse } from 'next/server';
-import { supabase } from '../../../lib/supabaseClient';
-
-// Type definitions
 type UserIdRow = {
-  id: number;
-};
-// GET: összes poszt lekérdezése (csak jóváhagyottak vagy pending, ha admin)
-export async function GET(req: NextRequest) {
-  try {
-    const pending = req.nextUrl.searchParams.get('pending');
-    let query = supabase
-      .from('posts')
-      .select(`*, users:users!posts_userId_fkey(nickname, name, profileImage, email)`)
-      .order('createdAt', { ascending: false });
 
 import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '../../../lib/supabaseClient';
-
 
 type UserIdRow = {
   id: number;
