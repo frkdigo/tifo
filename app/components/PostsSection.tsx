@@ -1,15 +1,8 @@
-  function handleImageClick(imageUrl: string) {
-    setSelectedImage(imageUrl);
-  }
 "use client";
 import { useEffect, useState } from "react";
 import { useAuth } from "./AuthProvider";
 import { uploadImageToStorage } from "../../lib/uploadImageToStorage";
-
-export default function PostsSection() {
-  const emojiOptions = ["😀", "😂", "😍", "🥳", "🔥", "❤️", "👍", "🎉", "😎", "🙏"];
-  const { user } = useAuth();
-  const [posts, setPosts] = useState<any[]>([]);
+import { uploadImageToStorage } from "../../lib/uploadImageToStorage";
   const [text, setText] = useState("");
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
