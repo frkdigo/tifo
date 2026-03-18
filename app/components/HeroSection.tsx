@@ -27,11 +27,12 @@ export default function HeroSection() {
     };
   }, [current]);
 
-  // Pont navigáció kattintás
-  const goTo = (idx: number) => setCurrent(idx);
+
+  // Kattintásra váltson a következő képre
+  const nextImage = () => setCurrent((prev) => (prev + 1) % heroImages.length);
 
   return (
-    <section className="relative overflow-hidden flex items-center justify-center min-h-screen text-center">
+    <section className="relative overflow-hidden flex items-center justify-center min-h-[70vh] text-center" onClick={nextImage} style={{cursor: 'pointer'}}>
       {/* Képek fade animációval */}
       <div className="absolute inset-0 w-full h-full z-0">
         {heroImages.map((src, idx) => (
@@ -79,19 +80,6 @@ export default function HeroSection() {
           >
             Eseményeink megtekintése
           </a>
-        </div>
-
-        {/* Pont navigáció */}
-        <div className="flex gap-2 mt-10">
-          {heroImages.map((_, idx) => (
-            <button
-              key={idx}
-              onClick={() => goTo(idx)}
-              aria-label={`Kép ${idx + 1}`}
-              className={`w-4 h-4 rounded-full border-2 border-white/60 bg-white/20 transition-all duration-300 ${idx === current ? 'bg-sky-400 border-sky-400 scale-110 shadow-lg' : 'hover:bg-white/40'}`}
-              style={{outline: 'none'}}
-            />
-          ))}
         </div>
       </div>
 
