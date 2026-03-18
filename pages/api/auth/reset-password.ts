@@ -22,8 +22,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (tokenError || !tokenRow) {
     return res.status(400).json({ error: 'Érvénytelen vagy lejárt token', debug: { token, tokenRow, tokenError } });
   }
-  if (new Date(tokenRow.expires_at) < new Date()) {
-    return res.status(400).json({ error: 'Token lejárt', debug: { expires_at: tokenRow.expires_at, now: new Date() } });
+  // Időzóna és formátum debug
+  const expiresAtUtc = new Date(tokenRow.expires_at).toISOString();
+  const nowUtc = new Date().toISOString();
+  console.log('expires_at (UTC):', expiresAtUtc, 'now (UTC):', nowUtc);
+  if (new Date(expiresAtUtc) < new Date(nowUtc)) {
+    return res.status(400).json({ error: 'Token lejárt', debug: { expires_at: expiresAtUtc, now: nowUtc } });
   }
   // Jelszó frissítése
   const { error: updateError } = await supabase
