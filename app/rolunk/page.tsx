@@ -215,13 +215,13 @@ export default function Rolunk() {
           {loading ? (
             <div className="text-gray-500">Betöltés...</div>
           ) : (
-            <ul className="grid sm:grid-cols-2 lg:grid-cols-3 gap-2 items-stretch">
+            <ul className="grid sm:grid-cols-2 lg:grid-cols-3 gap-1 items-stretch">
               {team.map((member) => (
                 <li key={member.id} className="h-full">
                   <button
                     type="button"
                     onClick={() => openMember(member)}
-                    className="group relative w-full h-full text-left rounded-[1.5rem] overflow-hidden bg-[linear-gradient(180deg,#ffffff_0%,#f8fbff_58%,#f7fff8_100%)] border border-slate-200/90 p-5 md:p-6 shadow-[0_16px_35px_-26px_rgba(15,23,42,0.4)] hover:shadow-[0_24px_45px_-24px_rgba(13,59,102,0.28)] hover:border-[#87ceeb]/70 hover:-translate-y-1 transition-all duration-200 min-h-[120px] max-h-[140px] md:min-h-[unset] md:max-h-[unset]"
+                    className="group relative w-full h-full text-left rounded-[1.5rem] overflow-hidden bg-[linear-gradient(180deg,#ffffff_0%,#f8fbff_58%,#f7fff8_100%)] border border-slate-200/90 p-5 md:p-6 shadow-[0_16px_35px_-26px_rgba(15,23,42,0.4)] hover:shadow-[0_24px_45px_-24px_rgba(13,59,102,0.28)] hover:border-[#87ceeb]/70 hover:-translate-y-1 transition-all duration-200 min-h-[100px] max-h-[120px] md:min-h-[unset] md:max-h-[unset]"
                   >
                     <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none bg-[radial-gradient(circle_at_top_right,rgba(135,206,235,0.16),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(40,167,69,0.12),transparent_26%)]" />
                     <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-[#0d3b66] via-[#87ceeb] to-[#28a745] opacity-80" />
