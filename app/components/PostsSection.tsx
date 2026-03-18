@@ -195,7 +195,7 @@ export default function PostsSection() {
             </div>
             <button
               type="submit"
-              className="w-fit bg-[#28a745] text-white px-7 py-3 rounded-full font-semibold hover:bg-[#87ceeb] hover:text-black transition-colors"
+              className="w-fit bg-blue-900 text-white px-7 py-3 rounded-full font-semibold hover:bg-blue-800 transition-colors"
               disabled={loading}
             >
               Poszt beküldése
@@ -254,7 +254,7 @@ export default function PostsSection() {
                     <button
                       type="button"
                       onClick={() => setSelectedPost(post)}
-                      className="bg-[#28a745] text-white px-4 py-2.5 rounded-full text-sm font-semibold hover:bg-[#87ceeb] hover:text-black transition-colors"
+                      className="bg-blue-900 text-white px-4 py-2.5 rounded-full text-sm font-semibold hover:bg-blue-800 transition-colors"
                     >
                       Megtekintés
                     </button>

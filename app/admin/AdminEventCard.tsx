@@ -18,7 +18,7 @@ export default function AdminEventCard({ event, onUpdated, onDeleted }: { event:
             <div className="pointer-events-none absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-white to-transparent" />
           </div>
           {user && user.isAdmin && (
-            <button className="mt-3 w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition-colors font-semibold shrink-0" onClick={() => setEditOpen(true)}>Szerkesztés</button>
+            <button className="mt-3 w-full bg-blue-900 text-white py-2 rounded hover:bg-blue-800 transition-colors font-semibold shrink-0" onClick={() => setEditOpen(true)}>Szerkesztés</button>
           )}
         </div>
       </div>

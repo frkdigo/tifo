@@ -236,7 +236,7 @@ export default function Esemeneink() {
 									<div className="mt-4">
 										{featured.location && <p className="text-xs text-gray-500 mb-3">Helyszín: {featured.location}</p>}
 										<button
-											className="w-full bg-[#28a745] text-white py-2.5 rounded-xl hover:bg-[#87ceeb] hover:text-black transition-colors font-semibold"
+											className="w-full bg-blue-900 text-white py-2.5 rounded-xl hover:bg-blue-800 transition-colors font-semibold"
 											onClick={() => setSelected(featured)}
 										>
 											Részletek megnyitása
@@ -274,7 +274,7 @@ export default function Esemeneink() {
 												<div className="pointer-events-none absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-white to-transparent" />
 											</div>
 											<button
-												className="mt-3 w-full bg-[#28a745] text-white py-2 rounded-xl hover:bg-[#87ceeb] hover:text-black transition-colors font-semibold shrink-0"
+												className="mt-3 w-full bg-blue-900 text-white py-2 rounded-xl hover:bg-blue-800 transition-colors font-semibold shrink-0"
 												onClick={() => setSelected(event)}
 											>
 												Érdekel
@@ -299,7 +299,7 @@ export default function Esemeneink() {
 											<div className="text-xs text-gray-500">{new Date(event.date).toLocaleDateString("hu-HU")}</div>
 										</div>
 										<button
-											className="text-sm bg-[#28a745] hover:bg-[#87ceeb] hover:text-black text-white px-3 py-1.5 rounded-xl transition-colors"
+											className="text-sm bg-blue-900 hover:bg-blue-800 text-white px-3 py-1.5 rounded-xl transition-colors"
 											onClick={() => setSelected(event)}
 										>
 											Megnézem

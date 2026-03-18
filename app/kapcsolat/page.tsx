@@ -133,7 +133,7 @@ export default function Kapcsolat() {
 
           <button
             type="submit"
-            className="inline-flex justify-center items-center gap-2 rounded-full bg-[#28a745] text-white font-black px-8 py-3.5 hover:bg-[#87ceeb] hover:text-black hover:scale-105 active:scale-95 transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100"
+            className="inline-flex justify-center items-center gap-2 rounded-full bg-blue-900 text-white font-black px-8 py-3.5 hover:bg-blue-800 hover:scale-105 active:scale-95 transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100"
             disabled={sending}
           >
             {sending ? "Küldés..." : (

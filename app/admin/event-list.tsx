@@ -31,7 +31,7 @@ export default function AdminEventList() {
               <div className="text-xs text-gray-500">{new Date(event.date).toLocaleDateString('hu-HU')}</div>
             </div>
             <div className="flex gap-2">
-              <button className="text-secondary hover:underline">Szerkesztés</button>
+              <button className="bg-blue-900 text-white px-3 py-1.5 rounded-lg hover:bg-blue-800 transition-colors font-semibold">Szerkesztés</button>
               <button className="text-red-500 hover:underline">Törlés</button>
             </div>
           </li>

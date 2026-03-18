@@ -104,9 +104,9 @@ function AdminPageContent() {
         <div className="premium-surface rounded-3xl p-6 md:p-10">
           <h1 className="text-3xl md:text-4xl font-black text-slate-900 mb-8 text-center">Admin felület</h1>
           <div className="mb-8 flex gap-4 justify-center">
-            <button className={"px-10 py-3 rounded-full font-semibold text-lg transition-colors min-w-[140px] " + (tab === "posts" ? "bg-slate-900 text-white shadow-lg" : "bg-white/90 text-slate-900 border border-slate-200 hover:bg-slate-100")}
+            <button className={"px-10 py-3 rounded-full font-semibold text-lg transition-colors min-w-[140px] " + (tab === "posts" ? "bg-blue-900 text-white shadow-lg" : "bg-white/90 text-slate-900 border border-slate-200 hover:bg-blue-50 hover:border-blue-200")}
               onClick={() => router.push("/admin?tab=posts")}>Posztok</button>
-            <button className={"px-10 py-3 rounded-full font-semibold text-lg transition-colors min-w-[140px] " + (tab === "events" ? "bg-slate-900 text-white shadow-lg" : "bg-white/90 text-slate-900 border border-slate-200 hover:bg-slate-100")}
+            <button className={"px-10 py-3 rounded-full font-semibold text-lg transition-colors min-w-[140px] " + (tab === "events" ? "bg-blue-900 text-white shadow-lg" : "bg-white/90 text-slate-900 border border-slate-200 hover:bg-blue-50 hover:border-blue-200")}
               onClick={() => router.push("/admin?tab=events")}>Események</button>
           </div>
           {tab === "posts" && (
@@ -130,8 +130,8 @@ function AdminPageContent() {
                       )}
                       <p className="text-sm text-slate-700 max-h-16 overflow-hidden">{post.text}</p>
                       <div className="mt-2 grid grid-cols-2 gap-2 w-full">
-                        <button className="w-full bg-slate-800 text-white px-3 py-2 rounded-lg hover:bg-slate-900 shadow-sm font-semibold text-sm transition-all duration-150 active:scale-[0.98]" onClick={() => setSelectedPost(post)}>Megtekintés</button>
-                        <button className="w-full bg-emerald-600 text-white px-3 py-2 rounded-lg hover:bg-emerald-700 shadow-sm font-semibold text-sm transition-all duration-150 active:scale-[0.98]" onClick={() => approvePost(post.id)}>Jóváhagyás</button>
+                        <button className="w-full bg-blue-900 text-white px-3 py-2 rounded-lg hover:bg-blue-800 shadow-sm font-semibold text-sm transition-all duration-150 active:scale-[0.98]" onClick={() => setSelectedPost(post)}>Megtekintés</button>
+                        <button className="w-full bg-blue-900 text-white px-3 py-2 rounded-lg hover:bg-blue-800 shadow-sm font-semibold text-sm transition-all duration-150 active:scale-[0.98]" onClick={() => approvePost(post.id)}>Jóváhagyás</button>
                         <button className="col-span-2 w-full bg-rose-600 text-white px-3 py-2 rounded-lg hover:bg-rose-700 shadow-sm font-semibold text-sm transition-all duration-150 active:scale-[0.98]" onClick={() => {
                           if (window.confirm('Biztosan elutasítod ezt a posztot?')) rejectPost(post.id);
                         }}>Elutasítás</button>

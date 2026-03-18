@@ -69,14 +69,14 @@ export default function HeroSection() {
         <div className="flex flex-col sm:flex-row gap-4 items-center">
           <a
             href="/kapcsolat"
-            className="inline-flex items-center gap-2 bg-sky-400 text-slate-900 font-black px-8 py-4 rounded-full shadow-xl hover:bg-sky-300 hover:scale-105 active:scale-95 transition-all duration-200 text-base tracking-tight"
+            className="inline-flex items-center gap-2 bg-blue-900 text-white font-black px-8 py-4 rounded-full shadow-xl hover:bg-blue-800 hover:scale-105 active:scale-95 transition-all duration-200 text-base tracking-tight"
           >
             Csatlakozz most
             <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
           </a>
           <a
             href="/esemenyeink"
-            className="inline-flex items-center gap-2 bg-white/15 backdrop-blur border border-white/30 text-white font-semibold px-8 py-4 rounded-full hover:bg-white/25 transition-all duration-200 text-base"
+            className="inline-flex items-center gap-2 bg-blue-900/80 backdrop-blur border border-blue-700 text-white font-semibold px-8 py-4 rounded-full hover:bg-blue-900 transition-all duration-200 text-base"
           >
             Eseményeink megtekintése
           </a>

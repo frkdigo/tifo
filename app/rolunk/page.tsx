@@ -319,9 +319,7 @@ export default function Rolunk() {
                   type="button"
                   onClick={() => navigateMember(-1)}
                   disabled={editing || team.length < 2}
-                  className="text-sm px-3.5 py-2 rounded-xl border border-gray-200 bg-white text-gray-700 hover:bg-[#87ceeb]/10 hover:border-[#87ceeb] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                >
-                  Előző személy
+                  className="text-sm px-3.5 py-2 rounded-xl border border-blue-900/30 bg-blue-900 text-white hover:bg-blue-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                 </button>
                 <div className="text-xs text-gray-500 font-medium text-center min-w-[48px]">
                   {activeIndex >= 0 ? `${activeIndex + 1} / ${team.length}` : ""}
@@ -330,9 +328,7 @@ export default function Rolunk() {
                   type="button"
                   onClick={() => navigateMember(1)}
                   disabled={editing || team.length < 2}
-                  className="text-sm px-3.5 py-2 rounded-xl border border-gray-200 bg-white text-gray-700 hover:bg-[#87ceeb]/10 hover:border-[#87ceeb] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                >
-                  Következő személy
+                  className="text-sm px-3.5 py-2 rounded-xl border border-blue-900/30 bg-blue-900 text-white hover:bg-blue-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                 </button>
               </div>
             </div>
@@ -353,7 +349,7 @@ export default function Rolunk() {
     {isAdmin && (
                 <button
                   type="button"
-                  className="inline-flex items-center gap-2 bg-[#28a745] text-white px-5 py-2.5 rounded-full font-semibold hover:bg-[#87ceeb] hover:text-black transition-colors mt-4 shadow-sm"
+                  className="inline-flex items-center gap-2 bg-blue-900 text-white px-5 py-2.5 rounded-full font-semibold hover:bg-blue-800 transition-colors mt-4 shadow-sm"
                   onClick={() => setEditing(true)}
                 >
         Szerkesztés
@@ -377,7 +373,7 @@ export default function Rolunk() {
                 <div>
                   <label className="block text-sm font-medium text-gray-800 mb-2">Kép feltöltése</label>
                   <div className="flex items-center gap-3 flex-wrap">
-                    <label className="cursor-pointer bg-[#28a745] text-white px-4 py-2.5 rounded-full font-semibold hover:bg-[#87ceeb] hover:text-black transition-colors shadow-sm">
+                    <label className="cursor-pointer bg-blue-900 text-white px-4 py-2.5 rounded-full font-semibold hover:bg-blue-800 transition-colors shadow-sm">
                       Fájl kiválasztása
                       <input type="file" accept="image/*" onChange={onPickImage} className="hidden" />
                     </label>
@@ -402,7 +398,7 @@ export default function Rolunk() {
 
                 <button
                   type="button"
-                  className="inline-flex items-center gap-2 bg-[#28a745] text-white font-black px-6 py-3 rounded-full hover:bg-[#87ceeb] hover:text-black transition-colors mt-2 disabled:opacity-60 shadow-sm"
+                  className="inline-flex items-center gap-2 bg-blue-900 text-white font-black px-6 py-3 rounded-full hover:bg-blue-800 transition-colors mt-2 disabled:opacity-60 shadow-sm"
                   onClick={saveMember}
                   disabled={saving}
                 >

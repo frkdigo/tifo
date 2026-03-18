@@ -13,7 +13,7 @@ export default function AdminLogin() {
           Email
           <input type="email" name="email" className="mt-1 w-full border rounded px-3 py-2" required />
         </label>
-        <button type="submit" className="bg-secondary text-white font-semibold px-6 py-2 rounded hover:bg-primary transition">Bejelentkezés</button>
+        <button type="submit" className="bg-blue-900 text-white font-semibold px-6 py-2 rounded hover:bg-blue-800 transition">Bejelentkezés</button>
       </form>
       <p className="text-xs text-gray-400 mt-4 text-center">A bejelentkezéshez Supabase Auth lesz használva.</p>
     </main>

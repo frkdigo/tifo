@@ -25,8 +25,14 @@ export default function ProfilomPage() {
       const res = await fetch(`/api/profile?email=${encodeURIComponent(user.email)}`, { cache: "no-store" });
       if (!res.ok) return;
       const data = await res.json();
-      setNickname(data.nickname || data.name || user.nickname || user.name || "");
-      setProfileImage(data.profileimage ?? data.profileImage ?? user.profileimage ?? user.profileImage ?? null);
+      const freshNickname = data.nickname || data.name || user.nickname || user.name || "";
+      const freshImage = data.profileimage ?? data.profileImage ?? user.profileimage ?? user.profileImage ?? null;
+      setNickname(freshNickname);
+      setProfileImage(freshImage);
+      // Szinkronizálja a navbar-t is, ha az adatbázisban más kép van mint a cache-ben
+      if (freshImage !== (user.profileimage ?? user.profileImage ?? null) || freshNickname !== (user.nickname || user.name || "")) {
+        updateUserProfile(freshNickname, freshImage);
+      }
     }
 
     loadProfile();
@@ -125,7 +131,7 @@ export default function ProfilomPage() {
         <button
           type="submit"
           disabled={saving}
-          className="bg-primary text-white font-semibold px-6 py-2 rounded hover:bg-secondary transition disabled:opacity-60"
+          className="bg-blue-900 text-white font-semibold px-6 py-2 rounded hover:bg-blue-800 transition disabled:opacity-60"
         >
           {saving ? "Mentés..." : "Mentés"}
         </button>

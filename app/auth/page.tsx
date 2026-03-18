@@ -141,7 +141,7 @@ export default function AuthPage() {
             <button
               type="submit"
               disabled={forgotSubmitting}
-              className="bg-blue-700 text-white rounded px-4 py-2 font-semibold transition-all duration-150 active:scale-95 active:brightness-90 disabled:opacity-70 disabled:cursor-not-allowed"
+              className="bg-blue-900 text-white rounded px-4 py-2 font-semibold transition-all duration-150 active:scale-95 active:brightness-90 disabled:opacity-70 disabled:cursor-not-allowed"
             >
               {forgotSubmitting
                 ? "Folyamatban..."
@@ -219,7 +219,7 @@ export default function AuthPage() {
             <button
               type="submit"
               disabled={submitting}
-              className="bg-slate-900 text-white rounded px-4 py-2 font-semibold transition-all duration-150 active:scale-95 active:brightness-90 disabled:opacity-70 disabled:cursor-not-allowed"
+              className="bg-blue-900 text-white rounded px-4 py-2 font-semibold transition-all duration-150 active:scale-95 active:brightness-90 disabled:opacity-70 disabled:cursor-not-allowed"
             >
               {submitting
                 ? "Folyamatban..."
