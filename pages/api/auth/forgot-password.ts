@@ -30,15 +30,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   // Generálj új token-t
   const token = Math.random().toString(36).substring(2) + Date.now().toString(36);
   const expires = new Date(Date.now() + 1000 * 60 * 30); // 30 perc
-  // Mentsd el az új token-t
-  await supabase
+  // Mentsd el az új token-t, és logoljunk mindent
+  const { error: insertError, data: insertData } = await supabase
     .from('password_reset_tokens')
     .insert([{ user_id: user.id, token, expires_at: expires }]);
+  console.log('Token beszúrás:', { user_id: user.id, token, expires_at: expires });
+  if (insertError) {
+    console.error('Token beszúrási hiba:', insertError);
+    return res.status(500).json({ error: 'Token beszúrási hiba', details: insertError });
+  }
   // Küldj emailt
   const resetUrl = `https://tifo.hu/auth/reset-password?token=${token}`;
   try {
     await sendMail(email, resetUrl);
   } catch (mailErr) {
+    console.error('Email küldési hiba:', mailErr);
     return res.status(500).json({ error: 'Email küldése sikertelen' });
   }
   return res.status(200).json({ success: true });
