@@ -112,24 +112,7 @@ export default function AuthPage() {
 							Nev
 							<input type="text" value={name} onChange={e => setName(e.target.value)} className="mt-1 w-full border rounded px-3 py-2" required={!isLogin} />
 						</label>
-					)}
-					<label>
-						Email
-						<input type="email" value={email} onChange={e => setEmail(e.target.value)} className="mt-1 w-full border rounded px-3 py-2" required />
-					</label>
-					<label>
-						Jelszó
-						<input type="password" value={password} onChange={e => setPassword(e.target.value)} className="mt-1 w-full border rounded px-3 py-2" required />
-					</label>
-					{isLogin && (
-						<label className="flex items-center gap-2 select-none">
-							<input
-								type="checkbox"
-								checked={rememberMe}
-								onChange={e => setRememberMe(e.target.checked)}
-								className="accent-primary"
-															</label>
-														)}
+																												)}
 														<label>
 															Email
 															<input type="email" value={email} onChange={e => setEmail(e.target.value)} className="mt-1 w-full border rounded px-3 py-2" required />
