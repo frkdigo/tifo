@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 
 const heroImages = [
   "/images/herokep_1.jpg",
