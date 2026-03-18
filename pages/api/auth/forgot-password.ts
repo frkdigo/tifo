@@ -21,10 +21,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (userError || !user) {
     return res.status(404).json({ error: 'Nincs ilyen felhasználó' });
   }
-  // Generálj token-t
+  // Előző tokenek törlése ehhez a userhez (mindig új linket küldjünk)
+  await supabase
+    .from('password_reset_tokens')
+    .delete()
+    .eq('user_id', user.id);
+
+  // Generálj új token-t
   const token = Math.random().toString(36).substring(2) + Date.now().toString(36);
   const expires = new Date(Date.now() + 1000 * 60 * 30); // 30 perc
-  // Mentsd el a token-t
+  // Mentsd el az új token-t
   await supabase
     .from('password_reset_tokens')
     .insert([{ user_id: user.id, token, expires_at: expires }]);
