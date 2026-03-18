@@ -1,3 +1,10 @@
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  function handleImageClick(imageUrl: string) {
+    setSelectedImage(imageUrl);
+  }
+  function handleCloseModal() {
+    setSelectedImage(null);
+  }
 "use client";
 
 import { useEffect, useState } from "react";
@@ -32,7 +39,13 @@ export default function PostsSection() {
     const file = e.target.files?.[0];
     if (!file) return;
     setImageFile(file);
-    setImageUrl(null);
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (typeof reader.result === "string") {
+        setImageUrl(reader.result);
+      }
+    };
+    reader.readAsDataURL(file);
   }
 
   useEffect(() => {
@@ -203,7 +216,32 @@ export default function PostsSection() {
 )}
               </div>
               <div className="text-slate-700 mb-3 line-clamp-4 leading-[1.58] flex-1">{post.text}</div>
-              {post.image && <img src={post.image} alt="post" className="max-h-48 w-full rounded-2xl mt-1 border border-slate-200 object-contain bg-slate-50" style={{maxWidth:'100%'}} loading="lazy" decoding="async" />}
+              {post.image && (
+                <img
+                  src={post.image}
+                  alt="post"
+                  className="max-h-48 w-full rounded-2xl mt-1 border border-slate-200 object-contain bg-slate-50 cursor-pointer"
+                  style={{maxWidth:'100%'}} loading="lazy" decoding="async"
+                  onClick={() => handleImageClick(post.image)}
+                />
+              )}
+                    {selectedImage && (
+                      <div
+                        className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70"
+                        onClick={handleCloseModal}
+                      >
+                        <img
+                          src={selectedImage}
+                          alt="Nagy kép"
+                          className="max-w-[90vw] max-h-[90vh] rounded-xl shadow-lg border-4 border-white"
+                          style={{ objectFit: "contain" }}
+                        />
+                        <button
+                          className="absolute top-4 right-4 bg-white text-black rounded-full px-4 py-2 font-bold shadow-lg"
+                          onClick={handleCloseModal}
+                        >Bezárás</button>
+                      </div>
+                    )}
               {user && (
                 <button
                   type="button"
