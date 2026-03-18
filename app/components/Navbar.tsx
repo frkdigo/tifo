@@ -190,6 +190,7 @@ export default function Navbar() {
                   <li className="px-5 py-3">
                     <Link
                       href="/auth"
+                      onClick={() => setMenuOpen(false)}
                       className={`block w-full text-center px-4 py-2.5 rounded-full font-semibold transition-all duration-200 shadow-sm active:scale-95 ${
                         pathname === '/auth'
                           ? 'bg-tifo-green text-white'
