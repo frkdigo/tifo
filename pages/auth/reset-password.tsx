@@ -95,7 +95,7 @@ export default function ResetPasswordPage() {
               <button
                 type="submit"
                 disabled={submitting}
-                className="bg-tifo-green hover:bg-sky-400 text-white rounded-full px-6 py-2 font-bold text-base shadow-md transition-all duration-150 active:scale-95 active:brightness-90 disabled:opacity-70 disabled:cursor-not-allowed"
+                className="bg-sky-500 hover:bg-sky-600 text-white rounded-full px-6 py-2 font-bold text-base shadow-md transition-all duration-150 active:scale-95 active:brightness-90 disabled:opacity-70 disabled:cursor-not-allowed"
               >
                 {submitting ? "Folyamatban..." : "Jelszó frissítése"}
               </button>
