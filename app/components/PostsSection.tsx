@@ -289,23 +289,25 @@ export default function PostsSection() {
           ))
         )}
       </div>
-      {selectedImage && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70"
+      {/* A nagy kép overlay mindig a legvégén legyen, hogy minden modal fölött jelenjen meg */}
+    </section>
+    {selectedImage && (
+      <div
+        className="fixed inset-0 z-[9999] flex items-center justify-center bg-black bg-opacity-70"
+        onClick={handleCloseModal}
+      >
+        <img
+          src={selectedImage}
+          alt="Nagy kép"
+          className="max-w-[90vw] max-h-[90vh] rounded-xl shadow-lg border-4 border-white"
+          style={{ objectFit: "contain" }}
+        />
+        <button
+          className="absolute top-4 right-4 bg-white text-black rounded-full px-4 py-2 font-bold shadow-lg"
           onClick={handleCloseModal}
-        >
-          <img
-            src={selectedImage}
-            alt="Nagy kép"
-            className="max-w-[90vw] max-h-[90vh] rounded-xl shadow-lg border-4 border-white"
-            style={{ objectFit: "contain" }}
-          />
-          <button
-            className="absolute top-4 right-4 bg-white text-black rounded-full px-4 py-2 font-bold shadow-lg"
-            onClick={handleCloseModal}
-          >Bezárás</button>
-        </div>
-      )}
+        >Bezárás</button>
+      </div>
+    )}
       {selectedPost && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
           <div className="w-full max-w-2xl rounded-3xl bg-white shadow-[0_8px_32px_rgba(0,0,0,0.18)] border border-slate-200 p-7 relative max-h-[85vh] overflow-y-auto animate-fade-in">
