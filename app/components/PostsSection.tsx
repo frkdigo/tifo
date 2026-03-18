@@ -238,7 +238,7 @@ export default function PostsSection() {
               <div className="h-1 -mx-5 -mt-5 mb-5 bg-gradient-to-r from-[#0d3b66] via-[#87ceeb] to-[#28a745]" />
               <div className="flex items-center gap-3 mb-3">
                   {getPostAuthorImage(post) && (
-                    <img src={getPostAuthorImage(post)} alt="Profilkép" className="w-11 h-11 rounded-2xl border border-slate-200 object-cover flex-shrink-0 shadow-sm" />
+                    <img src={getPostAuthorImage(post) ?? undefined} alt="Profilkép" className="w-11 h-11 rounded-2xl border border-slate-200 object-cover flex-shrink-0 shadow-sm" />
                 )}
                 {!getPostAuthorImage(post) && (
                   <div className="w-11 h-11 rounded-2xl bg-slate-950 text-white flex items-center justify-center font-bold shadow-sm">
@@ -315,7 +315,7 @@ export default function PostsSection() {
             </button>
             <div className="flex items-center gap-5 mb-6">
               {getPostAuthorImage(selectedPost) ? (
-                <img src={getPostAuthorImage(selectedPost)} alt="Profilkép" className="w-16 h-16 rounded-2xl border-4 border-slate-100 object-cover shadow-lg" />
+                <img src={getPostAuthorImage(selectedPost) ?? undefined} alt="Profilkép" className="w-16 h-16 rounded-2xl border-4 border-slate-100 object-cover shadow-lg" />
               ) : (
                 <div className="w-16 h-16 rounded-2xl bg-slate-950 text-white flex items-center justify-center text-3xl font-bold border-4 border-slate-100 shadow-lg">
                   {getPostAuthorName(selectedPost).charAt(0).toUpperCase()}
