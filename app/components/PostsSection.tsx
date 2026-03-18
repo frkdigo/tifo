@@ -342,7 +342,13 @@ export default function PostsSection() {
             </div>
             {selectedPost.image && (
               <div className="flex justify-center">
-                <img src={selectedPost.image} alt="Poszt képe" className="max-h-96 rounded-2xl border border-slate-200 shadow-lg mt-2 object-contain bg-slate-50" style={{maxWidth:'100%'}} loading="lazy" decoding="async" />
+                <img
+                  src={selectedPost.image}
+                  alt="Poszt képe"
+                  className="max-h-96 rounded-2xl border border-slate-200 shadow-lg mt-2 object-contain bg-slate-50 cursor-pointer"
+                  style={{maxWidth:'100%'}} loading="lazy" decoding="async"
+                  onClick={() => setSelectedImage(selectedPost.image!)}
+                />
               </div>
             )}
           </div>
