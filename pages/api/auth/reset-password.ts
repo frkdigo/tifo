@@ -41,10 +41,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   // Jelszó frissítése
   const { error: updateError } = await supabase
     .from('users')
-    .update({ password })
+    .update({ passwordHash: password })
     .eq('id', tokenRow.user_id);
   if (updateError) {
-    return res.status(500).json({ error: 'Jelszó frissítése sikertelen' });
+    console.error('Jelszó frissítése hiba:', updateError);
+    return res.status(500).json({ error: 'Jelszó frissítése sikertelen', details: updateError });
   }
   // Token törlése
   await supabase
