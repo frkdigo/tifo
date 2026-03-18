@@ -231,13 +231,24 @@ export default function PostsSection() {
                   />
                 )}
                 {user && (
-                  <button
-                    type="button"
-                    onClick={() => setSelectedPost(post)}
-                    className="mt-4 bg-[#28a745] text-white px-4 py-2.5 rounded-full text-sm font-semibold hover:bg-[#87ceeb] hover:text-black transition-colors"
-                  >
-                    Megtekintés
-                  </button>
+                  <div className="flex flex-col gap-2 mt-4">
+                    <button
+                      type="button"
+                      onClick={() => setSelectedPost(post)}
+                      className="bg-[#28a745] text-white px-4 py-2.5 rounded-full text-sm font-semibold hover:bg-[#87ceeb] hover:text-black transition-colors"
+                    >
+                      Megtekintés
+                    </button>
+                    {user.isAdmin && (
+                      <button
+                        type="button"
+                        onClick={() => handleDeletePost(post.id)}
+                        className="bg-red-500 hover:bg-red-600 text-white rounded-full px-4 py-2.5 text-sm font-semibold transition-colors"
+                      >
+                        Törlés
+                      </button>
+                    )}
+                  </div>
                 )}
               </article>
             ))
