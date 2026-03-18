@@ -224,7 +224,7 @@ export default function Rolunk() {
                       }
                     `}</style>
               {team.map((member) => (
-                <li key={member.id} className="h-full">
+                <li key={member.id} className="h-full team-card">
                   <button
                     type="button"
                     onClick={() => openMember(member)}
@@ -252,9 +252,20 @@ export default function Rolunk() {
                       <div className="min-w-0 flex-1 flex flex-col justify-center">
                         <div className="font-semibold text-black text-base md:text-lg leading-tight tracking-tight">{member.name}</div>
                         <div className="mt-1.5 inline-flex w-fit max-w-full items-center rounded-full bg-slate-100 text-slate-700 text-xs font-semibold px-2.5 py-1 border border-slate-200 truncate transition-colors duration-200 group-hover:bg-[#87ceeb]/15 group-hover:border-[#87ceeb]/40 group-hover:text-[#0d3b66]">{member.role}</div>
-                        <div className="mt-3 text-sm leading-[1.55] text-slate-500 line-clamp-2 max-h-[3.2em]">
+                        <div className="mt-3 text-sm leading-[1.55] text-slate-500 relative line-clamp-2 max-h-[3.2em]">
                           {member.bio?.trim() || "Kattints a részletes bemutatkozás megnyitásához."}
+                          <span className="absolute left-0 right-0 bottom-0 h-5 bg-gradient-to-t from-white/90 to-transparent pointer-events-none" />
                         </div>
+                            <style>{`
+                              @media (max-width: 640px) {
+                                .team-list {
+                                  gap: 0 !important;
+                                }
+                                .team-card {
+                                  margin-bottom: 0.5rem;
+                                }
+                              }
+                            `}</style>
                       </div>
                     </div>
                   </button>
