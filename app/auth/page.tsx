@@ -230,20 +230,21 @@ export default function AuthPage() {
           </form>
 
           <button
-            className="mt-4 text-sm text-slate-700 underline"
+            className="mt-4 text-sm text-slate-700 underline hover:text-tifo-green transition"
             onClick={() => setIsLogin((v) => !v)}
           >
             {isLogin
               ? "Nincs még fiókod? Regisztrálj!"
               : "Van már fiókod? Jelentkezz be!"}
           </button>
-
-          <button
-            className="mt-2 text-sm text-blue-700 underline"
-            onClick={() => setShowForgot(true)}
-          >
-            Elfelejtett jelszó
-          </button>
+          {isLogin && (
+            <button
+              className="mt-2 text-sm text-sky-500 underline hover:text-tifo-green transition"
+              onClick={() => setShowForgot(true)}
+            >
+              Elfelejtett jelszó
+            </button>
+          )}
         </>
       )}
     </div>

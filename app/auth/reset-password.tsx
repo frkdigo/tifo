@@ -58,45 +58,41 @@ export default function ResetPasswordPage() {
   }
 
   return (
-    <main className="flex-grow flex flex-col items-center justify-center">
+    <main className="flex-grow flex flex-col items-center justify-center bg-site min-h-screen">
       <div className="max-w-md w-full py-12 px-4">
-        <h1 className="text-2xl font-bold mb-6 text-center">
+        <h1 className="text-2xl font-black mb-6 text-center text-slate-900 drop-shadow-sm tracking-tight">
           Új jelszó beállítása
         </h1>
-
         <form
           onSubmit={handleSubmit}
-          className="bg-white rounded-xl shadow p-6 flex flex-col gap-4"
+          className="premium-surface rounded-2xl shadow-xl p-8 flex flex-col gap-5 border border-slate-200"
         >
-          <label>
+          <label className="text-sm font-semibold text-slate-700">
             Új jelszó
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="mt-1 w-full border rounded px-3 py-2"
+              className="mt-1 w-full border border-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-tifo-green focus:border-tifo-green transition"
               required
             />
           </label>
-
-          <label>
-            Jelszó még egyszer
+          <label className="text-sm font-semibold text-slate-700">
+            Új jelszó megerősítése
             <input
               type="password"
               value={password2}
               onChange={(e) => setPassword2(e.target.value)}
-              className="mt-1 w-full border rounded px-3 py-2"
+              className="mt-1 w-full border border-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-tifo-green focus:border-tifo-green transition"
               required
             />
           </label>
-
-          {error && <div className="text-red-600 text-sm">{error}</div>}
-          {success && <div className="text-green-600 text-sm">{success}</div>}
-
+          {error && <div className="text-red-600 text-sm font-semibold">{error}</div>}
+          {success && <div className="text-green-600 text-sm font-semibold">{success}</div>}
           <button
             type="submit"
             disabled={submitting}
-            className="bg-blue-700 text-white rounded px-4 py-2 font-semibold transition-all duration-150 active:scale-95 active:brightness-90 disabled:opacity-70 disabled:cursor-not-allowed"
+            className="bg-tifo-green hover:bg-sky-400 text-white rounded-full px-6 py-2 font-bold text-base shadow-md transition-all duration-150 active:scale-95 active:brightness-90 disabled:opacity-70 disabled:cursor-not-allowed"
           >
             {submitting ? "Folyamatban..." : "Jelszó frissítése"}
           </button>
