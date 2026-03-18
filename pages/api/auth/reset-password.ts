@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { createClient } from '@supabase/supabase-js';
+import bcrypt from 'bcryptjs';
 
 const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!);
 
@@ -38,10 +39,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (new Date(expiresAtUtc) < new Date(nowUtc)) {
     return res.status(400).json({ error: 'Token lejárt', debug: { expires_at: expiresAtUtc, now: nowUtc } });
   }
-  // Jelszó frissítése
+  // Jelszó hash-elése bcrypt-tel
+  let hashedPassword;
+  try {
+    hashedPassword = await bcrypt.hash(password, 10);
+  } catch (err) {
+    console.error('Jelszó hash-elési hiba:', err);
+    return res.status(500).json({ error: 'Jelszó hash-elése sikertelen', details: err });
+  }
+  // Jelszó frissítése hash-elve
   const { error: updateError } = await supabase
     .from('users')
-    .update({ passwordHash: password })
+    .update({ passwordHash: hashedPassword })
     .eq('id', tokenRow.user_id);
   if (updateError) {
     console.error('Jelszó frissítése hiba:', updateError);
