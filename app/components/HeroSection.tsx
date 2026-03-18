@@ -1,14 +1,32 @@
+import { useEffect, useState } from "react";
+
+const heroImages = [
+  "/images/herokep_1.jpg",
+  "/images/herokep_2.jpg",
+  "/images/herokep_3.jpg",
+  "/images/herokep_4.jpg",
+  "/images/herokep_5.jpg",
+  "/images/herokep_6.jpg",
+  "/images/herokep_7.jpg",
+  "/images/herokep_8.jpg",
+];
+
 export default function HeroSection() {
+  const [current, setCurrent] = useState(0);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % heroImages.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <section className="relative overflow-hidden flex items-center justify-center min-h-screen text-center">
-      <video
-        className="absolute inset-0 w-full h-full object-cover z-0 brightness-[0.38] contrast-95 saturate-80"
-        src="/images/hero.mp4"
-        preload="metadata"
-        autoPlay
-        loop
-        muted
-        playsInline
+      <img
+        src={heroImages[current]}
+        alt="Hero background"
+        className="absolute inset-0 w-full h-full object-cover z-0 brightness-[0.38] contrast-95 saturate-80 transition-opacity duration-700"
+        style={{transition: 'opacity 0.7s'}}
       />
       {/* Gradient overlay */}
       <div className="absolute inset-0 z-10 bg-gradient-to-b from-black/20 via-black/40 to-black/65" aria-hidden="true" />
