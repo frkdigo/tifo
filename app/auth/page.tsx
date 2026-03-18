@@ -125,19 +125,9 @@ export default function AuthPage() {
 						<label className="flex items-center gap-2 select-none">
 							<input
 								type="checkbox"
-								return (
-									<main className="flex-grow flex flex-col items-center justify-center">
-										<div className="max-w-md w-full py-12 px-4">
-											{!showForgot ? (
-												<>
-													<h1 className="text-2xl font-bold mb-6 text-center">
-														{isLogin ? "Bejelentkezés" : "Regisztráció"}
-													</h1>
-													<form onSubmit={handleSubmit} className="bg-white rounded-xl shadow p-6 flex flex-col gap-4">
-														{!isLogin && (
-															<label>
-																Név
-																<input type="text" value={name} onChange={e => setName(e.target.value)} className="mt-1 w-full border rounded px-3 py-2" required={!isLogin} />
+								checked={rememberMe}
+								onChange={e => setRememberMe(e.target.checked)}
+								className="accent-primary"
 															</label>
 														)}
 														<label>
