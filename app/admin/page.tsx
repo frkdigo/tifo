@@ -72,7 +72,7 @@ function AdminPageContent() {
     setLoading(true);
     setError("");
     try {
-      const eventsRes = await fetch("/api/events");
+      const eventsRes = await fetch("/api/events", { cache: "no-store" });
       const eventsData = await eventsRes.json();
       setEvents(eventsData);
     } catch (e) {
