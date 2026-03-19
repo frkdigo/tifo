@@ -247,13 +247,15 @@ export default function Rolunk() {
                           {member.bio?.trim() || "Kattints a részletes bemutatkozás megnyitásához."}
                           <span className="absolute left-0 right-0 bottom-0 h-5 bg-gradient-to-t from-white/90 to-transparent pointer-events-none" />
                         </div>
-                        <button
-                          type="button"
-                          onClick={() => openMember(member)}
-                          className="mt-4 w-full bg-blue-900 text-white py-2 rounded-full hover:bg-blue-800 transition-colors font-semibold"
-                        >
-                          Megnézem
-                        </button>
+                        <div className="flex justify-center mt-4">
+                          <button
+                            type="button"
+                            onClick={() => openMember(member)}
+                            className="bg-blue-900 text-white py-2 px-6 rounded-full hover:bg-blue-800 transition-colors font-semibold"
+                          >
+                            Megnézem
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
