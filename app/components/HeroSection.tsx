@@ -76,7 +76,7 @@ export default function HeroSection() {
           </a>
           <a
             href="/esemenyeink"
-            className="inline-flex items-center gap-2 bg-blue-900/40 backdrop-blur border border-blue-700 text-white font-semibold px-8 py-4 rounded-full hover:bg-blue-900/70 hover:backdrop-blur-md transition-all duration-200 text-base"
+            className="inline-flex items-center gap-2 bg-black/30 backdrop-blur border border-blue-700 text-white font-semibold px-8 py-4 rounded-full hover:bg-black/60 hover:backdrop-blur-md transition-all duration-200 text-base"
           >
             Eseményeink megtekintése
           </a>

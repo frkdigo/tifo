@@ -167,7 +167,7 @@ export default function PostsSection() {
             />
             <div className="flex flex-col items-start gap-2">
               <label className="inline-block cursor-pointer">
-                <span className="bg-[#28a745] text-white px-6 py-2.5 rounded-full font-semibold hover:bg-[#87ceeb] hover:text-black transition-colors inline-block">Fájl kiválasztása</span>
+                <span className="bg-blue-900 text-white px-6 py-2.5 rounded-full font-semibold hover:bg-blue-800 transition-colors inline-block">Fájl kiválasztása</span>
                 <input type="file" accept="image/*" onChange={handleFileChange} className="hidden" />
               </label>
               {imageUrl && (
