@@ -198,7 +198,7 @@ export default function PostsSection() {
               className="w-fit bg-blue-900 text-white px-7 py-3 rounded-full font-semibold hover:bg-blue-800 transition-colors"
               disabled={loading}
             >
-              Poszt beküldése
+              {loading ? "Posztolás folyamatban..." : "Poszt beküldése"}
             </button>
             {error && <div className="text-red-500 text-sm mt-2">{error}</div>}
             {success && <div className="text-green-600 text-sm mt-2">{success}</div>}

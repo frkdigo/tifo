@@ -16,6 +16,7 @@ function AdminPageContent() {
   const [error, setError] = useState("");
   const [eventMessage, setEventMessage] = useState("");
   const [selectedPost, setSelectedPost] = useState<any | null>(null);
+  const [approvingPostId, setApprovingPostId] = useState<number | null>(null);
 
   function getPostAuthorName(post: any) {
     return post.authorName || post.users?.nickname || post.users?.name || post.email || "Ismeretlen";
@@ -81,11 +82,13 @@ function AdminPageContent() {
   }
 
   async function approvePost(id: number) {
+    setApprovingPostId(id);
     await fetch(`/api/posts`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id, action: "approve" })
     });
+    setApprovingPostId(null);
     fetchPendingPosts();
   }
 
@@ -99,7 +102,14 @@ function AdminPageContent() {
   }
 
   return (
-    <main className="bg-site min-h-screen py-12 px-2">
+    <main className="bg-site min-h-screen py-12 px-2 relative">
+      {approvingPostId !== null && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
+          <div className="bg-white rounded-2xl px-8 py-6 shadow-xl text-xl font-semibold text-slate-800">
+            Poszt jóváhagyása folyamatban...
+          </div>
+        </div>
+      )}
       <section className="max-w-6xl mx-auto px-2 md:px-4">
         <div className="premium-surface rounded-3xl p-6 md:p-10">
           <h1 className="text-3xl md:text-4xl font-black text-slate-900 mb-8 text-center">Admin felület</h1>
@@ -131,7 +141,7 @@ function AdminPageContent() {
                       <p className="text-sm text-slate-700 max-h-16 overflow-hidden">{post.text}</p>
                       <div className="mt-2 grid grid-cols-2 gap-2 w-full">
                         <button className="w-full bg-blue-900 text-white px-3 py-2 rounded-lg hover:bg-blue-800 shadow-sm font-semibold text-sm transition-all duration-150 active:scale-[0.98]" onClick={() => setSelectedPost(post)}>Megtekintés</button>
-                        <button className="w-full bg-blue-900 text-white px-3 py-2 rounded-lg hover:bg-blue-800 shadow-sm font-semibold text-sm transition-all duration-150 active:scale-[0.98]" onClick={() => approvePost(post.id)}>Jóváhagyás</button>
+                        <button className="w-full bg-green-600 text-white px-3 py-2 rounded-lg hover:bg-green-700 shadow-sm font-semibold text-sm transition-all duration-150 active:scale-[0.98]" onClick={() => approvePost(post.id)}>Jóváhagyás</button>
                         <button className="col-span-2 w-full bg-rose-600 text-white px-3 py-2 rounded-lg hover:bg-rose-700 shadow-sm font-semibold text-sm transition-all duration-150 active:scale-[0.98]" onClick={() => {
                           if (window.confirm('Biztosan elutasítod ezt a posztot?')) rejectPost(post.id);
                         }}>Elutasítás</button>
