@@ -29,18 +29,10 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
-  // Cache only public approved events; admin pending list should stay fresh.
-  if (pending) {
-    return NextResponse.json(data, {
-      headers: {
-        "Cache-Control": "private, no-store",
-      },
-    });
-  }
-
+  // Mindig friss adatot adjunk vissza, ne cache-eljük az eseményeket
   return NextResponse.json(data, {
     headers: {
-      "Cache-Control": "public, max-age=60, stale-while-revalidate=300",
+      "Cache-Control": "no-store",
     },
   });
 }
