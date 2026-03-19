@@ -208,7 +208,7 @@ export default function Rolunk() {
                     className="w-full text-left rounded-2xl bg-white/5 border border-white/10 p-5 hover:bg-white/10 transition-colors"
                   >
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-sky-300 text-slate-950 font-bold grid place-items-center">
+                      <div className="w-16 h-16 rounded-full bg-sky-300 text-slate-950 font-bold grid place-items-center">
                         {member.name
                           .split(" ")
                           .map((part) => part[0])
@@ -249,10 +249,10 @@ export default function Rolunk() {
                 <img
                   src={activeMember.image}
                   alt={activeMember.name}
-                  className="w-20 h-20 rounded-full object-cover border border-slate-200"
+                  className="w-28 h-28 rounded-full object-cover border border-slate-200"
                 />
               ) : (
-                <div className="w-20 h-20 rounded-full bg-slate-900 text-sky-300 grid place-items-center font-bold text-xl">
+                <div className="w-28 h-28 rounded-full bg-slate-900 text-sky-300 grid place-items-center font-bold text-2xl">
                   {memberInitials}
                 </div>
               )}
