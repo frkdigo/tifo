@@ -119,11 +119,11 @@ function EventModal({ event, onClose, onZoomImage }: { event: any; onClose: () =
 							className="block w-full"
 							aria-label="Kép nagyítása"
 						>
-							<img
-								src={event.image}
-								alt={event.title}
-								className="w-full h-52 md:h-72 object-cover rounded-[1.35rem] border border-slate-200 shadow-sm"
-							/>
+										<img
+											src={event.image}
+											alt={event.title}
+											className="w-full h-52 md:h-72 object-contain bg-white rounded-[1.35rem] border border-slate-200 shadow-sm"
+										/>
 						</button>
 					)}
 					<div className="rounded-[1.35rem] border border-slate-200 bg-[linear-gradient(180deg,#ffffff_0%,#f8fbff_100%)] p-5 md:p-6 shadow-[0_14px_35px_-26px_rgba(15,23,42,0.22)]">

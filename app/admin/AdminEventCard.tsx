@@ -8,7 +8,7 @@ export default function AdminEventCard({ event, onUpdated, onDeleted }: { event:
   return (
     <>
       <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow flex flex-col h-[430px]">
-        <img src={event.image} alt={event.title} className="w-full h-44 object-cover" />
+          <img src={event.image} alt={event.title} className="w-full h-44 object-contain bg-white" />
         <div className="p-4 flex-1 min-h-0 flex flex-col">
           <div className="relative flex-1 min-h-0 overflow-hidden">
             <h2 className="font-semibold text-lg mb-1">{event.title}</h2>
