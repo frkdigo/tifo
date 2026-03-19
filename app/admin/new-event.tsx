@@ -63,8 +63,8 @@ export default function NewEventForm({ onCreated }: { onCreated?: () => void }) 
         credentials: "include",
         body: JSON.stringify({ title, date, location, description, image: uploadedImageUrl })
       });
-      if (!res.ok) {
-        const data = await res.json().catch(() => null);
+      const data = await res.json().catch(() => null);
+      if (!res.ok || !data || !data.id) {
         throw new Error(data?.error || "Hiba az esemény mentésekor.");
       }
       setSuccess(true);

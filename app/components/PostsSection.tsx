@@ -147,7 +147,7 @@ export default function PostsSection() {
             </div>
             <div className="rounded-2xl bg-white/10 border border-white/15 px-4 py-3 text-white min-w-[140px]">
               <div className="text-2xl font-black">{posts.length}</div>
-              <div className="text-xs text-white/70 uppercase tracking-wide">Jóváhagyott poszt</div>
+              <div className="text-xs text-white/70 uppercase tracking-wide">Poszt</div>
             </div>
           </div>
         </div>
