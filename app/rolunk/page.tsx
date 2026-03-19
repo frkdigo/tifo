@@ -216,19 +216,10 @@ export default function Rolunk() {
             <div className="text-gray-500">Betöltés...</div>
           ) : (
             <ul className="team-list grid sm:grid-cols-2 lg:grid-cols-3 gap-1 items-stretch">
-                    <style>{`
-                      @media (max-width: 640px) {
-                        .team-list {
-                          gap: 0.25rem !important;
-                        }
-                      }
-                    `}</style>
               {team.map((member) => (
-                <li key={member.id} className="h-full team-card">
-                  <button
-                    type="button"
-                    onClick={() => openMember(member)}
-                    className="group relative w-full h-full text-left rounded-[1.5rem] overflow-hidden bg-[linear-gradient(180deg,#ffffff_0%,#f8fbff_58%,#f7fff8_100%)] border border-slate-200/90 p-5 md:p-6 shadow-[0_16px_35px_-26px_rgba(15,23,42,0.4)] hover:shadow-[0_24px_45px_-24px_rgba(13,59,102,0.28)] hover:border-[#87ceeb]/70 hover:-translate-y-1 transition-all duration-200 min-h-[100px] max-h-[120px] md:min-h-[unset] md:max-h-[unset]"
+                <li key={member.id} className="h-full">
+                  <div
+                    className="group relative w-full h-full text-left rounded-[1.5rem] overflow-hidden bg-[linear-gradient(180deg,#ffffff_0%,#f8fbff_58%,#f7fff8_100%)] border border-slate-200/90 p-5 md:p-6 shadow-[0_16px_35px_-26px_rgba(15,23,42,0.4)] hover:shadow-[0_24px_45px_-24px_rgba(13,59,102,0.28)] hover:border-[#87ceeb]/70 hover:-translate-y-1 transition-all duration-200"
                   >
                     <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none bg-[radial-gradient(circle_at_top_right,rgba(135,206,235,0.16),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(40,167,69,0.12),transparent_26%)]" />
                     <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-[#0d3b66] via-[#87ceeb] to-[#28a745] opacity-80" />
@@ -256,19 +247,16 @@ export default function Rolunk() {
                           {member.bio?.trim() || "Kattints a részletes bemutatkozás megnyitásához."}
                           <span className="absolute left-0 right-0 bottom-0 h-5 bg-gradient-to-t from-white/90 to-transparent pointer-events-none" />
                         </div>
-                            <style>{`
-                              @media (max-width: 640px) {
-                                .team-list {
-                                  gap: 0 !important;
-                                }
-                                .team-card {
-                                  margin-bottom: 0.5rem;
-                                }
-                              }
-                            `}</style>
+                        <button
+                          type="button"
+                          onClick={() => openMember(member)}
+                          className="mt-4 w-full bg-blue-900 text-white py-2 rounded-full hover:bg-blue-800 transition-colors font-semibold"
+                        >
+                          Megnézem
+                        </button>
                       </div>
                     </div>
-                  </button>
+                  </div>
                 </li>
               ))}
             </ul>
