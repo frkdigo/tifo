@@ -23,8 +23,8 @@ function EventCard({
   return (
     <motion.div
       layout
-      whileHover={{ scale: 1.05 }}
-      className="cursor-pointer bg-white rounded-3xl shadow-xl overflow-hidden flex flex-col transition-transform duration-300 hover:shadow-2xl"
+      whileHover={{ scale: 1.05, boxShadow: "0 20px 40px rgba(0,0,0,0.2)" }}
+      className="cursor-pointer bg-white rounded-3xl overflow-hidden flex flex-col transition-transform duration-300"
     >
       {event.image && (
         <div
@@ -42,7 +42,7 @@ function EventCard({
           })}
         </div>
         <h3 className="text-xl font-extrabold text-tifo-primary mb-2">{event.title}</h3>
-        {event.location && <p className="text-blue-600 mb-2">📍 {event.location}</p>}
+        {event.location && <p className="text-orange-500 mb-2">📍 {event.location}</p>}
         {event.description && <p className="text-gray-700 line-clamp-3 mb-4">{event.description}</p>}
         <button
           onClick={onSelect}
@@ -91,7 +91,7 @@ export default function Esemeneink() {
   const otherEvents = events.filter((e) => e.id !== upcomingEvent?.id);
 
   return (
-    <main className="bg-gradient-to-b from-slate-50 via-white to-slate-100 text-black min-h-screen py-12">
+    <main className="bg-gradient-to-b from-gray-50 via-white to-gray-100 text-black min-h-screen py-12">
       {/* Header */}
       <section className="text-center mb-16 px-4">
         <motion.h1
@@ -112,9 +112,9 @@ export default function Esemeneink() {
 
       {/* Highlighted Upcoming Event */}
       {upcomingEvent && (
-        <section className="max-w-4xl mx-auto mb-16 px-4 relative">
+        <section className="max-w-5xl mx-auto mb-16 px-4 relative">
           <motion.div
-            className="relative rounded-3xl bg-gradient-to-r from-blue-600 to-blue-400 shadow-2xl p-8 flex flex-col md:flex-row items-center gap-8 overflow-hidden cursor-pointer"
+            className="relative rounded-3xl bg-gradient-to-r from-blue-700 to-orange-500 shadow-2xl p-8 flex flex-col md:flex-row items-center gap-8 overflow-hidden cursor-pointer"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             whileHover={{ scale: 1.03 }}
@@ -134,14 +134,12 @@ export default function Esemeneink() {
                 }}
               />
             )}
-
-            <div className="flex-1 relative">
-              {/* Gradient overlay effect */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent rounded-2xl pointer-events-none animate-pulse-slow" />
-              <p className="text-white/90 font-semibold uppercase mb-2 relative z-10">
+            <div className="flex-1 relative z-10">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent rounded-2xl animate-pulse-slow pointer-events-none" />
+              <p className="text-white font-semibold uppercase mb-2 z-10 relative">
                 Közelgő esemény
               </p>
-              <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-2 relative z-10">
+              <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-2 z-10 relative">
                 {upcomingEvent.title}
               </h2>
               {upcomingEvent.location && (
