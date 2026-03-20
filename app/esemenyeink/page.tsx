@@ -80,7 +80,7 @@ export default function Esemeneink() {
     <main className="min-h-screen bg-white text-gray-900">
       {/* HERO */}
       <section
-        className="relative overflow-hidden flex items-center justify-center min-h-[60vh] text-center cursor-pointer"
+        className="relative overflow-hidden flex items-center justify-center min-h-screen text-center cursor-pointer"
         onClick={nextHeroImage}
       >
         <div className="absolute inset-0 w-full h-full z-0">
@@ -139,10 +139,13 @@ export default function Esemeneink() {
               >
                 {event.image && (
                   <div
-                    className="h-64 w-full bg-cover bg-center group-hover:scale-105 transition-transform duration-300"
-                    style={{ backgroundImage: `url(${event.image})` }}
+                    className="relative h-64 w-full"
                   >
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                    <img
+                      src={event.image}
+                      alt={event.title}
+                      className="w-full h-full object-cover rounded-t-2xl transition-transform duration-300 group-hover:scale-105"
+                    />
                   </div>
                 )}
 
