@@ -74,7 +74,7 @@ export default function Esemeneink() {
   }) {
     return (
       <div
-        className="relative rounded-2xl overflow-hidden shadow-2xl group bg-black/80 border border-white/10"
+        className="relative rounded-2xl overflow-hidden shadow-2xl group bg-black/80 border border-white/10 transition-all duration-300 hover:shadow-[0_8px_40px_-10px_rgba(10,34,89,0.45)] hover:-translate-y-1 hover:scale-[1.03]"
       >
         {event.image && (
           <div
@@ -119,36 +119,35 @@ export default function Esemeneink() {
     <main className="relative overflow-hidden bg-white text-black">
       <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_18%_8%,rgba(15,23,42,0.22),transparent_40%),linear-gradient(180deg,#020617_0%,#020617_34%,#f6f9fc_34%,#ffffff_100%)]" />
 
-      <section className="max-w-6xl mx-auto px-4 pt-10 md:pt-14 pb-8">
-        <div className="relative overflow-hidden rounded-3xl border border-white/15 bg-slate-950 shadow-[0_30px_70px_-40px_rgba(0,0,0,0.65)] p-8 md:p-12 text-center">
-          <div className="absolute inset-0 opacity-80 pointer-events-none" aria-hidden="true" style={{ background: 'radial-gradient(circle at 14% -6%, rgba(135,206,235,0.22), transparent 28%), radial-gradient(circle at 88% 8%, rgba(40,167,69,0.18), transparent 25%), radial-gradient(circle at 52% 120%, rgba(13,59,102,0.35), transparent 40%)' }} />
-          <div className="relative">
-            <p className="inline-flex items-center gap-2 rounded-full bg-white/15 text-white text-xs tracking-[0.18em] uppercase px-5 py-2.5 mb-6 shadow-lg shadow-black/20">
-              Törökbálinti Ifjúsági Önkormányzat
-            </p>
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-black leading-tight text-white">Eseményeink</h1>
-            <p className="mt-5 text-white/90 text-lg md:text-xl max-w-3xl leading-[1.58] mx-auto">
-              Fedezd fel a legjobb bulikat, programokat és rendezvényeket! Válassz, és éld át a felejthetetlen élményeket!
-            </p>
+      {/* HEADER szekció */}
+      <header className="max-w-4xl mx-auto px-4 pt-10 md:pt-14 pb-8 text-center">
+        <p className="inline-flex items-center gap-2 rounded-full bg-white/15 text-[#0a2259] text-xs tracking-[0.18em] uppercase px-5 py-2.5 mb-6 shadow-lg shadow-black/10">
+          Törökbálinti Ifjúsági Önkormányzat
+        </p>
+        <h1 className="text-4xl md:text-6xl lg:text-7xl font-black leading-tight text-[#0a2259]">Eseményeink</h1>
+        <p className="mt-5 text-[#0a2259]/90 text-lg md:text-xl max-w-3xl leading-[1.58] mx-auto">
+          Fedezd fel a legjobb bulikat, programokat és rendezvényeket! Válassz, és éld át a felejthetetlen élményeket!
+        </p>
+      </header>
 
-            <div className="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {loading ? (
-                <p className="text-white/70 col-span-full text-center">Betöltés...</p>
-              ) : error ? (
-                <p className="text-red-400 col-span-full text-center">{error}</p>
-              ) : events.length === 0 ? (
-                <p className="text-white/70 col-span-full text-center">Nincs esemény.</p>
-              ) : (
-                events.map((event) => (
-                  <EventCard
-                    key={event.id}
-                    event={event}
-                    onSelect={() => setActiveEvent(event)}
-                  />
-                ))
-              )}
-            </div>
-          </div>
+      {/* Kártyák gridje külön szekcióban */}
+      <section className="max-w-6xl mx-auto px-4 pb-16">
+        <div className="mt-4 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {loading ? (
+            <p className="text-[#0a2259]/70 col-span-full text-center">Betöltés...</p>
+          ) : error ? (
+            <p className="text-red-400 col-span-full text-center">{error}</p>
+          ) : events.length === 0 ? (
+            <p className="text-[#0a2259]/70 col-span-full text-center">Nincs esemény.</p>
+          ) : (
+            events.map((event) => (
+              <EventCard
+                key={event.id}
+                event={event}
+                onSelect={() => setActiveEvent(event)}
+              />
+            ))
+          )}
         </div>
       </section>
 
