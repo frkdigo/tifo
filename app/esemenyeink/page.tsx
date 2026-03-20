@@ -80,20 +80,25 @@ export default function Esemeneink() {
     <main className="max-w-6xl mx-auto px-4 py-8">
 
       {/* HERO CARD */}
-      <section className="max-w-2xl mx-auto mb-8">
-        <div className="rounded-[32px] bg-gradient-to-br from-[#eaf3fa] via-[#dbeafe] to-[#e0e7ef] p-1">
-          <div className="rounded-[28px] bg-gradient-to-br from-[#0a1a2f] via-[#1e293b] to-[#0a1a2f] p-6 md:p-8 text-white">
-            <p className="uppercase tracking-[0.18em] text-xs text-gray-200 mb-2">Programok</p>
-            <h1 className="text-3xl md:text-4xl font-extrabold mb-2">Eseményeink</h1>
-            <p className="text-base md:text-lg text-gray-200 mb-6">Kövesd a közelgő programokat, nézd vissza a korábbi eseményeket, és csatlakozz a közösséghez.</p>
-            <div className="flex gap-3 mt-2">
-              <div className="flex-1 rounded-2xl border border-gray-300 bg-white/10 py-4 text-center">
-                <div className="text-2xl font-bold">{upcoming.length}</div>
-                <div className="text-xs text-gray-200 mt-1">Közelgő</div>
+      <section className="max-w-6xl mx-auto px-4 pt-10 md:pt-14 pb-8">
+        <div className="relative overflow-hidden rounded-3xl border border-white/15 bg-slate-950 shadow-[0_30px_70px_-40px_rgba(0,0,0,0.65)] p-8 md:p-12 text-center">
+          <div className="absolute inset-0 opacity-80 pointer-events-none" aria-hidden="true" style={{ background: 'radial-gradient(circle at 14% -6%, rgba(135,206,235,0.22), transparent 28%), radial-gradient(circle at 88% 8%, rgba(40,167,69,0.18), transparent 25%), radial-gradient(circle at 52% 120%, rgba(13,59,102,0.35), transparent 40%)' }} />
+          <div className="relative">
+            <p className="inline-flex items-center gap-2 rounded-full bg-white/15 text-white text-xs tracking-[0.18em] uppercase px-5 py-2.5 mb-6 shadow-lg shadow-black/20">
+              Törökbálinti Ifjúsági Önkormányzat
+            </p>
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-black leading-tight text-white mb-2">Eseményeink</h1>
+            <p className="mt-5 text-white/90 text-lg md:text-xl max-w-3xl leading-[1.58] mx-auto">
+              Kövesd a közelgő programokat, nézd vissza a korábbi eseményeket, és csatlakozz a közösséghez.
+            </p>
+            <div className="flex gap-3 justify-center mt-8">
+              <div className="flex-1 max-w-[120px] rounded-2xl border border-white/20 bg-white/10 py-4 text-center">
+                <div className="text-2xl font-bold text-white">{upcoming.length}</div>
+                <div className="text-xs text-white/80 mt-1">Közelgő</div>
               </div>
-              <div className="flex-1 rounded-2xl border border-gray-300 bg-white/10 py-4 text-center">
-                <div className="text-2xl font-bold">{past.length}</div>
-                <div className="text-xs text-gray-200 mt-1">Korábbi</div>
+              <div className="flex-1 max-w-[120px] rounded-2xl border border-white/20 bg-white/10 py-4 text-center">
+                <div className="text-2xl font-bold text-white">{past.length}</div>
+                <div className="text-xs text-white/80 mt-1">Korábbi</div>
               </div>
             </div>
           </div>
@@ -106,30 +111,30 @@ export default function Esemeneink() {
         <section className="mb-10">
           <div
             onClick={() => setActiveEvent(featuredEvent)}
-            className="cursor-pointer rounded-3xl overflow-hidden border border-gray-200 bg-white shadow-md grid md:grid-cols-2"
+            className="cursor-pointer rounded-3xl overflow-hidden border border-gray-200 bg-white shadow-md relative min-h-[220px]"
+            style={{ minHeight: 220 }}
           >
-            <div className="h-56 md:h-auto">
-              {featuredEvent.image && (
+            {featuredEvent.image && (
+              <div className="relative w-full h-56 md:h-64">
                 <img
                   src={featuredEvent.image}
                   className="w-full h-full object-cover"
                   alt={featuredEvent.title}
                 />
-              )}
-            </div>
-            <div className="p-6 md:p-8 flex flex-col justify-between">
-              <div>
-                <span className="text-xs uppercase tracking-widest text-blue-700 font-bold">KIEMELT ESEMÉNY</span>
-                <h2 className="text-xl md:text-2xl font-black mt-2 mb-1">{featuredEvent.title}</h2>
-                <p className="text-sm text-gray-500 mb-2">{new Date(featuredEvent.date).toLocaleDateString("hu-HU")}</p>
-                <p className="text-gray-700 line-clamp-4 leading-[1.6]">{featuredEvent.description}</p>
+                <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-transparent" />
+                <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-8">
+                  <span className="text-xs uppercase tracking-widest text-white font-bold mb-1 drop-shadow">KIEMELT ESEMÉNY</span>
+                  <h2 className="text-2xl md:text-3xl font-black text-white mb-1 drop-shadow">{featuredEvent.title}</h2>
+                  <p className="text-sm text-gray-200 mb-2 drop-shadow">{new Date(featuredEvent.date).toLocaleDateString("hu-HU")}</p>
+                  <p className="text-white/90 line-clamp-3 leading-[1.6] drop-shadow">{featuredEvent.description}</p>
+                  <div className="mt-4">
+                    <button className="bg-blue-900 text-white font-bold px-6 py-2 rounded-[16px] hover:bg-blue-800 transition w-full text-base">
+                      Érdekel
+                    </button>
+                  </div>
+                </div>
               </div>
-              <div className="mt-6">
-                <button className="bg-blue-900 text-white font-bold px-6 py-2 rounded-[16px] hover:bg-blue-800 transition w-full text-base">
-                  Érdekel
-                </button>
-              </div>
-            </div>
+            )}
           </div>
         </section>
       )}
