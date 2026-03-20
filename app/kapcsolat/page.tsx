@@ -9,7 +9,7 @@ export default function Kapcsolat() {
   const [sending, setSending] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
-  import { motion } from "framer-motion";
+  // ...existing code...
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
