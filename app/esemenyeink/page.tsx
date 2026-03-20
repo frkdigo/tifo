@@ -201,13 +201,6 @@ export default function Esemeneink() {
     </main>
   );
 }
-              {upcomingEvent.location && (
-                <p className="text-white/90 mb-2 relative z-10">📍 {upcomingEvent.location}</p>
-              )}
-              <p className="text-white/95 line-clamp-3 relative z-10">{upcomingEvent.description}</p>
-            </div>
-          </motion.div>
-        </section>
       )}
 
       {/* Tabos szűrő */}
