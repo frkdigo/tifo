@@ -68,6 +68,62 @@ export default function Esemeneink() {
     setActiveEvent(events[nextIndex]);
   }
 
+  function EventCard({ event, onSelect, onShowImage }: {
+    event: EventItem;
+    onSelect: () => void;
+    onShowImage: () => void;
+  }) {
+    return (
+      <div
+        className="relative rounded-2xl overflow-hidden shadow-2xl group bg-black/80 border border-white/10"
+      >
+        {event.image && (
+          <div
+            className="h-56 w-full bg-cover bg-center group-hover:scale-105 transition-transform duration-300"
+            style={{ backgroundImage: `url(${event.image})` }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+          </div>
+        )}
+        <div className="p-6 flex flex-col gap-2 relative z-10">
+          <div className="flex items-center gap-2 mb-1">
+            <span className="inline-block bg-gradient-to-r from-pink-500 to-blue-500 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest shadow">
+              {event.category || "Esemény"}
+            </span>
+            <span className="text-xs text-white/70 ml-auto">
+              {new Date(event.date).toLocaleDateString("hu-HU", { year: "numeric", month: "short", day: "numeric" })}
+            </span>
+          </div>
+          <h3 className="text-2xl font-extrabold text-white mb-1 line-clamp-2 drop-shadow">
+            {event.title}
+          </h3>
+          {event.location && (
+            <p className="text-sm text-blue-300 mb-1">📍 {event.location}</p>
+          )}
+          {event.description && (
+            <p className="text-white/80 text-base line-clamp-3 mb-2">{event.description}</p>
+          )}
+          <div className="flex gap-2 mt-2">
+            <button
+              onClick={onSelect}
+              className="bg-[#0a2259] hover:bg-blue-900 text-white font-bold px-5 py-2 rounded-lg shadow transition-all duration-200 uppercase tracking-wide"
+            >
+              Érdekel
+            </button>
+            {event.image && (
+              <button
+                onClick={onShowImage}
+                className="bg-white/10 text-white px-4 py-2 rounded-lg border border-white/20 hover:bg-white/20 transition"
+              >
+                Kép
+              </button>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <main className="min-h-screen bg-black text-white">
       {/* HERO szekció */}
@@ -97,54 +153,17 @@ export default function Esemeneink() {
         ) : (
           <ul className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {events.map((event) => (
-              <div
+              <EventCard
                 key={event.id}
-                className="relative rounded-2xl overflow-hidden shadow-2xl group bg-black/80 border border-white/10"
-              >
-                {event.image && (
-                  <div
-                    className="h-56 w-full bg-cover bg-center group-hover:scale-105 transition-transform duration-300"
-                    style={{ backgroundImage: `url(${event.image})` }}
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
-                  </div>
-                )}
-                <div className="p-6 flex flex-col gap-2 relative z-10">
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className="inline-block bg-gradient-to-r from-pink-500 to-blue-500 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest shadow">
-                      {event.category || "Esemény"}
-                    </span>
-                    <span className="text-xs text-white/70 ml-auto">
-                      {new Date(event.date).toLocaleDateString("hu-HU", { year: "numeric", month: "short", day: "numeric" })}
-                    </span>
-                  </div>
-                  <h3 className="text-2xl font-extrabold text-white mb-1 line-clamp-2 drop-shadow">
-                    {event.title}
-                  </h3>
-                  {event.location && (
-                    <p className="text-sm text-blue-300 mb-1">📍 {event.location}</p>
-                  )}
-                  {event.description && (
-                    <p className="text-white/80 text-base line-clamp-3 mb-2">{event.description}</p>
-                  )}
-                  <div className="flex gap-2 mt-2">
-                    <button
-                      onClick={() => { setSelected(event); setShowModal(true); }}
-                      className="bg-[#0a2259] hover:bg-blue-900 text-white font-bold px-5 py-2 rounded-lg shadow transition-all duration-200 uppercase tracking-wide"
-                    >
-                      Érdekel
-                    </button>
-                    {event.image && (
-                      <button
-                        onClick={() => { setImageSrc(event.image!); setShowImageModal(true); }}
-                        className="bg-white/10 text-white px-4 py-2 rounded-lg border border-white/20 hover:bg-white/20 transition"
-                      >
-                        Kép
-                      </button>
-                    )}
-                  </div>
-                </div>
-              </div>
+                event={event}
+                onSelect={() => { setSelected(event); setShowModal(true); }}
+                onShowImage={() => {
+                  if (event.image) {
+                    setImageSrc(event.image);
+                    setShowImageModal(true);
+                  }
+                }}
+              />
             ))}
           </ul>
         )}
