@@ -85,15 +85,43 @@ export default function Esemeneink() {
 		const past = events.filter((event) => toLocalDay(event.date) < todayStart).reverse();
 		const featured = upcoming[0] || events[0] || null;
 
-		return (
-			<motion.main
-				className="max-w-6xl mx-auto py-12 px-4 text-black"
-				initial={{ opacity: 0, y: 40 }}
-				animate={{ opacity: 1, y: 0 }}
-				transition={{ duration: 0.8, ease: "easeOut" }}
-			>
-				{/* Itt jöhet a teljes JSX tartalom, pl. szekciók, eseménylista, modálisok stb. */}
-				<div className="text-center text-gray-500">Esemény oldal tartalom ide jön...</div>
-			</motion.main>
-		);
+			return (
+				<motion.main
+					className="max-w-6xl mx-auto py-12 px-4 text-black"
+					initial={{ opacity: 0, y: 40 }}
+					animate={{ opacity: 1, y: 0 }}
+					transition={{ duration: 0.8, ease: "easeOut" }}
+				>
+					<h1 className="text-3xl font-bold mb-8 text-center">Eseményeink</h1>
+					{loading ? (
+						<div className="text-center text-gray-500">Betöltés...</div>
+					) : error ? (
+						<div className="text-center text-red-500">{error}</div>
+					) : events.length === 0 ? (
+						<div className="text-center text-gray-500">Nincs megjeleníthető esemény.</div>
+					) : (
+						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+							{events.map((event, idx) => (
+								<motion.div
+									key={event.id}
+									className="bg-white rounded-xl shadow-md p-6 flex flex-col gap-2 border border-gray-100 hover:shadow-lg transition-shadow"
+									initial={{ opacity: 0, y: 30 }}
+									whileInView={{ opacity: 1, y: 0 }}
+									viewport={{ once: true, amount: 0.2 }}
+									transition={{ duration: 0.5, delay: idx * 0.1 }}
+								>
+									<div className="text-xs text-gray-400 mb-1">{toLocalDay(event.date).toLocaleDateString()}</div>
+									<div className="font-semibold text-lg mb-1">{event.title}</div>
+									{event.location && (
+										<div className="text-sm text-gray-500 mb-1">📍 {event.location}</div>
+									)}
+									{event.description && (
+										<EventDescription text={event.description} />
+									)}
+								</motion.div>
+							))}
+						</div>
+					)}
+				</motion.main>
+			);
 	}
