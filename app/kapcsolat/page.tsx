@@ -18,44 +18,8 @@ export default function Kapcsolat() {
     setError(null);
     const form = e.currentTarget;
     const formData = new FormData(form);
-        </motion.main>
-      );
-              <button
-                type="submit"
-                className="inline-flex justify-center items-center gap-2 rounded-full bg-blue-900 text-white font-black px-8 py-3.5 hover:bg-blue-800 hover:scale-105 active:scale-95 transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100"
-                disabled={sending}
-              >
-                {sending ? "Küldés..." : (
-                  <>
-                    Üzenet küldése
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
-                  </>
-                )}
-              </button>
-              {success && <div className="text-green-600 text-sm mt-2">{success}</div>}
-              {error && <div className="text-red-600 text-sm mt-2">{error}</div>}
-            </form>
-          </motion.section>
-        </motion.main>
-      );
-        <div className="relative grid md:grid-cols-[1.25fr,0.75fr] gap-6 items-center">
-          <div>
-            <p className="inline-flex rounded-full bg-white/15 text-white uppercase tracking-[0.18em] text-xs px-4 py-2 mb-4">
-              Törökbálinti Ifjúsági Önkormányzat
-            </p>
-            <h1 className="text-4xl md:text-6xl font-black text-white leading-tight">Kapcsolat</h1>
-            <p className="text-white/85 mt-3 text-base md:text-lg leading-[1.58] max-w-lg">
-              Kérdésed van, csatlakoznál, vagy ötleted van programra? Írj nekünk, és hamarosan válaszolunk.
-            </p>
-            <div className="mt-4 flex flex-wrap gap-2">
-              <span className="inline-flex items-center rounded-full bg-white/12 border border-white/25 text-white text-xs font-semibold px-3 py-1.5">Gyors válasz</span>
-              <span className="inline-flex items-center rounded-full bg-[#87ceeb]/15 border border-[#87ceeb]/30 text-[#d7f1ff] text-xs font-semibold px-3 py-1.5">Közvetlen kapcsolat</span>
-              <span className="inline-flex items-center rounded-full bg-[#28a745]/18 border border-[#28a745]/35 text-[#d8ffe2] text-xs font-semibold px-3 py-1.5">Közösségi csatornák</span>
-            </div>
-
-            <div className="mt-6 flex flex-col gap-3">
-              <a
-                href="mailto:info.tifo@gmail.com"
+    // ...existing code for form submission...
+  }
                 className="flex items-center gap-4 rounded-2xl bg-[#28a745]/22 border border-[#28a745]/40 px-4 py-3.5 hover:bg-[#87ceeb]/22 hover:border-[#87ceeb]/60 transition-all group"
               >
                 <span className="text-2xl shrink-0">✉️</span>
