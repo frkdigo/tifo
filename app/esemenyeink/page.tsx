@@ -136,50 +136,6 @@ export default function Esemeneink() {
           </motion.div>
         </section>
       )}
-                {nextEvent.title}
-              </h3>
-              {nextEvent.location && (
-                <div className="flex items-center gap-1 text-base mb-2 font-semibold text-gray-600">
-                  <svg
-                    width="20"
-                    height="20"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    className="inline-block mr-1"
-                  >
-                    <path
-                      d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5z"
-                      fill="currentColor"
-                    />
-                  </svg>
-                  {nextEvent.location}
-                </div>
-              )}
-              <p className="text-gray-500 text-base mb-3 font-medium">
-                {new Date(nextEvent.date).toLocaleDateString("hu-HU", {
-                  year: "numeric",
-                  month: "short",
-                  day: "numeric",
-                })}
-              </p>
-              {nextEvent.description && (
-                <div className="text-gray-700 line-clamp-3">
-                  <EventDescription text={nextEvent.description} />
-                </div>
-              )}
-              <button
-                className="mt-4 py-3 px-8 rounded-2xl bg-blue-900 hover:bg-blue-800 text-white font-bold shadow-lg transition-all duration-200"
-                onClick={() => {
-                  setSelected(nextEvent);
-                  setShowModal(true);
-                }}
-              >
-                Érdekel
-              </button>
-            </div>
-          </motion.div>
-        </section>
-      )}
 
       {/* További események */}
       {/* ... a további grid szekció marad ugyanaz ... */}
