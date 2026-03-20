@@ -81,7 +81,12 @@ export default function Esemeneink() {
     <main className="max-w-6xl mx-auto px-4 py-8">
 
       {/* HERO CARD */}
-      <section className="w-full px-0 pt-10 md:pt-14 pb-8">
+      <motion.section
+        className="w-full px-0 pt-10 md:pt-14 pb-8"
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, ease: [0.4, 0.2, 0.2, 1] }}
+      >
         <div className="relative overflow-hidden rounded-3xl border border-white/15 bg-slate-950 shadow-[0_30px_70px_-40px_rgba(0,0,0,0.65)] p-8 md:p-12 mx-4 md:mx-0">
           <div className="absolute inset-0 opacity-80 pointer-events-none" aria-hidden="true" style={{ background: 'radial-gradient(circle at 14% -6%, rgba(135,206,235,0.22), transparent 28%), radial-gradient(circle at 88% 8%, rgba(40,167,69,0.18), transparent 25%), radial-gradient(circle at 52% 120%, rgba(13,59,102,0.35), transparent 40%)' }} />
           <div className="relative flex flex-col md:flex-row md:items-center md:justify-between gap-8 md:gap-0">
@@ -109,12 +114,18 @@ export default function Esemeneink() {
             </div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
 
       {/* KIEMELT ESEMÉNY */}
       {featuredEvent && (
-        <section className="mb-10">
+        <motion.section
+          className="mb-10"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.6 }}
+          transition={{ duration: 0.7, delay: 0.1 }}
+        >
           <div
             onClick={() => setActiveEvent(featuredEvent)}
             className="cursor-pointer rounded-3xl overflow-hidden border border-gray-200 bg-white shadow-md grid md:grid-cols-2 min-h-[220px]"
@@ -146,7 +157,7 @@ export default function Esemeneink() {
               </button>
             </div>
           </div>
-        </section>
+        </motion.section>
       )}
 
       {/* KÖZELGŐ ESEMÉNYEK */}
