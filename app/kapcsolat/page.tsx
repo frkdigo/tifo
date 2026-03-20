@@ -100,7 +100,6 @@ export default function Kapcsolat() {
 
            <div className="w-fit mx-auto">
              <img
-          import { motion } from "framer-motion";
                src="/images/logo.jpg"
                alt="TIFO logó"
                className="w-full max-w-[240px] h-[240px] mx-auto object-cover rounded-full border border-white/35 bg-white p-2"
