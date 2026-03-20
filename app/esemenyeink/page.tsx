@@ -14,6 +14,7 @@ type EventItem = {
 };
 
 export default function Esemeneink() {
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [events, setEvents] = useState<EventItem[]>([]);
   const [activeEvent, setActiveEvent] = useState<EventItem | null>(null);
   const [loading, setLoading] = useState(true);
@@ -93,15 +94,17 @@ export default function Esemeneink() {
                 Kövesd a közelgő programokat, nézd vissza a korábbi eseményeket, és csatlakozz a közösséghez.
               </p>
             </div>
-            <div className="flex flex-row md:flex-col items-center justify-center md:justify-end flex-shrink-0 md:ml-12 mt-8 md:mt-0">
-              <div className="flex flex-col items-center w-32 rounded-2xl border border-white/20 bg-white/10 py-4 text-center">
-                <div className="text-2xl font-bold text-white">{upcoming.length}</div>
-                <div className="text-xs text-white/80 mt-1">Közelgő</div>
-              </div>
-              <div className="hidden md:block h-8 w-px bg-white/20 mx-4" />
-              <div className="flex flex-col items-center w-32 rounded-2xl border border-white/20 bg-white/10 py-4 text-center mt-0 md:mt-6">
-                <div className="text-2xl font-bold text-white">{past.length}</div>
-                <div className="text-xs text-white/80 mt-1">Korábbi</div>
+            <div className="flex flex-row md:flex-col items-center justify-center md:justify-end flex-shrink-0 md:ml-12 mt-8 md:mt-0 w-full md:w-auto">
+              <div className="flex flex-row md:flex-col gap-3 md:gap-6 w-full md:w-auto justify-center">
+                <div className="flex-1 md:w-32 rounded-2xl border border-white/20 bg-white/10 py-4 text-center min-w-[120px]">
+                  <div className="text-2xl font-bold text-white">{upcoming.length}</div>
+                  <div className="text-xs text-white/80 mt-1">Közelgő</div>
+                </div>
+                <div className="w-px h-10 bg-white/20 self-center hidden md:block" />
+                <div className="flex-1 md:w-32 rounded-2xl border border-white/20 bg-white/10 py-4 text-center min-w-[120px]">
+                  <div className="text-2xl font-bold text-white">{past.length}</div>
+                  <div className="text-xs text-white/80 mt-1">Korábbi</div>
+                </div>
               </div>
             </div>
           </div>
@@ -199,8 +202,9 @@ export default function Esemeneink() {
               {activeEvent.image && (
                 <img
                   src={activeEvent.image}
-                  className="w-full h-32 sm:h-60 object-cover"
+                  className="w-full h-32 sm:h-60 object-cover cursor-zoom-in"
                   alt={activeEvent.title}
+                  onClick={() => setImagePreview(activeEvent.image!)}
                 />
               )}
               <div className="p-3 sm:p-6 overflow-y-auto flex-1 min-h-0">
@@ -209,6 +213,30 @@ export default function Esemeneink() {
                 <p className="text-gray-700 text-sm sm:text-base">{activeEvent.description}</p>
               </div>
             </motion.div>
+          </motion.div>
+        )}
+        {/* Fullscreen image preview */}
+        {imagePreview && (
+          <motion.div
+            className="fixed inset-0 z-[100] bg-black/90 flex items-center justify-center cursor-zoom-out"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setImagePreview(null)}
+          >
+            <img
+              src={imagePreview}
+              alt="Esemény borítókép nagyban"
+              className="max-w-full max-h-[90vh] rounded-2xl shadow-2xl border-2 border-white"
+              onClick={e => { e.stopPropagation(); setImagePreview(null); }}
+            />
+            <button
+              onClick={() => setImagePreview(null)}
+              className="absolute top-4 right-4 z-20 w-12 h-12 flex items-center justify-center rounded-full bg-white/90 border border-gray-200 shadow text-gray-700 text-3xl hover:bg-white"
+              aria-label="Bezárás"
+            >
+              ✕
+            </button>
           </motion.div>
         )}
       </AnimatePresence>
