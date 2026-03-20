@@ -1,10 +1,17 @@
+
+"use client";
 import HeroSection from './components/HeroSection'
 import PostsSection from './components/PostsSection'
 import HomeHighlights from './components/HomeHighlights'
+import { motion } from "framer-motion";
 
 export default function Home() {
   return (
-    <main>
+    <motion.main
+      initial={{ opacity: 0, y: 40 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+    >
       <HeroSection />
 
       <section className="max-w-6xl mx-auto px-4 py-16 md:py-24">
@@ -55,6 +62,6 @@ export default function Home() {
       </section>
 
       <PostsSection />
-    </main>
+    </motion.main>
   )
 }

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "../components/AuthProvider";
+import { motion } from "framer-motion";
 
 export default function ProfilomPage() {
   const { user, updateUserProfile } = useAuth();
@@ -86,7 +87,12 @@ export default function ProfilomPage() {
   if (!user) return null;
 
   return (
-    <main className="max-w-xl mx-auto py-10 px-4">
+    <motion.main
+      className="max-w-xl mx-auto py-10 px-4"
+      initial={{ opacity: 0, y: 40 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+    >
       <h1 className="text-2xl font-bold mb-6">Profilom</h1>
 
       <form onSubmit={handleSave} className="bg-white rounded-xl shadow p-6 flex flex-col gap-4">

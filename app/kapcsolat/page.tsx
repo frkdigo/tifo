@@ -7,7 +7,10 @@ import { useState } from "react";
 export default function Kapcsolat() {
   const { user } = useAuth();
   const [sending, setSending] = useState(false);
-  const [success, setSuccess] = useState<string | null>(null);
+  "use client";
+  import { useAuth } from "../components/AuthProvider";
+  import { useState } from "react";
+  import { motion } from "framer-motion";
   const [error, setError] = useState<string | null>(null);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
