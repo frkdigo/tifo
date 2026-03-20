@@ -9,6 +9,7 @@ type EventItem = {
   description?: string;
   image?: string | null;
   location?: string | null;
+  category?: string;
 };
 
 function EventCard({
@@ -90,8 +91,26 @@ export default function Esemeneink() {
   const upcomingEvent = events.find((e) => new Date(e.date) >= now);
   const otherEvents = events.filter((e) => e.id !== upcomingEvent?.id);
 
+  // Tab szűrőhöz kategóriák kigyűjtése
+  const categories = Array.from(new Set(events.map(e => e.category || "Egyéb")));
+  const [activeTab, setActiveTab] = useState<string>(categories[0] || "");
+  const [currentPage, setCurrentPage] = useState(1);
+  const eventsPerPage = 6;
+
+  // Szűrt és lapozott események
+  const filteredEvents = otherEvents.filter(e => (e.category || "Egyéb") === activeTab);
+  const totalPages = Math.ceil(filteredEvents.length / eventsPerPage);
+  const paginatedEvents = filteredEvents.slice((currentPage - 1) * eventsPerPage, currentPage * eventsPerPage);
+
   return (
     <main className="bg-gradient-to-b from-gray-50 via-white to-gray-100 text-black min-h-screen py-12">
+      {/* Breadcrumb */}
+      <nav className="max-w-7xl mx-auto px-4 mb-4 text-sm text-gray-500 flex items-center gap-2">
+        <span className="hover:underline cursor-pointer" onClick={() => window.location.href = '/'}>Főoldal</span>
+        <span className="mx-1">&gt;</span>
+        <span className="text-blue-700 font-semibold">Eseményeink</span>
+      </nav>
+
       {/* Header */}
       <section className="text-center mb-16 px-4">
         <motion.h1
@@ -151,6 +170,19 @@ export default function Esemeneink() {
         </section>
       )}
 
+      {/* Tabos szűrő */}
+      <div className="max-w-7xl mx-auto px-4 mb-8 flex flex-wrap gap-2">
+        {categories.map((cat) => (
+          <button
+            key={cat}
+            className={`px-4 py-2 rounded-full font-semibold border transition-all duration-150 ${activeTab === cat ? 'bg-blue-700 text-white border-blue-700 shadow' : 'bg-white text-blue-700 border-blue-200 hover:bg-blue-50'}`}
+            onClick={() => { setActiveTab(cat); setCurrentPage(1); }}
+          >
+            {cat}
+          </button>
+        ))}
+      </div>
+
       {/* Other Events Grid */}
       <section className="max-w-7xl mx-auto px-4">
         <motion.h3
@@ -164,11 +196,11 @@ export default function Esemeneink() {
           <p className="text-center text-gray-400">Betöltés...</p>
         ) : error ? (
           <p className="text-center text-red-500">{error}</p>
-        ) : otherEvents.length === 0 ? (
+        ) : paginatedEvents.length === 0 ? (
           <p className="text-center text-gray-400">Nincs további esemény.</p>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {otherEvents.map((ev) => (
+            {paginatedEvents.map((ev) => (
               <EventCard
                 key={ev.id}
                 event={ev}
@@ -184,6 +216,34 @@ export default function Esemeneink() {
                 }}
               />
             ))}
+          </div>
+        )}
+        {/* Lapozó */}
+        {totalPages > 1 && (
+          <div className="flex justify-center items-center gap-2 mt-8">
+            <button
+              className="px-3 py-1 rounded-full border bg-white text-blue-700 font-bold disabled:opacity-50"
+              onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+              disabled={currentPage === 1}
+            >
+              &lt;
+            </button>
+            {Array.from({ length: totalPages }, (_, i) => (
+              <button
+                key={i + 1}
+                className={`px-3 py-1 rounded-full border font-bold ${currentPage === i + 1 ? 'bg-blue-700 text-white border-blue-700' : 'bg-white text-blue-700 border-blue-200 hover:bg-blue-50'}`}
+                onClick={() => setCurrentPage(i + 1)}
+              >
+                {i + 1}
+              </button>
+            ))}
+            <button
+              className="px-3 py-1 rounded-full border bg-white text-blue-700 font-bold disabled:opacity-50"
+              onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+              disabled={currentPage === totalPages}
+            >
+              &gt;
+            </button>
           </div>
         )}
       </section>
