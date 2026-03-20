@@ -54,6 +54,10 @@ export default function Esemeneink() {
   const [showImageModal, setShowImageModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
+  // Következő jövőbeli esemény kiválasztása
+  const now = new Date();
+  const nextEvent = events.find(e => new Date(e.date) >= now);
+
   useEffect(() => {
     fetchEvents();
   }, []);
@@ -181,6 +185,10 @@ export default function Esemeneink() {
                     }}
                   />
                 )}
+                {/* Dátum kicsiben */}
+                <div className="text-xs text-gray-500 mb-1">
+                  {new Date(event.date).toLocaleDateString("hu-HU", { year: "numeric", month: "short", day: "numeric" })}
+                </div>
                 <h3 className="font-bold text-xl mb-1 truncate">{event.title}</h3>
                 {event.description && (
                   <div className="text-gray-700 text-base line-clamp-2">
