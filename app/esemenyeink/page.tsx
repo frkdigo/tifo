@@ -39,41 +39,34 @@ export default function Esemeneink() {
     setLoading(false);
   }
 
-  const featuredEvent = events[0];
+  // Szétválogatás: közelgő és korábbi események
+  const now = new Date();
+  const upcoming = events.filter(e => new Date(e.date) >= now);
+  const past = events.filter(e => new Date(e.date) < now);
+  const featuredEvent = upcoming[0];
 
   function EventCard({ event }: { event: EventItem }) {
     return (
       <motion.div
         whileHover={{ y: -6 }}
         transition={{ duration: 0.3 }}
-        className="bg-white/80 backdrop-blur-xl border border-white/30 rounded-2xl overflow-hidden shadow-lg hover:shadow-[0_20px_60px_-20px_rgba(0,150,255,0.3)] transition-all duration-300"
+        className="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300"
       >
         {event.image && (
           <img
             src={event.image}
-            className="w-full h-44 object-cover hover:scale-110 transition-transform duration-700"
+            className="w-full h-44 object-cover"
+            alt={event.title}
           />
         )}
-
         <div className="p-5 flex flex-col gap-2">
-          <span className="text-xs uppercase text-gray-400">
-            {event.category || "Esemény"}
-          </span>
-
-          <h3 className="text-lg font-bold">{event.title}</h3>
-
-          <p className="text-sm text-gray-500">
-            {new Date(event.date).toLocaleDateString("hu-HU")}
-          </p>
-
-          <p className="text-sm text-gray-600 line-clamp-3">
-            {event.description}
-          </p>
-
-          <div className="flex justify-center mt-3">
+          <h3 className="text-lg font-bold mb-1">{event.title}</h3>
+          <p className="text-sm text-gray-500 mb-1">{new Date(event.date).toLocaleDateString("hu-HU")}</p>
+          <p className="text-sm text-gray-600 line-clamp-3 mb-2">{event.description}</p>
+          <div className="flex justify-center mt-2">
             <button
               onClick={() => setActiveEvent(event)}
-              className="bg-blue-900 text-white font-bold px-6 py-2 rounded-full hover:bg-blue-800 transition text-sm"
+              className="bg-blue-900 text-white font-bold px-6 py-2 rounded-[16px] hover:bg-blue-800 transition text-base w-full"
             >
               Érdekel
             </button>
@@ -84,78 +77,56 @@ export default function Esemeneink() {
   }
 
   return (
-    <main className="max-w-6xl mx-auto px-4 py-16">
+    <main className="max-w-6xl mx-auto px-4 py-8">
 
-<section className="max-w-6xl mx-auto px-4 pt-10 md:pt-14 pb-8">
-  <div className="relative overflow-hidden rounded-3xl border border-white/15 bg-slate-950 shadow-[0_30px_70px_-40px_rgba(0,0,0,0.65)] p-8 md:p-12 text-center">
-
-    <div
-      className="absolute inset-0 opacity-80 pointer-events-none"
-      aria-hidden="true"
-      style={{
-        background:
-          "radial-gradient(circle at 14% -6%, rgba(135,206,235,0.22), transparent 28%), radial-gradient(circle at 88% 8%, rgba(40,167,69,0.18), transparent 25%), radial-gradient(circle at 52% 120%, rgba(13,59,102,0.35), transparent 40%)",
-      }}
-    />
-
-    <div className="relative">
-      <p className="inline-flex items-center gap-2 rounded-full bg-white/15 text-white text-xs tracking-[0.18em] uppercase px-5 py-2.5 mb-6 shadow-lg shadow-black/20">
-        Törökbálinti Ifjúsági Önkormányzat
-      </p>
-
-      <h1 className="text-4xl md:text-6xl lg:text-7xl font-black leading-tight text-white">
-        Eseményeink
-      </h1>
-
-      <p className="mt-5 text-white/90 text-lg md:text-xl max-w-3xl leading-[1.58] mx-auto">
-        Fedezd fel legfrissebb eseményeinket és csatlakozz hozzánk!
-      </p>
-    </div>
-  </div>
-</section>
+      {/* HERO CARD */}
+      <section className="max-w-2xl mx-auto mb-8">
+        <div className="rounded-[32px] bg-gradient-to-br from-[#eaf3fa] via-[#dbeafe] to-[#e0e7ef] p-1">
+          <div className="rounded-[28px] bg-gradient-to-br from-[#0a1a2f] via-[#1e293b] to-[#0a1a2f] p-6 md:p-8 text-white">
+            <p className="uppercase tracking-[0.18em] text-xs text-gray-200 mb-2">Programok</p>
+            <h1 className="text-3xl md:text-4xl font-extrabold mb-2">Eseményeink</h1>
+            <p className="text-base md:text-lg text-gray-200 mb-6">Kövesd a közelgő programokat, nézd vissza a korábbi eseményeket, és csatlakozz a közösséghez.</p>
+            <div className="flex gap-3 mt-2">
+              <div className="flex-1 rounded-2xl border border-gray-300 bg-white/10 py-4 text-center">
+                <div className="text-2xl font-bold">{upcoming.length}</div>
+                <div className="text-xs text-gray-200 mt-1">Közelgő</div>
+              </div>
+              <div className="flex-1 rounded-2xl border border-gray-300 bg-white/10 py-4 text-center">
+                <div className="text-2xl font-bold">{past.length}</div>
+                <div className="text-xs text-gray-200 mt-1">Korábbi</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
 
       {/* KIEMELT ESEMÉNY */}
       {featuredEvent && (
-        <section className="mb-14">
+        <section className="mb-10">
           <div
             onClick={() => setActiveEvent(featuredEvent)}
-            className="cursor-pointer grid md:grid-cols-2 overflow-hidden rounded-3xl border border-white/10 shadow-[0_30px_80px_-30px_rgba(0,150,255,0.25)] backdrop-blur-md bg-white/5 hover:shadow-[0_40px_120px_-40px_rgba(0,150,255,0.4)] transition-all duration-500"
+            className="cursor-pointer rounded-3xl overflow-hidden border border-gray-200 bg-white shadow-md grid md:grid-cols-2"
           >
-            {/* KÉP */}
-            <div className="h-64 md:h-auto">
+            <div className="h-56 md:h-auto">
               {featuredEvent.image && (
                 <img
                   src={featuredEvent.image}
                   className="w-full h-full object-cover"
+                  alt={featuredEvent.title}
                 />
               )}
             </div>
-
-            {/* SZÖVEG */}
-            <div className="bg-white/95 backdrop-blur-xl p-8 flex flex-col justify-between">
+            <div className="p-6 md:p-8 flex flex-col justify-between">
               <div>
-                <span className="text-xs uppercase tracking-widest text-[#87ceeb]">
-                  Kiemelt esemény
-                </span>
-
-                <h2 className="text-2xl md:text-3xl font-black mt-2">
-                  {featuredEvent.title}
-                </h2>
-
-                <p className="text-sm text-gray-500 mt-2">
-                  {new Date(featuredEvent.date).toLocaleDateString("hu-HU")}
-                </p>
-
-                <p className="text-gray-600 mt-4 line-clamp-4 leading-[1.6]">
-                  {featuredEvent.description}
-                </p>
+                <span className="text-xs uppercase tracking-widest text-blue-700 font-bold">KIEMELT ESEMÉNY</span>
+                <h2 className="text-xl md:text-2xl font-black mt-2 mb-1">{featuredEvent.title}</h2>
+                <p className="text-sm text-gray-500 mb-2">{new Date(featuredEvent.date).toLocaleDateString("hu-HU")}</p>
+                <p className="text-gray-700 line-clamp-4 leading-[1.6]">{featuredEvent.description}</p>
               </div>
-
-              {/* GOMB (NEM VÁLTOZOTT) */}
               <div className="mt-6">
-                <button className="bg-blue-900 text-white font-bold px-6 py-2 rounded-full hover:bg-blue-800 transition">
-                  Érdekel →
+                <button className="bg-blue-900 text-white font-bold px-6 py-2 rounded-[16px] hover:bg-blue-800 transition w-full text-base">
+                  Érdekel
                 </button>
               </div>
             </div>
@@ -163,16 +134,30 @@ export default function Esemeneink() {
         </section>
       )}
 
-      {/* LISTA */}
-      <section>
+      {/* KÖZELGŐ ESEMÉNYEK */}
+      <section className="mb-10">
+        <h2 className="text-xl font-bold mb-4">Közelgő események</h2>
         {loading ? (
           <p className="text-gray-500">Betöltés...</p>
         ) : (
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {events.map((event, index) => {
-              if (index === 0) return null;
-              return <EventCard key={event.id} event={event} />;
-            })}
+            {upcoming.slice(1).map((event) => (
+              <EventCard key={event.id} event={event} />
+            ))}
+          </div>
+        )}
+      </section>
+
+      {/* KORÁBBI ESEMÉNYEK */}
+      <section className="mb-10">
+        <h2 className="text-xl font-bold mb-2">Korábbi események</h2>
+        {past.length === 0 ? (
+          <p className="text-gray-400">Még nincsenek korábbi események.</p>
+        ) : (
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {past.map((event) => (
+              <EventCard key={event.id} event={event} />
+            ))}
           </div>
         )}
       </section>
@@ -188,36 +173,26 @@ export default function Esemeneink() {
             exit={{ opacity: 0 }}
           >
             <motion.div
-              className="relative bg-white/90 backdrop-blur-xl max-w-2xl w-full rounded-3xl overflow-hidden shadow-[0_40px_120px_-40px_rgba(0,150,255,0.3)] border border-white/20"
+              className="relative bg-white max-w-2xl w-full rounded-3xl overflow-hidden shadow-2xl border border-gray-200"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* ❌ X */}
               <button
                 onClick={() => setActiveEvent(null)}
                 className="absolute top-4 right-4 z-10 w-10 h-10 flex items-center justify-center rounded-full bg-white border border-gray-200 shadow-sm text-gray-500 hover:text-black hover:bg-gray-100 transition"
               >
                 ✕
               </button>
-
               {activeEvent.image && (
                 <img
                   src={activeEvent.image}
                   className="w-full h-60 object-cover"
+                  alt={activeEvent.title}
                 />
               )}
-
               <div className="p-6">
-                <h2 className="text-2xl font-bold">
-                  {activeEvent.title}
-                </h2>
-
-                <p className="text-sm text-gray-500 mt-2">
-                  {new Date(activeEvent.date).toLocaleDateString("hu-HU")}
-                </p>
-
-                <p className="mt-4 text-gray-700">
-                  {activeEvent.description}
-                </p>
+                <h2 className="text-2xl font-bold mb-1">{activeEvent.title}</h2>
+                <p className="text-sm text-gray-500 mb-2">{new Date(activeEvent.date).toLocaleDateString("hu-HU")}</p>
+                <p className="text-gray-700">{activeEvent.description}</p>
               </div>
             </motion.div>
           </motion.div>
