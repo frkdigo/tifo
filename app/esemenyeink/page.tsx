@@ -44,14 +44,14 @@ export default function Esemeneink() {
   function EventCard({ event }: { event: EventItem }) {
     return (
       <motion.div
-        whileHover={{ y: -4 }}
-        transition={{ duration: 0.25 }}
-        className="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all"
+        whileHover={{ y: -6 }}
+        transition={{ duration: 0.3 }}
+        className="bg-white/80 backdrop-blur-xl border border-white/30 rounded-2xl overflow-hidden shadow-lg hover:shadow-[0_20px_60px_-20px_rgba(0,150,255,0.3)] transition-all duration-300"
       >
         {event.image && (
           <img
             src={event.image}
-            className="w-full h-44 object-cover"
+            className="w-full h-44 object-cover hover:scale-110 transition-transform duration-700"
           />
         )}
 
@@ -86,17 +86,24 @@ export default function Esemeneink() {
   return (
     <main className="max-w-6xl mx-auto px-4 py-16">
 
-      {/* HEADER */}
+      {/* FUTURISZTIKUS HEADER */}
       <section className="max-w-6xl mx-auto px-4 pt-10 md:pt-14 pb-10 text-center">
-        <div className="relative overflow-hidden rounded-3xl border border-white/15 bg-slate-950 shadow-[0_30px_70px_-40px_rgba(0,0,0,0.65)] p-10 md:p-14">
-          <h1 className="text-4xl md:text-6xl font-black text-white">
+        <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-slate-950 via-slate-900 to-black shadow-[0_40px_120px_-50px_rgba(0,0,0,0.9)] p-12 md:p-16">
+
+          {/* glow */}
+          <div className="absolute inset-0 opacity-30 bg-[radial-gradient(circle_at_50%_30%,rgba(0,150,255,0.25),transparent_60%)]" />
+
+          {/* grid */}
+          <div className="absolute inset-0 opacity-[0.08] bg-[linear-gradient(to_right,white_1px,transparent_1px),linear-gradient(to_bottom,white_1px,transparent_1px)] bg-[size:40px_40px]" />
+
+          <h1 className="relative text-4xl md:text-6xl font-black text-white tracking-tight">
             Eseményeink
           </h1>
 
-          <div className="w-20 h-1 bg-white/70 mx-auto my-6" />
+          <div className="relative w-24 h-1 bg-cyan-400 mx-auto my-6 shadow-[0_0_20px_rgba(0,200,255,0.8)]" />
 
-          <p className="text-white/80 max-w-2xl mx-auto text-lg">
-            Fedezd fel legfrissebb eseményeinket és csatlakozz hozzánk!
+          <p className="relative text-white/70 max-w-2xl mx-auto text-lg">
+            Fedezd fel legfrissebb eseményeinket és csatlakozz egy új szintű élményhez.
           </p>
         </div>
       </section>
@@ -106,7 +113,7 @@ export default function Esemeneink() {
         <section className="mb-14">
           <div
             onClick={() => setActiveEvent(featuredEvent)}
-            className="cursor-pointer grid md:grid-cols-2 overflow-hidden rounded-3xl border border-gray-200 shadow-lg hover:shadow-2xl transition"
+            className="cursor-pointer grid md:grid-cols-2 overflow-hidden rounded-3xl border border-white/10 shadow-[0_30px_80px_-30px_rgba(0,150,255,0.25)] backdrop-blur-md bg-white/5 hover:shadow-[0_40px_120px_-40px_rgba(0,150,255,0.4)] transition-all duration-500"
           >
             {/* KÉP */}
             <div className="h-64 md:h-auto">
@@ -119,7 +126,7 @@ export default function Esemeneink() {
             </div>
 
             {/* SZÖVEG */}
-            <div className="bg-white p-8 flex flex-col justify-between">
+            <div className="bg-white/95 backdrop-blur-xl p-8 flex flex-col justify-between">
               <div>
                 <span className="text-xs uppercase tracking-widest text-[#87ceeb]">
                   Kiemelt esemény
@@ -138,6 +145,7 @@ export default function Esemeneink() {
                 </p>
               </div>
 
+              {/* GOMB (NEM VÁLTOZOTT) */}
               <div className="mt-6">
                 <button className="bg-blue-900 text-white font-bold px-6 py-2 rounded-full hover:bg-blue-800 transition">
                   Érdekel →
@@ -166,24 +174,20 @@ export default function Esemeneink() {
       <AnimatePresence>
         {activeEvent && (
           <motion.div
-            className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4"
+            className="fixed inset-0 z-50 bg-black/70 backdrop-blur-md flex items-center justify-center p-4"
             onClick={() => setActiveEvent(null)}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
             <motion.div
-              className="relative bg-white max-w-2xl w-full rounded-2xl overflow-hidden shadow-xl"
+              className="relative bg-white/90 backdrop-blur-xl max-w-2xl w-full rounded-3xl overflow-hidden shadow-[0_40px_120px_-40px_rgba(0,150,255,0.3)] border border-white/20"
               onClick={(e) => e.stopPropagation()}
-              initial={{ scale: 0.95 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.95 }}
             >
-              {/* ❌ X GOMB */}
+              {/* ❌ X */}
               <button
                 onClick={() => setActiveEvent(null)}
                 className="absolute top-4 right-4 z-10 w-10 h-10 flex items-center justify-center rounded-full bg-white border border-gray-200 shadow-sm text-gray-500 hover:text-black hover:bg-gray-100 transition"
-                aria-label="Bezárás"
               >
                 ✕
               </button>
