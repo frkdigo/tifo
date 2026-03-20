@@ -18,32 +18,16 @@ export default function Esemeneink() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  const heroImages = [
-    "/images/herokep_1.jpg",
-    "/images/herokep_2.jpg",
-    "/images/herokep_3.jpg",
-    "/images/herokep_4.jpg",
-    "/images/herokep_5.jpg",
-    "/images/herokep_6.jpg",
-    "/images/herokep_7.jpg",
-    "/images/herokep_8.jpg",
-  ];
-  const [current, setCurrent] = useState(0);
-
   useEffect(() => {
     fetchEvents();
   }, []);
-
-  useEffect(() => {
-    const timeout = setTimeout(() => setCurrent((prev) => (prev + 1) % heroImages.length), 5000);
-    return () => clearTimeout(timeout);
-  }, [current]);
 
   async function fetchEvents() {
     setLoading(true);
     try {
       const res = await fetch("/api/events");
       const data = await res.json();
+
       setEvents(
         data.sort(
           (a: EventItem, b: EventItem) =>
@@ -68,150 +52,150 @@ export default function Esemeneink() {
     setActiveEvent(events[nextIndex]);
   }
 
-  function EventCard({ event, onSelect }: {
-    event: EventItem;
-    onSelect: () => void;
-  }) {
+  function EventCard({ event }: { event: EventItem }) {
     return (
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: 16 }}
-        transition={{ duration: 0.4, ease: [0.4, 0.2, 0.2, 1] }}
-        whileHover={{ scale: 1.02, y: -2 }}
-        className="relative rounded-xl overflow-hidden shadow-sm group bg-white border border-gray-200 transition-all duration-200 hover:shadow-md cursor-pointer"
-        style={{ willChange: 'transform, box-shadow' }}
-        onClick={onSelect}
+        whileHover={{ y: -4 }}
+        transition={{ duration: 0.3 }}
+        onClick={() => setActiveEvent(event)}
+        className="cursor-pointer bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300"
       >
         {event.image && (
-          <div className="relative h-48 w-full overflow-hidden">
+          <div className="h-48 w-full overflow-hidden">
             <img
               src={event.image}
               alt={event.title}
-              className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-400"
-              style={{ willChange: 'transform' }}
+              className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-white/80 via-white/10 to-transparent" />
           </div>
         )}
-        <div className="p-5 flex flex-col gap-2 relative z-10">
-          <div className="flex items-center gap-2 mb-1">
-            <span className="inline-block bg-gray-100 text-gray-600 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-widest border border-gray-200">
-              {event.category || "Esemény"}
-            </span>
-            <span className="text-xs text-gray-400 ml-auto">
-              {new Date(event.date).toLocaleDateString("hu-HU", { year: "numeric", month: "short", day: "numeric" })}
-            </span>
-          </div>
-          <h3 className="text-lg md:text-xl font-black text-tifo-dark mb-1 line-clamp-2">
+
+        <div className="p-6 flex flex-col gap-2">
+          <span className="text-xs uppercase tracking-wider text-gray-400">
+            {event.category || "Esemény"}
+          </span>
+
+          <h3 className="text-lg font-bold text-gray-900 leading-snug">
             {event.title}
           </h3>
+
           {event.location && (
-            <p className="text-xs text-gray-500 mb-1">📍 {event.location}</p>
+            <p className="text-sm text-gray-500">📍 {event.location}</p>
           )}
-          {event.description && (
-            <p className="text-gray-600 text-sm line-clamp-3 mb-3">{event.description}</p>
-          )}
-          <div className="flex justify-center mt-2">
-            <button
-              onClick={(e) => { e.stopPropagation(); onSelect(); }}
-              className="inline-flex justify-center items-center gap-2 rounded-full bg-blue-900 text-white font-black px-6 py-2 hover:bg-blue-800 hover:scale-105 active:scale-95 transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100 text-sm"
-            >
-              Érdekel
-            </button>
-          </div>
+
+          <p className="text-sm text-gray-500">
+            {new Date(event.date).toLocaleDateString("hu-HU", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}
+          </p>
+
+          <p className="text-sm text-gray-600 line-clamp-3 mt-2">
+            {event.description}
+          </p>
+
+          <button className="mt-4 text-sm font-semibold text-blue-900 hover:underline self-start">
+            Részletek →
+          </button>
         </div>
       </motion.div>
     );
   }
 
   return (
-    <main className="max-w-6xl mx-auto py-12 px-4">
+    <main className="max-w-6xl mx-auto px-4 py-16">
 
-      {/* HERO szekció - egységes, világos, site style */}
-      <header className="mb-10">
-        <p className="section-label">Események</p>
-        <h1 className="text-3xl md:text-5xl font-black text-tifo-dark mb-3">Eseményeink</h1>
-        <p className="mt-2 text-gray-600 max-w-2xl">
-          Fedezd fel a legjobb bulikat, programokat és rendezvényeket! Válassz, és éld át a felejthetetlen élményeket!
+      {/* HEADER – mint Rólunk oldal */}
+      <section className="mb-12 text-center">
+        <p className="text-sm uppercase tracking-widest text-gray-400 mb-2">
+          Események
         </p>
-      </header>
 
-      {/* Kártyák gridje - egységes site style, masonry */}
-      <section className="mt-8">
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {loading ? (
-            <p className="text-gray-400 col-span-full text-center">Betöltés...</p>
-          ) : error ? (
-            <p className="text-red-400 col-span-full text-center">{error}</p>
-          ) : events.length === 0 ? (
-            <p className="text-gray-400 col-span-full text-center">Nincs esemény.</p>
-          ) : (
-            events.map((event) => (
-              <EventCard
-                key={event.id}
-                event={event}
-                onSelect={() => setActiveEvent(event)}
-              />
-            ))
-          )}
-        </div>
+        <h1 className="text-4xl md:text-5xl font-black text-gray-900">
+          Eseményeink
+        </h1>
+
+        <div className="w-20 h-1 bg-blue-900 mx-auto my-6" />
+
+        <p className="text-gray-600 max-w-2xl mx-auto">
+          Fedezd fel legújabb eseményeinket, programjainkat és élményeinket.
+          Válassz egy eseményt, és nézd meg a részleteket!
+        </p>
       </section>
 
-      {/* Modal - egységes, világos, letisztult */}
+      {/* CONTENT */}
+      <section>
+        {loading ? (
+          <p className="text-center text-gray-400">Betöltés...</p>
+        ) : error ? (
+          <p className="text-center text-red-500">{error}</p>
+        ) : events.length === 0 ? (
+          <p className="text-center text-gray-400">Nincs esemény.</p>
+        ) : (
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {events.map((event) => (
+              <EventCard key={event.id} event={event} />
+            ))}
+          </div>
+        )}
+      </section>
+
+      {/* MODAL */}
       <AnimatePresence>
         {activeEvent && (
           <motion.div
-            className="fixed inset-0 z-50 bg-black/40 backdrop-blur-[2px] p-4 flex items-center justify-center"
+            className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4"
+            onClick={() => setActiveEvent(null)}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            onClick={() => setActiveEvent(null)}
           >
             <motion.div
-              className="w-full max-w-2xl rounded-xl overflow-hidden bg-white shadow-lg border border-gray-200 relative"
-              initial={{ scale: 0.98, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.98, opacity: 0 }}
-              transition={{ duration: 0.22, ease: [0.4, 0.2, 0.2, 1] }}
               onClick={(e) => e.stopPropagation()}
+              className="bg-white max-w-2xl w-full rounded-2xl overflow-hidden shadow-xl"
+              initial={{ scale: 0.95 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0.95 }}
             >
-              <button
-                type="button"
-                className="absolute top-4 right-4 text-gray-400 hover:text-blue-900 text-2xl leading-none bg-white rounded-full w-10 h-10 flex items-center justify-center shadow-sm border border-gray-200"
-                onClick={() => setActiveEvent(null)}
-                aria-label="Bezárás"
-              >
-                &times;
-              </button>
-              <div className="p-7">
-                {activeEvent.image && (
-                  <img
-                    src={activeEvent.image}
-                    alt={activeEvent.title}
-                    className="w-full h-64 object-cover rounded-xl mb-6 shadow-sm"
-                  />
+              <div className="p-6">
+                <h2 className="text-2xl font-bold mb-2">
+                  {activeEvent.title}
+                </h2>
+
+                <p className="text-sm text-gray-500 mb-4">
+                  {new Date(activeEvent.date).toLocaleDateString("hu-HU")}
+                </p>
+
+                {activeEvent.location && (
+                  <p className="text-sm text-gray-500 mb-4">
+                    📍 {activeEvent.location}
+                  </p>
                 )}
-                <h2 className="text-2xl md:text-3xl font-black text-tifo-dark leading-tight mb-1">{activeEvent.title}</h2>
-                {activeEvent.location && <p className="mt-1 text-gray-500 text-sm">{activeEvent.location}</p>}
-                <p className="mt-2 text-gray-400 text-xs">{new Date(activeEvent.date).toLocaleDateString("hu-HU")}</p>
-                {activeEvent.description && <p className="mt-5 text-gray-700 text-base leading-relaxed">{activeEvent.description}</p>}
-                <div className="flex justify-between mt-8">
+
+                <p className="text-gray-700">
+                  {activeEvent.description}
+                </p>
+
+                <div className="flex justify-between mt-6">
                   <button
-                    type="button"
                     onClick={() => navigateEvent(-1)}
-                    className="inline-flex justify-center items-center gap-2 rounded-full bg-blue-900 text-white font-black px-5 py-2 hover:bg-blue-800 hover:scale-105 active:scale-95 transition-all duration-200 text-sm"
+                    className="px-4 py-2 bg-blue-900 text-white rounded-full text-sm"
                   >
-                    Előző esemény
+                    Előző
                   </button>
-                  <span className="text-sm text-gray-400">{activeIndex + 1} / {events.length}</span>
+
+                  <span className="text-sm text-gray-400">
+                    {activeIndex + 1} / {events.length}
+                  </span>
+
                   <button
-                    type="button"
                     onClick={() => navigateEvent(1)}
-                    className="inline-flex justify-center items-center gap-2 rounded-full bg-blue-900 text-white font-black px-5 py-2 hover:bg-blue-800 hover:scale-105 active:scale-95 transition-all duration-200 text-sm"
+                    className="px-4 py-2 bg-blue-900 text-white rounded-full text-sm"
                   >
-                    Következő esemény
+                    Következő
                   </button>
                 </div>
               </div>
