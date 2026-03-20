@@ -24,16 +24,16 @@ function EventCard({
     <motion.div
       layout
       whileHover={{ scale: 1.05 }}
-      className="cursor-pointer bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col transition-transform duration-200"
+      className="cursor-pointer bg-white rounded-3xl shadow-xl overflow-hidden flex flex-col transition-transform duration-300 hover:shadow-2xl"
     >
       {event.image && (
         <div
-          className="h-44 w-full bg-cover bg-center"
+          className="h-48 w-full bg-cover bg-center"
           style={{ backgroundImage: `url(${event.image})` }}
           onClick={onShowImage}
         />
       )}
-      <div className="p-5 flex flex-col flex-1">
+      <div className="p-6 flex flex-col flex-1">
         <div className="text-xs font-semibold text-gray-500 mb-1 uppercase">
           {new Date(event.date).toLocaleDateString("hu-HU", {
             year: "numeric",
@@ -42,12 +42,8 @@ function EventCard({
           })}
         </div>
         <h3 className="text-xl font-extrabold text-tifo-primary mb-2">{event.title}</h3>
-        {event.location && (
-          <div className="text-sm text-blue-700 mb-2 truncate">
-            📍 {event.location}
-          </div>
-        )}
-        <p className="text-gray-700 line-clamp-3 mb-4">{event.description}</p>
+        {event.location && <p className="text-blue-600 mb-2">📍 {event.location}</p>}
+        {event.description && <p className="text-gray-700 line-clamp-3 mb-4">{event.description}</p>}
         <button
           onClick={onSelect}
           className="mt-auto py-2 px-4 bg-tifo-secondary text-white font-bold rounded-xl hover:scale-105 transition-transform"
@@ -90,45 +86,105 @@ export default function Esemeneink() {
     setLoading(false);
   }
 
+  const now = new Date();
+  const upcomingEvent = events.find((e) => new Date(e.date) >= now);
+  const otherEvents = events.filter((e) => e.id !== upcomingEvent?.id);
+
   return (
-    <main className="bg-gradient-to-b from-slate-50 to-white text-black min-h-screen py-12">
+    <main className="bg-gradient-to-b from-slate-50 via-white to-slate-100 text-black min-h-screen py-12">
       {/* Page Header */}
       <section className="text-center mb-16 px-4">
-        <h1 className="text-5xl md:text-6xl font-black text-blue-800 mb-4">
+        <motion.h1
+          className="text-5xl md:text-6xl font-black text-blue-800 mb-4"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
           Eseményeink
-        </h1>
-        <p className="max-w-xl mx-auto text-lg text-gray-700">
+        </motion.h1>
+        <motion.p
+          className="max-w-xl mx-auto text-lg text-gray-700"
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
           Fedezd fel a legújabb programokat, közösségi eseményeket és rendezvényeket!
-        </p>
+        </motion.p>
       </section>
 
-      {/* Event Grid */}
-      {loading ? (
-        <p className="text-center text-gray-400">Betöltés...</p>
-      ) : error ? (
-        <p className="text-center text-red-500">{error}</p>
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 px-4 max-w-7xl mx-auto">
-          {events.map((ev) => (
-            <EventCard
-              key={ev.id}
-              event={ev}
-              onSelect={() => {
-                setSelected(ev);
-                setShowModal(true);
-              }}
-              onShowImage={() => {
-                if (ev.image) {
-                  setImageSrc(ev.image);
+      {/* Highlighted Upcoming Event */}
+      {upcomingEvent && (
+        <section className="max-w-4xl mx-auto mb-16 px-4">
+          <motion.div
+            className="relative rounded-3xl bg-gradient-to-r from-blue-600 to-blue-400 shadow-2xl p-8 flex flex-col md:flex-row items-center gap-8 cursor-pointer overflow-hidden"
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            whileHover={{ scale: 1.03 }}
+            onClick={() => setSelected(upcomingEvent) || setShowModal(true)}
+          >
+            {upcomingEvent.image && (
+              <div
+                className="h-64 md:h-48 md:w-1/3 bg-cover bg-center rounded-2xl"
+                style={{ backgroundImage: `url(${upcomingEvent.image})` }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setImageSrc(upcomingEvent.image!);
                   setShowImageModal(true);
-                }
-              }}
-            />
-          ))}
-        </div>
+                }}
+              />
+            )}
+            <div className="flex-1">
+              <p className="text-white/90 font-semibold uppercase mb-2">
+                Közelgő esemény
+              </p>
+              <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-2">
+                {upcomingEvent.title}
+              </h2>
+              {upcomingEvent.location && (
+                <p className="text-white/90 mb-2">📍 {upcomingEvent.location}</p>
+              )}
+              <p className="text-white/95 line-clamp-3">{upcomingEvent.description}</p>
+            </div>
+          </motion.div>
+        </section>
       )}
 
-      {/* Event Details Modal */}
+      {/* Other Events Grid */}
+      <section className="max-w-7xl mx-auto px-4">
+        <motion.h3
+          className="text-2xl md:text-3xl font-extrabold text-blue-700 mb-8 text-center"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
+          További események
+        </motion.h3>
+        {loading ? (
+          <p className="text-center text-gray-400">Betöltés...</p>
+        ) : error ? (
+          <p className="text-center text-red-500">{error}</p>
+        ) : otherEvents.length === 0 ? (
+          <p className="text-center text-gray-400">Nincs további esemény.</p>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {otherEvents.map((ev) => (
+              <EventCard
+                key={ev.id}
+                event={ev}
+                onSelect={() => {
+                  setSelected(ev);
+                  setShowModal(true);
+                }}
+                onShowImage={() => {
+                  if (ev.image) {
+                    setImageSrc(ev.image);
+                    setShowImageModal(true);
+                  }
+                }}
+              />
+            ))}
+          </div>
+        )}
+      </section>
+
+      {/* Event Modal */}
       <AnimatePresence>
         {showModal && selected && (
           <motion.div
@@ -139,43 +195,39 @@ export default function Esemeneink() {
             onClick={() => setShowModal(false)}
           >
             <motion.div
-              className="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full"
-              initial={{ scale: 0.9 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.9 }}
+              className="bg-white rounded-3xl shadow-2xl p-8 max-w-md w-full overflow-y-auto"
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
             >
               {selected.image && (
                 <img
                   src={selected.image}
                   alt={selected.title}
-                  className="w-full rounded-xl mb-4"
+                  className="w-full rounded-2xl mb-4"
                 />
               )}
-              <h2 className="text-2xl font-bold text-blue-900 mb-2">
-                {selected.title}
-              </h2>
-              <p className="text-sm text-gray-500 mb-2">
+              <h2 className="text-2xl font-bold text-blue-900 mb-2">{selected.title}</h2>
+              <p className="text-gray-500 mb-2">
                 {new Date(selected.date).toLocaleDateString("hu-HU", {
                   year: "numeric",
                   month: "short",
                   day: "numeric",
                 })}
               </p>
-              {selected.location && (
-                <p className="text-gray-700 mb-2">📍 {selected.location}</p>
-              )}
-              <p className="text-gray-800">{selected.description}</p>
+              {selected.location && <p className="text-gray-700 mb-2">📍 {selected.location}</p>}
+              {selected.description && <p className="text-gray-800">{selected.description}</p>}
             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Image Lightbox Modal */}
+      {/* Image Lightbox */}
       <AnimatePresence>
         {showImageModal && imageSrc && (
           <motion.div
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/70"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/80"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -183,10 +235,10 @@ export default function Esemeneink() {
           >
             <motion.img
               src={imageSrc}
-              className="max-w-full max-h-[80vh] rounded-xl shadow-2xl"
-              initial={{ scale: 0.9 }}
+              className="max-w-full max-h-[80vh] rounded-3xl shadow-2xl"
+              initial={{ scale: 0.95 }}
               animate={{ scale: 1 }}
-              exit={{ scale: 0.9 }}
+              exit={{ scale: 0.95 }}
             />
           </motion.div>
         )}
