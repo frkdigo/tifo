@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
 
 const heroImages = [
   "/images/herokep_1.jpg",
@@ -56,11 +57,16 @@ export default function HeroSection() {
           Törökbálint &bull; Ifjúsági Önkormányzat
         </span>
 
-        <h1 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-black text-white leading-[0.92] tracking-tight mb-6 drop-shadow-2xl">
+        <motion.h1
+          className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-black text-white leading-[0.92] tracking-tight mb-6 drop-shadow-2xl"
+          initial={{ opacity: 0, y: 60 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, ease: "easeOut" }}
+        >
           Törökbálinti<br />
           <span className="text-sky-300">Ifjúsági</span><br />
           Önkormányzat
-        </h1>
+        </motion.h1>
 
         <p className="text-lg md:text-xl mb-10 text-white/80 max-w-xl font-medium leading-relaxed">
           Fiatalokért, közösségben, Törökbálinton
