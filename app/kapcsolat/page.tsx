@@ -122,25 +122,57 @@ export default function Kapcsolat() {
         </div>
       </motion.section>
 
-      {/* FORM */}
+      {/* FORM - eredeti, részletes, színes, címkézett blokk */}
       <motion.section
-        className="rounded-3xl bg-white border p-6 md:p-8"
+        className="rounded-3xl bg-[linear-gradient(180deg,#ffffff_0%,#f8fbff_100%)] border border-gray-200 shadow-[0_18px_45px_-28px_rgba(13,59,102,0.22)] p-6 md:p-8"
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, ease: "easeOut", delay: 0.15 }}
       >
-        <h2 className="text-2xl font-black mb-6">Írj nekünk!</h2>
-
+        <p className="section-label">Kapcsolatfelvétel</p>
+        <h2 className="text-2xl md:text-3xl font-black text-tifo-dark mb-6">Írj nekünk!</h2>
         <form className="grid gap-4" onSubmit={handleSubmit}>
-          <input name="name" placeholder="Név" required />
-          <input name="email" type="email" placeholder="Email" required />
-          <textarea name="message" rows={5} placeholder="Üzenet" required />
-
-          <button disabled={sending}>
-            {sending ? "Küldés..." : "Üzenet küldése"}
+          <label className="text-sm font-semibold text-gray-700">
+            Név
+            <input
+              type="text"
+              name="name"
+              className="mt-1.5 w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-black focus:outline-none focus:ring-2 focus:ring-[#28a745] focus:border-[#28a745] transition"
+              required
+            />
+          </label>
+          <label className="text-sm font-semibold text-gray-700">
+            Email
+            <input
+              type="email"
+              name="email"
+              className="mt-1.5 w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-black focus:outline-none focus:ring-2 focus:ring-[#28a745] focus:border-[#28a745] transition"
+              required
+            />
+          </label>
+          <label className="text-sm font-semibold text-gray-700">
+            Üzenet
+            <textarea
+              name="message"
+              className="mt-1.5 w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-black focus:outline-none focus:ring-2 focus:ring-[#28a745] focus:border-[#28a745] transition"
+              rows={5}
+              required
+            />
+          </label>
+          <button
+            type="submit"
+            className="inline-flex justify-center items-center gap-2 rounded-full bg-blue-900 text-white font-black px-8 py-3.5 hover:bg-blue-800 hover:scale-105 active:scale-95 transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100"
+            disabled={sending}
+          >
+            {sending ? "Küldés..." : (
+              <>
+                Üzenet küldése
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
+              </>
+            )}
           </button>
-
-          {success && <div className="text-green-600">{success}</div>}
-          {error && <div className="text-red-600">{error}</div>}
+          {success && <div className="text-green-600 text-sm mt-2">{success}</div>}
+          {error && <div className="text-red-600 text-sm mt-2">{error}</div>}
         </form>
       </motion.section>
     </motion.main>
