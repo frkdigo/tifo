@@ -199,25 +199,6 @@ export default function Esemeneink() {
     </main>
   );
 }
-                }}
-                onShowImage={() => {
-                  if (ev.image) {
-                    setImageSrc(ev.image);
-                    setShowImageModal(true);
-                  }
-                }}
-              />
-            ))}
-          </div>
-        )}
-        {/* Lapozó */}
-        {totalPages > 1 && (
-          <div className="flex justify-center items-center gap-2 mt-8">
-            <button
-              className="px-3 py-1 rounded-full border bg-white text-blue-700 font-bold disabled:opacity-50"
-              onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-              disabled={currentPage === 1}
-            >
               &lt;
             </button>
             {Array.from({ length: totalPages }, (_, i) => (
