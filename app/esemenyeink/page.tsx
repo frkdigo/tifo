@@ -92,7 +92,7 @@ export default function Esemeneink() {
 
   return (
     <main className="bg-gradient-to-b from-slate-50 via-white to-slate-100 text-black min-h-screen py-12">
-      {/* Page Header */}
+      {/* Header */}
       <section className="text-center mb-16 px-4">
         <motion.h1
           className="text-5xl md:text-6xl font-black text-blue-800 mb-4"
@@ -112,17 +112,20 @@ export default function Esemeneink() {
 
       {/* Highlighted Upcoming Event */}
       {upcomingEvent && (
-        <section className="max-w-4xl mx-auto mb-16 px-4">
+        <section className="max-w-4xl mx-auto mb-16 px-4 relative">
           <motion.div
-            className="relative rounded-3xl bg-gradient-to-r from-blue-600 to-blue-400 shadow-2xl p-8 flex flex-col md:flex-row items-center gap-8 cursor-pointer overflow-hidden"
+            className="relative rounded-3xl bg-gradient-to-r from-blue-600 to-blue-400 shadow-2xl p-8 flex flex-col md:flex-row items-center gap-8 overflow-hidden cursor-pointer"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             whileHover={{ scale: 1.03 }}
-            onClick={() => setSelected(upcomingEvent) || setShowModal(true)}
+            onClick={() => {
+              setSelected(upcomingEvent);
+              setShowModal(true);
+            }}
           >
             {upcomingEvent.image && (
               <div
-                className="h-64 md:h-48 md:w-1/3 bg-cover bg-center rounded-2xl"
+                className="h-64 md:h-48 md:w-1/3 bg-cover bg-center rounded-2xl transform transition-transform duration-300 hover:scale-105"
                 style={{ backgroundImage: `url(${upcomingEvent.image})` }}
                 onClick={(e) => {
                   e.stopPropagation();
@@ -131,17 +134,20 @@ export default function Esemeneink() {
                 }}
               />
             )}
-            <div className="flex-1">
-              <p className="text-white/90 font-semibold uppercase mb-2">
+
+            <div className="flex-1 relative">
+              {/* Gradient overlay effect */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent rounded-2xl pointer-events-none animate-pulse-slow" />
+              <p className="text-white/90 font-semibold uppercase mb-2 relative z-10">
                 Közelgő esemény
               </p>
-              <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-2">
+              <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-2 relative z-10">
                 {upcomingEvent.title}
               </h2>
               {upcomingEvent.location && (
-                <p className="text-white/90 mb-2">📍 {upcomingEvent.location}</p>
+                <p className="text-white/90 mb-2 relative z-10">📍 {upcomingEvent.location}</p>
               )}
-              <p className="text-white/95 line-clamp-3">{upcomingEvent.description}</p>
+              <p className="text-white/95 line-clamp-3 relative z-10">{upcomingEvent.description}</p>
             </div>
           </motion.div>
         </section>
