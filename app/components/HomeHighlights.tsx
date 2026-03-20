@@ -62,7 +62,7 @@ export default function HomeHighlights() {
               "mt-4 h-1 rounded-full",
               isFeatured ? "bg-sky-300/70" : "bg-slate-200",
             ].join(" ")} />
-          </article>
+          </motion.article>
         );
       })}
     </div>
