@@ -163,20 +163,20 @@ export default function Esemeneink() {
 							exit={{ opacity: 0 }}
 						>
 							<motion.div
-								className="relative bg-white rounded-3xl shadow-2xl p-8 max-w-lg w-full mx-4 flex flex-col gap-4 animate-in"
+								className="relative bg-white rounded-3xl shadow-2xl p-8 max-w-lg w-full mx-4 flex flex-col gap-4 animate-in max-h-[80vh]"
 								initial={{ scale: 0.95, opacity: 0, y: 40 }}
 								animate={{ scale: 1, opacity: 1, y: 0 }}
 								exit={{ scale: 0.95, opacity: 0, y: 40 }}
 								transition={{ duration: 0.25 }}
 							>
 								<button
-									className="absolute top-3 right-3 text-gray-400 hover:text-tifo-primary text-2xl font-bold focus:outline-none"
+									className="absolute top-3 right-3 text-gray-400 hover:text-tifo-primary text-2xl font-bold focus:outline-none z-10"
 									onClick={() => setShowModal(false)}
 									aria-label="Bezárás"
 								>
 									×
 								</button>
-								<div className="flex flex-col items-center gap-2">
+								<div className="flex flex-col items-center gap-2 overflow-y-auto w-full" style={{ maxHeight: '60vh' }}>
 									{/* Kép, ha van */}
 									{selected.image && (
 										<img
