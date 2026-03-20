@@ -100,13 +100,13 @@ export default function Kapcsolat() {
 
            <div className="w-fit mx-auto">
              <img
+          import { motion } from "framer-motion";
                src="/images/logo.jpg"
                alt="TIFO logó"
                className="w-full max-w-[240px] h-[240px] mx-auto object-cover rounded-full border border-white/35 bg-white p-2"
              />
            </div>
         </div>
-      </motion.section>
 
       <motion.section
         className="rounded-3xl bg-[linear-gradient(180deg,#ffffff_0%,#f8fbff_100%)] border border-gray-200 shadow-[0_18px_45px_-28px_rgba(13,59,102,0.22)] p-6 md:p-8"
