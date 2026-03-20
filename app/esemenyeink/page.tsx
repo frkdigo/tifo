@@ -74,14 +74,14 @@ export default function Esemeneink() {
   }) {
     return (
       <div
-        className="relative rounded-2xl overflow-hidden shadow-2xl group bg-black/80 border border-white/10 transition-all duration-300 hover:shadow-[0_8px_40px_-10px_rgba(10,34,89,0.45)] hover:-translate-y-1 hover:scale-[1.03]"
+        className="relative rounded-2xl overflow-hidden shadow-xl group bg-white border border-slate-200 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 hover:scale-[1.03]"
       >
         {event.image && (
           <div
-            className="h-56 w-full bg-cover bg-center group-hover:scale-105 transition-transform duration-300"
+            className="h-56 w-full bg-cover bg-center group-hover:scale-105 transition-transform duration-300 rounded-t-2xl"
             style={{ backgroundImage: `url(${event.image})` }}
           >
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-black/10 to-transparent rounded-t-2xl" />
           </div>
         )}
         <div className="p-6 flex flex-col gap-2 relative z-10">
@@ -89,18 +89,18 @@ export default function Esemeneink() {
             <span className="inline-block bg-gradient-to-r from-pink-500 to-blue-500 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest shadow">
               {event.category || "Esemény"}
             </span>
-            <span className="text-xs text-white/70 ml-auto">
+            <span className="text-xs text-[#0a2259]/80 ml-auto">
               {new Date(event.date).toLocaleDateString("hu-HU", { year: "numeric", month: "short", day: "numeric" })}
             </span>
           </div>
-          <h3 className="text-2xl font-extrabold text-white mb-1 line-clamp-2 drop-shadow">
+          <h3 className="text-2xl font-extrabold text-[#0a2259] mb-1 line-clamp-2 drop-shadow">
             {event.title}
           </h3>
           {event.location && (
-            <p className="text-sm text-blue-300 mb-1">📍 {event.location}</p>
+            <p className="text-sm text-blue-900 mb-1">📍 {event.location}</p>
           )}
           {event.description && (
-            <p className="text-white/80 text-base line-clamp-3 mb-4">{event.description}</p>
+            <p className="text-[#0a2259]/80 text-base line-clamp-3 mb-4">{event.description}</p>
           )}
           <div className="flex justify-center mt-4">
             <button
@@ -119,18 +119,21 @@ export default function Esemeneink() {
     <main className="relative overflow-hidden bg-white text-black">
       <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_18%_8%,rgba(15,23,42,0.22),transparent_40%),linear-gradient(180deg,#020617_0%,#020617_34%,#f6f9fc_34%,#ffffff_100%)]" />
 
-      {/* HEADER szekció */}
-      <header className="max-w-4xl mx-auto px-4 pt-10 md:pt-14 pb-8 text-center">
-        <p className="inline-flex items-center gap-2 rounded-full bg-white/15 text-[#0a2259] text-xs tracking-[0.18em] uppercase px-5 py-2.5 mb-6 shadow-lg shadow-black/10">
-          Törökbálinti Ifjúsági Önkormányzat
-        </p>
-        <h1 className="text-4xl md:text-6xl lg:text-7xl font-black leading-tight text-[#0a2259]">Eseményeink</h1>
-        <p className="mt-5 text-[#0a2259]/90 text-lg md:text-xl max-w-3xl leading-[1.58] mx-auto">
-          Fedezd fel a legjobb bulikat, programokat és rendezvényeket! Válassz, és éld át a felejthetetlen élményeket!
-        </p>
+      {/* HEADER szekció - Rólunk/Kapcsolat stílus */}
+      <header className="max-w-4xl mx-auto px-4 pt-10 md:pt-14 pb-8 text-center relative overflow-hidden rounded-3xl border border-white/15 bg-slate-950 shadow-[0_30px_70px_-40px_rgba(0,0,0,0.65)]">
+        <div className="absolute inset-0 opacity-80 pointer-events-none" aria-hidden="true" style={{ background: 'radial-gradient(circle at 14% -6%, rgba(135,206,235,0.22), transparent 28%), radial-gradient(circle at 88% 8%, rgba(40,167,69,0.18), transparent 25%), radial-gradient(circle at 52% 120%, rgba(13,59,102,0.35), transparent 40%)' }} />
+        <div className="relative">
+          <p className="inline-flex items-center gap-2 rounded-full bg-white/15 text-white text-xs tracking-[0.18em] uppercase px-5 py-2.5 mb-6 shadow-lg shadow-black/20">
+            Törökbálinti Ifjúsági Önkormányzat
+          </p>
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-black leading-tight text-white">Eseményeink</h1>
+          <p className="mt-5 text-white/90 text-lg md:text-xl max-w-3xl leading-[1.58] mx-auto">
+            Fedezd fel a legjobb bulikat, programokat és rendezvényeket! Válassz, és éld át a felejthetetlen élményeket!
+          </p>
+        </div>
       </header>
 
-      {/* Kártyák gridje külön szekcióban */}
+      {/* Kártyák gridje külön szekcióban, fehér háttérrel */}
       <section className="max-w-6xl mx-auto px-4 pb-16">
         <div className="mt-4 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {loading ? (
