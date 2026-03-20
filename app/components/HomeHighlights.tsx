@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 type HighlightItem = {
   title: string;
   subtitle: string;
