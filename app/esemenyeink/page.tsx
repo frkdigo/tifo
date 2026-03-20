@@ -86,27 +86,34 @@ export default function Esemeneink() {
   return (
     <main className="max-w-6xl mx-auto px-4 py-16">
 
-      {/* FUTURISZTIKUS HEADER */}
-      <section className="max-w-6xl mx-auto px-4 pt-10 md:pt-14 pb-10 text-center">
-        <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-slate-950 via-slate-900 to-black shadow-[0_40px_120px_-50px_rgba(0,0,0,0.9)] p-12 md:p-16">
+<section className="max-w-6xl mx-auto px-4 pt-10 md:pt-14 pb-8">
+  <div className="relative overflow-hidden rounded-3xl border border-white/15 bg-slate-950 shadow-[0_30px_70px_-40px_rgba(0,0,0,0.65)] p-8 md:p-12 text-center">
 
-          {/* glow */}
-          <div className="absolute inset-0 opacity-30 bg-[radial-gradient(circle_at_50%_30%,rgba(0,150,255,0.25),transparent_60%)]" />
+    <div
+      className="absolute inset-0 opacity-80 pointer-events-none"
+      aria-hidden="true"
+      style={{
+        background:
+          "radial-gradient(circle at 14% -6%, rgba(135,206,235,0.22), transparent 28%), radial-gradient(circle at 88% 8%, rgba(40,167,69,0.18), transparent 25%), radial-gradient(circle at 52% 120%, rgba(13,59,102,0.35), transparent 40%)",
+      }}
+    />
 
-          {/* grid */}
-          <div className="absolute inset-0 opacity-[0.08] bg-[linear-gradient(to_right,white_1px,transparent_1px),linear-gradient(to_bottom,white_1px,transparent_1px)] bg-[size:40px_40px]" />
+    <div className="relative">
+      <p className="inline-flex items-center gap-2 rounded-full bg-white/15 text-white text-xs tracking-[0.18em] uppercase px-5 py-2.5 mb-6 shadow-lg shadow-black/20">
+        Törökbálinti Ifjúsági Önkormányzat
+      </p>
 
-          <h1 className="relative text-4xl md:text-6xl font-black text-white tracking-tight">
-            Eseményeink
-          </h1>
+      <h1 className="text-4xl md:text-6xl lg:text-7xl font-black leading-tight text-white">
+        Eseményeink
+      </h1>
 
-          <div className="relative w-24 h-1 bg-cyan-400 mx-auto my-6 shadow-[0_0_20px_rgba(0,200,255,0.8)]" />
+      <p className="mt-5 text-white/90 text-lg md:text-xl max-w-3xl leading-[1.58] mx-auto">
+        Fedezd fel legfrissebb eseményeinket és csatlakozz hozzánk!
+      </p>
+    </div>
+  </div>
+</section>
 
-          <p className="relative text-white/70 max-w-2xl mx-auto text-lg">
-            Fedezd fel legfrissebb eseményeinket és csatlakozz egy új szintű élményhez.
-          </p>
-        </div>
-      </section>
 
       {/* KIEMELT ESEMÉNY */}
       {featuredEvent && (
