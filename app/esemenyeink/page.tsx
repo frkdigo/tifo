@@ -1,6 +1,4 @@
-"use client";
-import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+
 "use client";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -201,45 +199,6 @@ export default function Esemeneink() {
     </main>
   );
 }
-      )}
-
-      {/* Tabos szűrő */}
-      <div className="max-w-7xl mx-auto px-4 mb-8 flex flex-wrap gap-2">
-        {categories.map((cat) => (
-          <button
-            key={cat}
-            className={`px-4 py-2 rounded-full font-semibold border transition-all duration-150 ${activeTab === cat ? 'bg-blue-700 text-white border-blue-700 shadow' : 'bg-white text-blue-700 border-blue-200 hover:bg-blue-50'}`}
-            onClick={() => { setActiveTab(cat); setCurrentPage(1); }}
-          >
-            {cat}
-          </button>
-        ))}
-      </div>
-
-      {/* Other Events Grid */}
-      <section className="max-w-7xl mx-auto px-4">
-        <motion.h3
-          className="text-2xl md:text-3xl font-extrabold text-blue-700 mb-8 text-center"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-        >
-          További események
-        </motion.h3>
-        {loading ? (
-          <p className="text-center text-gray-400">Betöltés...</p>
-        ) : error ? (
-          <p className="text-center text-red-500">{error}</p>
-        ) : paginatedEvents.length === 0 ? (
-          <p className="text-center text-gray-400">Nincs további esemény.</p>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {paginatedEvents.map((ev) => (
-              <EventCard
-                key={ev.id}
-                event={ev}
-                onSelect={() => {
-                  setSelected(ev);
-                  setShowModal(true);
                 }}
                 onShowImage={() => {
                   if (ev.image) {
