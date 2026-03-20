@@ -87,37 +87,60 @@ export default function Esemeneink() {
 
 			return (
 				<motion.main
-					className="max-w-6xl mx-auto py-12 px-4 text-black"
+					className="max-w-7xl mx-auto py-16 px-4 md:px-8 text-black"
 					initial={{ opacity: 0, y: 40 }}
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ duration: 0.8, ease: "easeOut" }}
+					style={{ minHeight: '70vh' }}
 				>
-					<h1 className="text-3xl font-bold mb-8 text-center">Eseményeink</h1>
+					<h1 className="text-4xl md:text-5xl font-extrabold text-center mb-12 bg-gradient-to-r from-tifo-primary to-tifo-secondary bg-clip-text text-transparent drop-shadow-lg">
+						Eseményeink
+					</h1>
 					{loading ? (
-						<div className="text-center text-gray-500">Betöltés...</div>
+						<div className="text-center text-gray-400 text-lg font-medium animate-pulse">Betöltés...</div>
 					) : error ? (
-						<div className="text-center text-red-500">{error}</div>
+						<div className="text-center text-red-500 text-lg font-semibold">{error}</div>
 					) : events.length === 0 ? (
-						<div className="text-center text-gray-500">Nincs megjeleníthető esemény.</div>
+						<div className="text-center text-gray-400 text-lg font-medium">Nincs megjeleníthető esemény.</div>
 					) : (
-						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
 							{events.map((event, idx) => (
 								<motion.div
 									key={event.id}
-									className="bg-white rounded-xl shadow-md p-6 flex flex-col gap-2 border border-gray-100 hover:shadow-lg transition-shadow"
+									className="relative group bg-white/90 rounded-3xl shadow-xl p-7 flex flex-col gap-3 border border-tifo-primary/10 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 overflow-hidden"
 									initial={{ opacity: 0, y: 30 }}
 									whileInView={{ opacity: 1, y: 0 }}
 									viewport={{ once: true, amount: 0.2 }}
 									transition={{ duration: 0.5, delay: idx * 0.1 }}
 								>
-									<div className="text-xs text-gray-400 mb-1">{toLocalDay(event.date).toLocaleDateString()}</div>
-									<div className="font-semibold text-lg mb-1">{event.title}</div>
+									{/* Dátum badge */}
+									<div className="absolute top-5 right-5">
+										<span className="inline-block bg-gradient-to-r from-tifo-primary to-tifo-secondary text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
+											{toLocalDay(event.date).toLocaleDateString('hu-HU', { year: 'numeric', month: 'short', day: 'numeric' })}
+										</span>
+									</div>
+									{/* Cím */}
+									<div className="font-bold text-2xl mb-1 text-tifo-primary group-hover:text-tifo-secondary transition-colors duration-200">
+										{event.title}
+									</div>
+									{/* Helyszín */}
 									{event.location && (
-										<div className="text-sm text-gray-500 mb-1">📍 {event.location}</div>
+										<div className="flex items-center gap-1 text-sm text-tifo-secondary font-medium mb-1">
+											<svg width="18" height="18" fill="none" viewBox="0 0 24 24" className="inline-block mr-1"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5z" fill="currentColor"/></svg>
+											{event.location}
+										</div>
 									)}
+									{/* Leírás */}
 									{event.description && (
-										<EventDescription text={event.description} />
+										<div className="mt-2 text-gray-700 text-base leading-relaxed">
+											<EventDescription text={event.description} />
+										</div>
 									)}
+									{/* Színes háttér animáció */}
+									<div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0">
+										<div className="absolute -top-10 -left-10 w-40 h-40 bg-tifo-primary/20 rounded-full blur-2xl animate-pulse" />
+										<div className="absolute -bottom-10 -right-10 w-40 h-40 bg-tifo-secondary/20 rounded-full blur-2xl animate-pulse" />
+									</div>
 								</motion.div>
 							))}
 						</div>
