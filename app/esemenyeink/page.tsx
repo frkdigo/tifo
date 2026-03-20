@@ -86,7 +86,7 @@ export default function Esemeneink() {
   return (
     <main className="max-w-6xl mx-auto px-4 py-16">
 
-      {/* HEADER – mint Rólunk */}
+      {/* HEADER */}
       <section className="max-w-6xl mx-auto px-4 pt-10 md:pt-14 pb-10 text-center">
         <div className="relative overflow-hidden rounded-3xl border border-white/15 bg-slate-950 shadow-[0_30px_70px_-40px_rgba(0,0,0,0.65)] p-10 md:p-14">
           <h1 className="text-4xl md:text-6xl font-black text-white">
@@ -101,14 +101,14 @@ export default function Esemeneink() {
         </div>
       </section>
 
-      {/* KIEMELT ESEMÉNY – SPLIT LAYOUT */}
+      {/* KIEMELT ESEMÉNY */}
       {featuredEvent && (
         <section className="mb-14">
           <div
             onClick={() => setActiveEvent(featuredEvent)}
             className="cursor-pointer grid md:grid-cols-2 overflow-hidden rounded-3xl border border-gray-200 shadow-lg hover:shadow-2xl transition"
           >
-            {/* BAL OLDAL – KÉP */}
+            {/* KÉP */}
             <div className="h-64 md:h-auto">
               {featuredEvent.image && (
                 <img
@@ -118,7 +118,7 @@ export default function Esemeneink() {
               )}
             </div>
 
-            {/* JOBB OLDAL – SZÖVEG */}
+            {/* SZÖVEG */}
             <div className="bg-white p-8 flex flex-col justify-between">
               <div>
                 <span className="text-xs uppercase tracking-widest text-[#87ceeb]">
@@ -138,7 +138,6 @@ export default function Esemeneink() {
                 </p>
               </div>
 
-              {/* GOMB */}
               <div className="mt-6">
                 <button className="bg-blue-900 text-white font-bold px-6 py-2 rounded-full hover:bg-blue-800 transition">
                   Érdekel →
@@ -149,14 +148,14 @@ export default function Esemeneink() {
         </section>
       )}
 
-      {/* TÖBBI ESEMÉNY */}
+      {/* LISTA */}
       <section>
         {loading ? (
           <p className="text-gray-500">Betöltés...</p>
         ) : (
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {events.map((event, index) => {
-              if (index === 0) return null; // ne duplázza a featured-et
+              if (index === 0) return null;
               return <EventCard key={event.id} event={event} />;
             })}
           </div>
@@ -174,9 +173,21 @@ export default function Esemeneink() {
             exit={{ opacity: 0 }}
           >
             <motion.div
-              className="bg-white max-w-2xl w-full rounded-2xl overflow-hidden shadow-xl"
+              className="relative bg-white max-w-2xl w-full rounded-2xl overflow-hidden shadow-xl"
               onClick={(e) => e.stopPropagation()}
+              initial={{ scale: 0.95 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0.95 }}
             >
+              {/* ❌ X GOMB */}
+              <button
+                onClick={() => setActiveEvent(null)}
+                className="absolute top-4 right-4 z-10 w-10 h-10 flex items-center justify-center rounded-full bg-white border border-gray-200 shadow-sm text-gray-500 hover:text-black hover:bg-gray-100 transition"
+                aria-label="Bezárás"
+              >
+                ✕
+              </button>
+
               {activeEvent.image && (
                 <img
                   src={activeEvent.image}
