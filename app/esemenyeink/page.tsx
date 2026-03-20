@@ -201,23 +201,6 @@ export default function Esemeneink() {
     </main>
   );
 }
-                className="h-64 md:h-48 md:w-1/3 bg-cover bg-center rounded-2xl transform transition-transform duration-300 hover:scale-105"
-                style={{ backgroundImage: `url(${upcomingEvent.image})` }}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setImageSrc(upcomingEvent.image!);
-                  setShowImageModal(true);
-                }}
-              />
-            )}
-            <div className="flex-1 relative z-10">
-              <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent rounded-2xl animate-pulse-slow pointer-events-none" />
-              <p className="text-white font-semibold uppercase mb-2 z-10 relative">
-                Közelgő esemény
-              </p>
-              <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-2 z-10 relative">
-                {upcomingEvent.title}
-              </h2>
               {upcomingEvent.location && (
                 <p className="text-white/90 mb-2 relative z-10">📍 {upcomingEvent.location}</p>
               )}
