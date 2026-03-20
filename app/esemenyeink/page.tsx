@@ -123,7 +123,7 @@ export default function Esemeneink() {
                 </div>
               )}
               <div className="text-white/80 text-base mb-3 font-medium">
-                {toLocalDay(nextEvent.date).toLocaleDateString('hu-HU', { year: 'numeric', month: 'short', day: 'numeric' })}
+                {new Date(nextEvent.date).toLocaleDateString('hu-HU', { year: 'numeric', month: 'short', day: 'numeric' })}
               </div>
               {nextEvent.description && (
                 <div className="text-white/95 text-lg leading-relaxed line-clamp-3">
