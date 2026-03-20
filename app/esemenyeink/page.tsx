@@ -65,7 +65,7 @@ export default function Esemeneink() {
   return (
     <main className="min-h-screen bg-white text-gray-900">
       {/* HERO */}
-      <section className="relative flex flex-col items-center justify-center min-h-[60vh] w-full text-center overflow-hidden">
+      <section className="relative flex flex-col items-center justify-center min-h-[95vh] w-full text-center overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center z-0"
           style={{
@@ -73,7 +73,8 @@ export default function Esemeneink() {
             filter: "brightness(0.4) blur(1px)",
           }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/80 z-10" />
+        {/* Gradient eltávolítva az alján lévő sötétítés miatt */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-transparent z-10" />
         <div className="relative z-20 flex flex-col items-center justify-center py-24 px-4">
           <h1 className="text-5xl md:text-6xl font-black tracking-tight mb-4 text-white uppercase">
             Eseményeink
@@ -86,7 +87,7 @@ export default function Esemeneink() {
         </div>
       </section>
 
-      {/* ESEMÉNYEK */}
+      {/* ESEMÉNYEK - fehér háttér */}
       <section className="max-w-7xl mx-auto px-4 py-16">
         <h2 className="text-3xl md:text-4xl font-extrabold text-center mb-12 uppercase">
           Közelgő események
