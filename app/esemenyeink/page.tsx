@@ -56,7 +56,7 @@ export default function Esemeneink() {
   ];
 
   // Véletlenszerűen kiválasztott hero kép
-  const heroBg = events[0]?.image || heroImages[Math.floor(Math.random() * heroImages.length)];
+  const heroBg = heroImages[Math.floor(Math.random() * heroImages.length)];
 
   const breakpointColumnsObj = {
     default: 3,
@@ -85,17 +85,17 @@ export default function Esemeneink() {
       </section>
 
       {/* Pinterest-stílusú események */}
-      <section className="relative z-20 max-w-7xl mx-auto px-4 py-16">
-        <h2 className="text-3xl md:text-4xl font-extrabold text-center mb-12 tracking-wide text-white uppercase drop-shadow-lg">
+      <section className="relative z-20 max-w-7xl mx-auto px-4 py-16 bg-white text-gray-900 rounded-3xl shadow-lg">
+        <h2 className="text-3xl md:text-4xl font-extrabold text-center mb-12 tracking-wide text-gray-900 uppercase drop-shadow-lg">
           Közelgő események
         </h2>
 
         {loading ? (
-          <p className="text-center text-white/60">Betöltés...</p>
+          <p className="text-center text-gray-500">Betöltés...</p>
         ) : error ? (
-          <p className="text-center text-red-400">{error}</p>
+          <p className="text-center text-red-500">{error}</p>
         ) : events.length === 0 ? (
-          <p className="text-center text-white/60">Nincs esemény.</p>
+          <p className="text-center text-gray-500">Nincs esemény.</p>
         ) : (
           <Masonry
             breakpointCols={breakpointColumnsObj}
