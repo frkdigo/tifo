@@ -68,10 +68,9 @@ export default function Esemeneink() {
     setActiveEvent(events[nextIndex]);
   }
 
-  function EventCard({ event, onSelect, onShowImage }: {
+  function EventCard({ event, onSelect }: {
     event: EventItem;
     onSelect: () => void;
-    onShowImage: () => void;
   }) {
     return (
       <div
@@ -101,23 +100,15 @@ export default function Esemeneink() {
             <p className="text-sm text-blue-300 mb-1">📍 {event.location}</p>
           )}
           {event.description && (
-            <p className="text-white/80 text-base line-clamp-3 mb-2">{event.description}</p>
+            <p className="text-white/80 text-base line-clamp-3 mb-4">{event.description}</p>
           )}
-          <div className="flex gap-2 mt-2">
+          <div className="flex justify-center mt-4">
             <button
               onClick={onSelect}
-              className="bg-[#0a2259] hover:bg-blue-900 text-white font-bold px-5 py-2 rounded-lg shadow transition-all duration-200 uppercase tracking-wide"
+              className="bg-[#0a2259] hover:bg-blue-900 text-white font-bold px-6 py-2 rounded-lg shadow transition-all duration-200 uppercase tracking-wide"
             >
               Érdekel
             </button>
-            {event.image && (
-              <button
-                onClick={onShowImage}
-                className="bg-white/10 text-white px-4 py-2 rounded-lg border border-white/20 hover:bg-white/20 transition"
-              >
-                Kép
-              </button>
-            )}
           </div>
         </div>
       </div>
@@ -153,11 +144,6 @@ export default function Esemeneink() {
                     key={event.id}
                     event={event}
                     onSelect={() => setActiveEvent(event)}
-                    onShowImage={() => {
-                      if (event.image) {
-                        setActiveEvent(event);
-                      }
-                    }}
                   />
                 ))
               )}
