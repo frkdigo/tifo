@@ -110,17 +110,32 @@ export default function Esemeneink() {
 
       {/* Közelgő esemény */}
       {nextEvent && (
-        <section className="max-w-3xl mx-auto px-4 mb-14">
-          <h2 className="text-center text-2xl md:text-3xl font-extrabold text-tifo-primary mb-5 tracking-tight drop-shadow-sm">
+        <section className="max-w-4xl mx-auto px-4 mb-16">
+          <h2 className="text-center text-2xl md:text-3xl font-extrabold text-tifo-primary mb-8 tracking-tight drop-shadow-sm">
             Közelgő esemény
           </h2>
-          <div className="relative bg-gradient-to-br from-tifo-primary/90 to-tifo-secondary/80 rounded-3xl shadow-2xl p-8 md:p-12 flex flex-col md:flex-row items-center gap-8 border border-white/20 overflow-hidden">
-            <div className="flex-1 min-w-0">
-              <div className="font-extrabold text-3xl md:text-4xl text-white mb-2 truncate drop-shadow">
+          <motion.div
+            className="relative group rounded-3xl shadow-2xl p-6 md:p-10 flex flex-col md:flex-row items-center gap-6 bg-gradient-to-br from-blue-700 to-blue-900 hover:scale-105 transition-transform duration-300 cursor-pointer"
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            {nextEvent.image && (
+              <img
+                src={nextEvent.image}
+                alt={nextEvent.title}
+                className="w-full md:w-64 h-40 object-cover rounded-xl border border-white/30 shadow-md"
+                onClick={() => {
+                  setSelectedImage(nextEvent.image!);
+                  setShowImageModal(true);
+                }}
+              />
+            )}
+            <div className="flex-1 min-w-0 text-white">
+              <h3 className="font-extrabold text-3xl md:text-4xl mb-2 truncate drop-shadow-sm">
                 {nextEvent.title}
-              </div>
+              </h3>
               {nextEvent.location && (
-                <div className="flex items-center gap-1 text-base text-white/90 mb-2 font-semibold">
+                <div className="flex items-center gap-1 text-base mb-2 font-semibold opacity-90">
                   <svg
                     width="20"
                     height="20"
@@ -136,49 +151,38 @@ export default function Esemeneink() {
                   {nextEvent.location}
                 </div>
               )}
-              <div className="text-white/80 text-base mb-3 font-medium">
+              <p className="text-base mb-3 font-medium opacity-80">
                 {new Date(nextEvent.date).toLocaleDateString("hu-HU", {
                   year: "numeric",
                   month: "short",
                   day: "numeric",
                 })}
-              </div>
+              </p>
               {nextEvent.description && (
-                <div className="text-white/95 text-lg leading-relaxed line-clamp-3">
+                <div className="line-clamp-3">
                   <EventDescription text={nextEvent.description} />
                 </div>
               )}
-            </div>
-            {nextEvent.image && (
-              <img
-                src={nextEvent.image}
-                alt={nextEvent.title}
-                className="w-64 h-40 object-cover rounded-xl cursor-pointer border border-white/30 shadow-md"
+              <button
+                className="mt-4 py-3 px-8 rounded-2xl bg-blue-900 hover:bg-blue-800 text-white font-bold shadow-lg transition-colors duration-200"
                 onClick={() => {
-                  setSelectedImage(nextEvent.image!);
-                  setShowImageModal(true);
+                  setSelected(nextEvent);
+                  setShowModal(true);
                 }}
-              />
-            )}
-            <button
-              className="mt-6 md:mt-0 w-full md:w-auto py-3 px-8 rounded-2xl bg-white text-tifo-primary font-extrabold shadow-lg hover:scale-[1.04] hover:shadow-xl transition-all duration-200 text-lg tracking-wide drop-shadow"
-              onClick={() => {
-                setSelected(nextEvent);
-                setShowModal(true);
-              }}
-            >
-              Érdekel
-            </button>
-          </div>
+              >
+                Érdekel
+              </button>
+            </div>
+          </motion.div>
         </section>
       )}
 
       {/* További események */}
       <motion.section
         className="max-w-6xl mx-auto px-4 pb-20"
-        initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
       >
         <h2 className="text-center text-2xl md:text-3xl font-extrabold text-tifo-primary mb-8 tracking-tight drop-shadow-sm">
           További eseményeink
@@ -198,40 +202,30 @@ export default function Esemeneink() {
             {events.map((event, idx) => (
               <motion.div
                 key={event.id}
-                className="relative group rounded-3xl border-2 border-tifo-primary/30 bg-white/95 shadow-[0_8px_32px_-8px_rgba(40,60,120,0.13)] hover:shadow-[0_16px_48px_-8px_rgba(40,60,120,0.18)] p-8 flex flex-col gap-4 min-h-[240px] overflow-hidden transition-all duration-300 hover:-translate-y-1"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
+                className="group rounded-3xl border-2 border-tifo-primary/30 bg-white shadow-md hover:shadow-xl p-6 flex flex-col gap-3 min-h-[240px] overflow-hidden cursor-pointer hover:scale-105 transition-transform duration-300"
+                initial={{ opacity: 0, y: 40 }}
+                animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: idx * 0.08 }}
               >
-                {/* Kép */}
                 {event.image && (
                   <img
                     src={event.image}
                     alt={event.title}
-                    className="w-full h-40 object-cover rounded-xl cursor-pointer mb-2 border border-tifo-primary/20 shadow"
+                    className="w-full h-40 object-cover rounded-xl mb-2 border border-tifo-primary/20 shadow"
                     onClick={() => {
                       setSelectedImage(event.image!);
                       setShowImageModal(true);
                     }}
                   />
                 )}
-
-                {/* Cím */}
-                <div className="font-extrabold text-xl mb-1 text-tifo-primary group-hover:text-tifo-secondary transition-colors duration-200 truncate drop-shadow-sm">
-                  {event.title}
-                </div>
-
-                {/* Rövid leírás */}
+                <h3 className="font-bold text-xl mb-1 truncate">{event.title}</h3>
                 {event.description && (
-                  <div className="mt-1 text-gray-700 text-base line-clamp-2">
+                  <div className="text-gray-700 text-base line-clamp-2">
                     <EventDescription text={event.description} />
                   </div>
                 )}
-
-                {/* Érdekel gomb */}
                 <button
-                  className="mt-auto w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-tifo-primary to-tifo-secondary text-white font-extrabold shadow-lg hover:scale-[1.04] hover:shadow-xl transition-all duration-200 text-base tracking-wide drop-shadow-sm"
+                  className="mt-auto py-2.5 px-4 rounded-xl bg-blue-900 hover:bg-blue-800 text-white font-bold shadow transition-colors duration-200"
                   onClick={() => {
                     setSelected(event);
                     setShowModal(true);
@@ -245,7 +239,7 @@ export default function Esemeneink() {
         )}
       </motion.section>
 
-      {/* MODAL: teljes esemény */}
+      {/* Full modal */}
       <AnimatePresence>
         {showModal && selected && (
           <motion.div
@@ -256,7 +250,7 @@ export default function Esemeneink() {
             onClick={() => setShowModal(false)}
           >
             <motion.div
-              className="relative bg-white rounded-3xl shadow-2xl p-8 max-w-lg w-full mx-4 flex flex-col gap-4 overflow-y-auto max-h-[80vh]"
+              className="relative bg-white rounded-3xl shadow-2xl p-8 max-w-lg w-full mx-4 flex flex-col gap-4 overflow-y-auto max-h-[80vh] scroll-smooth"
               initial={{ scale: 0.95, opacity: 0, y: 40 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.95, opacity: 0, y: 40 }}
@@ -314,7 +308,7 @@ export default function Esemeneink() {
         )}
       </AnimatePresence>
 
-      {/* MODAL: nagy kép */}
+      {/* Image modal */}
       <AnimatePresence>
         {showImageModal && selectedImage && (
           <motion.div
