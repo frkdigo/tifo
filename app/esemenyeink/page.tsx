@@ -45,14 +45,14 @@ export default function Esemeneink() {
 
   // Főoldali hero képek (8 kép váltakozik)
   const heroImages = [
-    "/images/hero1.jpg",
-    "/images/hero2.jpg",
-    "/images/hero3.jpg",
-    "/images/hero4.jpg",
-    "/images/hero5.jpg",
-    "/images/hero6.jpg",
-    "/images/hero7.jpg",
-    "/images/hero8.jpg",
+    "/images/herokep_1.jpg",
+    "/images/herokep_2.jpg",
+    "/images/herokep_3.jpg",
+    "/images/herokep_4.jpg",
+    "/images/herokep_5.jpg",
+    "/images/herokep_6.jpg",
+    "/images/herokep_7.jpg",
+    "/images/herokep_8.jpg",
   ];
 
   // Véletlenszerűen kiválasztott hero kép
