@@ -115,7 +115,7 @@ export default function Esemeneink() {
             Közelgő esemény
           </h2>
           <motion.div
-            className="relative group rounded-3xl shadow-2xl p-6 md:p-10 flex flex-col md:flex-row items-center gap-6 bg-gradient-to-br from-blue-700 to-blue-900 hover:scale-105 transition-transform duration-300 cursor-pointer"
+            className="relative group rounded-3xl shadow-xl p-6 md:p-10 flex flex-col md:flex-row items-center gap-6 bg-white hover:shadow-2xl transition-all duration-300"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
           >
@@ -123,19 +123,19 @@ export default function Esemeneink() {
               <img
                 src={nextEvent.image}
                 alt={nextEvent.title}
-                className="w-full md:w-64 h-40 object-cover rounded-xl border border-white/30 shadow-md"
+                className="w-full md:w-64 h-40 object-cover rounded-xl border border-gray-200 shadow-md cursor-pointer"
                 onClick={() => {
                   setSelectedImage(nextEvent.image!);
                   setShowImageModal(true);
                 }}
               />
             )}
-            <div className="flex-1 min-w-0 text-white">
-              <h3 className="font-extrabold text-3xl md:text-4xl mb-2 truncate drop-shadow-sm">
+            <div className="flex-1 min-w-0">
+              <h3 className="font-extrabold text-3xl md:text-4xl mb-2 text-tifo-primary">
                 {nextEvent.title}
               </h3>
               {nextEvent.location && (
-                <div className="flex items-center gap-1 text-base mb-2 font-semibold opacity-90">
+                <div className="flex items-center gap-1 text-base mb-2 font-semibold text-gray-600">
                   <svg
                     width="20"
                     height="20"
@@ -151,7 +151,7 @@ export default function Esemeneink() {
                   {nextEvent.location}
                 </div>
               )}
-              <p className="text-base mb-3 font-medium opacity-80">
+              <p className="text-gray-500 text-base mb-3 font-medium">
                 {new Date(nextEvent.date).toLocaleDateString("hu-HU", {
                   year: "numeric",
                   month: "short",
@@ -159,12 +159,12 @@ export default function Esemeneink() {
                 })}
               </p>
               {nextEvent.description && (
-                <div className="line-clamp-3">
+                <div className="text-gray-700 line-clamp-3">
                   <EventDescription text={nextEvent.description} />
                 </div>
               )}
               <button
-                className="mt-4 py-3 px-8 rounded-2xl bg-blue-900 hover:bg-blue-800 text-white font-bold shadow-lg transition-colors duration-200"
+                className="mt-4 py-3 px-8 rounded-2xl bg-blue-900 hover:bg-blue-800 text-white font-bold shadow-lg transition-all duration-200"
                 onClick={() => {
                   setSelected(nextEvent);
                   setShowModal(true);
@@ -176,6 +176,9 @@ export default function Esemeneink() {
           </motion.div>
         </section>
       )}
+
+      {/* További események */}
+      {/* ... a további grid szekció marad ugyanaz ... */}
 
       {/* További események */}
       <motion.section
