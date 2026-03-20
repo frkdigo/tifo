@@ -83,7 +83,7 @@ export default function Esemeneink() {
       <section className="max-w-6xl mx-auto px-4 pt-10 md:pt-14 pb-8">
         <div className="relative overflow-hidden rounded-3xl border border-white/15 bg-slate-950 shadow-[0_30px_70px_-40px_rgba(0,0,0,0.65)] p-8 md:p-12">
           <div className="absolute inset-0 opacity-80 pointer-events-none" aria-hidden="true" style={{ background: 'radial-gradient(circle at 14% -6%, rgba(135,206,235,0.22), transparent 28%), radial-gradient(circle at 88% 8%, rgba(40,167,69,0.18), transparent 25%), radial-gradient(circle at 52% 120%, rgba(13,59,102,0.35), transparent 40%)' }} />
-          <div className="relative flex flex-col md:flex-row md:items-center md:justify-between gap-8">
+          <div className="relative flex flex-col md:flex-row md:items-center md:justify-between gap-8 md:gap-0">
             <div className="md:text-left text-center md:max-w-xl flex-1">
               <p className="inline-flex items-center gap-2 rounded-full bg-white/15 text-white text-xs tracking-[0.18em] uppercase px-5 py-2.5 mb-6 shadow-lg shadow-black/20">
                 Törökbálinti Ifjúsági Önkormányzat
@@ -93,12 +93,13 @@ export default function Esemeneink() {
                 Kövesd a közelgő programokat, nézd vissza a korábbi eseményeket, és csatlakozz a közösséghez.
               </p>
             </div>
-            <div className="flex flex-row md:flex-col gap-4 md:gap-6 items-center justify-center md:justify-end flex-shrink-0">
-              <div className="w-32 rounded-2xl border border-white/20 bg-white/10 py-4 text-center">
+            <div className="flex flex-row md:flex-col items-center justify-center md:justify-end flex-shrink-0 md:ml-12 mt-8 md:mt-0">
+              <div className="flex flex-col items-center w-32 rounded-2xl border border-white/20 bg-white/10 py-4 text-center">
                 <div className="text-2xl font-bold text-white">{upcoming.length}</div>
                 <div className="text-xs text-white/80 mt-1">Közelgő</div>
               </div>
-              <div className="w-32 rounded-2xl border border-white/20 bg-white/10 py-4 text-center">
+              <div className="hidden md:block h-8 w-px bg-white/20 mx-4" />
+              <div className="flex flex-col items-center w-32 rounded-2xl border border-white/20 bg-white/10 py-4 text-center mt-0 md:mt-6">
                 <div className="text-2xl font-bold text-white">{past.length}</div>
                 <div className="text-xs text-white/80 mt-1">Korábbi</div>
               </div>
@@ -177,30 +178,32 @@ export default function Esemeneink() {
       <AnimatePresence>
         {activeEvent && (
           <motion.div
-            className="fixed inset-0 z-50 bg-black/70 backdrop-blur-md flex items-center justify-center p-4"
+            className="fixed inset-0 z-50 bg-black/70 backdrop-blur-md flex items-center justify-center p-2 sm:p-4"
             onClick={() => setActiveEvent(null)}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
             <motion.div
-              className="relative bg-white max-w-2xl w-full rounded-3xl overflow-hidden shadow-2xl border border-gray-200"
+              className="relative bg-white w-full max-w-lg sm:max-w-2xl rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-gray-200 max-h-[90vh] sm:max-h-[80vh] flex flex-col"
+              style={{ boxSizing: 'border-box' }}
               onClick={(e) => e.stopPropagation()}
             >
               <button
                 onClick={() => setActiveEvent(null)}
-                className="absolute top-4 right-4 z-10 w-10 h-10 flex items-center justify-center rounded-full bg-white border border-gray-200 shadow-sm text-gray-500 hover:text-black hover:bg-gray-100 transition"
+                className="absolute top-3 right-3 z-10 w-10 h-10 flex items-center justify-center rounded-full bg-white border border-gray-200 shadow-sm text-gray-500 hover:text-black hover:bg-gray-100 transition"
+                style={{ top: 12, right: 12 }}
               >
                 ✕
               </button>
               {activeEvent.image && (
                 <img
                   src={activeEvent.image}
-                  className="w-full h-60 object-cover"
+                  className="w-full h-48 sm:h-60 object-cover"
                   alt={activeEvent.title}
                 />
               )}
-              <div className="p-6">
+              <div className="p-5 sm:p-6 overflow-y-auto flex-1 min-h-0">
                 <h2 className="text-2xl font-bold mb-1">{activeEvent.title}</h2>
                 <p className="text-sm text-gray-500 mb-2">{new Date(activeEvent.date).toLocaleDateString("hu-HU")}</p>
                 <p className="text-gray-700">{activeEvent.description}</p>
