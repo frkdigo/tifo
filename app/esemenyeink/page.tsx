@@ -75,63 +75,67 @@ export default function Esemeneink() {
     setLoading(false);
   }
 
-  const now = new Date();
-  const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-  const nextEvent =
-    events.length > 0
-      ? events.find((e) => new Date(e.date) >= todayStart) || events[0]
-      : null;
-
   return (
-    <main className="relative min-h-screen bg-gradient-to-b from-slate-50 via-white to-slate-100 text-black overflow-x-hidden">
-      {/* Page header */}
-      <section className="max-w-6xl mx-auto px-4 pt-10 md:pt-14 pb-8">
-        <div className="relative overflow-hidden rounded-3xl border border-white/15 bg-slate-950 shadow-[0_30px_70px_-40px_rgba(0,0,0,0.65)] p-8 md:p-12 text-center">
-          <div
-            className="absolute inset-0 opacity-80 pointer-events-none"
-            aria-hidden="true"
-            style={{
-              background:
-                "radial-gradient(circle at 14% -6%, rgba(135,206,235,0.22), transparent 28%), radial-gradient(circle at 88% 8%, rgba(40,167,69,0.18), transparent 25%), radial-gradient(circle at 52% 120%, rgba(13,59,102,0.35), transparent 40%)",
-            }}
-          />
-          <p className="inline-flex items-center gap-2 rounded-full bg-white/15 text-white text-xs tracking-[0.18em] uppercase px-5 py-2.5 mb-6 shadow-lg shadow-black/20">
-            TiFO események
-          </p>
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-black leading-tight text-white">
-            Eseményeink
-          </h1>
-          <p className="mt-5 text-white/90 text-lg md:text-xl max-w-3xl leading-[1.58] mx-auto">
-            Fedezd fel legújabb közösségi eseményeinket, programjainkat és
-            rendezvényeinket! Kattints az "Érdekel" gombra a részletekért.
-          </p>
-        </div>
+    <main className="relative min-h-screen overflow-hidden bg-gradient-to-b from-slate-50 via-white to-slate-100 text-black">
+      {/* Prémium háttér, overlay, mint a Rólunk oldalon */}
+      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-tifo-primary/10 via-white/60 to-slate-100" />
+
+      {/* Modern, prémium header */}
+      <section className="max-w-5xl mx-auto px-4 pt-12 pb-8">
+        <motion.div
+          className="relative rounded-3xl bg-white/90 shadow-2xl border border-tifo-primary/20 px-8 py-12 flex flex-col items-center overflow-hidden"
+          initial={{ opacity: 0, y: -40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: 'easeOut' }}
+        >
+          <div className="absolute -top-10 -left-10 w-40 h-40 bg-tifo-primary/10 rounded-full blur-2xl" />
+          <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-tifo-secondary/10 rounded-full blur-2xl" />
+          <span className="inline-block mb-4 px-5 py-2 rounded-full bg-gradient-to-r from-tifo-primary to-tifo-secondary text-white text-xs font-bold tracking-widest uppercase shadow-lg shadow-tifo-primary/10">TiFO események</span>
+          <h1 className="text-5xl md:text-6xl font-black text-tifo-primary drop-shadow-sm mb-4 text-center">Eseményeink</h1>
+          <p className="text-lg md:text-xl text-slate-700 max-w-2xl text-center mx-auto font-medium">Fedezd fel legújabb közösségi eseményeinket, programjainkat és rendezvényeinket! Kattints az <span className='font-bold text-tifo-secondary'>"Érdekel"</span> gombra a részletekért.</p>
+        </motion.div>
       </section>
 
-      {/* Közelgő esemény */}
+      {/* Közelgő esemény szekció - prémium stílus */}
       {nextEvent && (
-        <section className="max-w-4xl mx-auto px-4 mb-16">
-          <h2 className="text-center text-2xl md:text-3xl font-extrabold text-tifo-primary mb-8 tracking-tight drop-shadow-sm">
-            Közelgő esemény
-          </h2>
+        <section className="max-w-3xl mx-auto px-4 mb-16">
           <motion.div
-            className="relative group rounded-3xl shadow-xl p-6 md:p-10 flex flex-col md:flex-row items-center gap-6 bg-white hover:shadow-2xl transition-all duration-300"
+            className="relative rounded-3xl bg-gradient-to-br from-tifo-primary/90 to-tifo-secondary/80 shadow-2xl border border-white/20 p-10 flex flex-col md:flex-row items-center gap-8 overflow-hidden"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: 'easeOut' }}
           >
-            {nextEvent.image && (
-              <img
-                src={nextEvent.image}
-                alt={nextEvent.title}
-                className="w-full md:w-64 h-40 object-cover rounded-xl border border-gray-200 shadow-md cursor-pointer"
-                onClick={() => {
-                  setSelectedImage(nextEvent.image!);
-                  setShowImageModal(true);
-                }}
-              />
-            )}
+            <div className="absolute -top-16 -left-16 w-60 h-60 bg-white/10 rounded-full blur-3xl animate-pulse" />
+            <div className="absolute -bottom-16 -right-16 w-60 h-60 bg-white/10 rounded-full blur-3xl animate-pulse" />
             <div className="flex-1 min-w-0">
-              <h3 className="font-extrabold text-3xl md:text-4xl mb-2 text-tifo-primary">
+              <div className="mb-2 flex items-center gap-2">
+                <span className="inline-block bg-white/20 text-white text-xs font-bold px-4 py-1.5 rounded-full shadow tracking-wide uppercase">Közelgő esemény</span>
+              </div>
+              <div className="font-extrabold text-3xl md:text-4xl text-white mb-2 truncate drop-shadow-lg">{nextEvent.title}</div>
+              {nextEvent.location && (
+                <div className="flex items-center gap-1 text-base text-white/90 mb-2 font-semibold">
+                  <svg width="20" height="20" fill="none" viewBox="0 0 24 24" className="inline-block mr-1"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5z" fill="currentColor"/></svg>
+                  {nextEvent.location}
+                </div>
+              )}
+              <div className="text-white/80 text-base mb-3 font-medium">
+                {toLocalDay(nextEvent.date).toLocaleDateString('hu-HU', { year: 'numeric', month: 'short', day: 'numeric' })}
+              </div>
+              {nextEvent.description && (
+                <div className="text-white/95 text-lg leading-relaxed line-clamp-3">
+                  <EventDescription text={nextEvent.description} />
+                </div>
+              )}
+            </div>
+            <button
+              className="mt-6 md:mt-0 w-full md:w-auto py-3 px-8 rounded-2xl bg-white text-tifo-primary font-extrabold shadow-lg hover:scale-[1.04] hover:shadow-xl transition-all duration-200 text-lg tracking-wide drop-shadow"
+              onClick={() => { setSelected(nextEvent); setShowModal(true); }}
+            >
+              Érdekel
+            </button>
+          </motion.div>
+        </section>
+      )}
                 {nextEvent.title}
               </h3>
               {nextEvent.location && (
