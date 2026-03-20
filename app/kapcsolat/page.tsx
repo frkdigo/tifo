@@ -9,7 +9,7 @@ export default function Kapcsolat() {
   const [sending, setSending] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
-  // import { motion } from "framer-motion"; // már fent kell lennie, ha kell
+  import { motion } from "framer-motion";
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -42,9 +42,20 @@ export default function Kapcsolat() {
   }
 
   return (
-    <main className="max-w-5xl mx-auto py-12 px-4">
+    <motion.main
+      className="max-w-5xl mx-auto py-12 px-4"
+      initial={{ opacity: 0, y: 40 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.7, ease: "easeOut" }}
+    >
       {/* Logó a kör alakú kép helyén, a tetejéről eltávolítva */}
-      <section className="relative overflow-hidden rounded-3xl bg-slate-950 border border-white/15 shadow-[0_24px_55px_-30px_rgba(0,0,0,0.55)] p-6 md:p-8 mb-6">
+      <motion.section
+        className="relative overflow-hidden rounded-3xl bg-slate-950 border border-white/15 shadow-[0_24px_55px_-30px_rgba(0,0,0,0.55)] p-6 md:p-8 mb-6"
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.4 }}
+        transition={{ duration: 0.7, ease: "easeOut" }}
+      >
         <div className="absolute inset-0 opacity-80 pointer-events-none" aria-hidden="true" style={{ background: 'radial-gradient(circle at 14% -6%, rgba(135,206,235,0.22), transparent 28%), radial-gradient(circle at 88% 8%, rgba(40,167,69,0.18), transparent 25%), radial-gradient(circle at 52% 120%, rgba(13,59,102,0.35), transparent 40%)' }} />
         <div className="relative grid md:grid-cols-[1.25fr,0.75fr] gap-6 items-center">
           <div>
@@ -95,9 +106,15 @@ export default function Kapcsolat() {
              />
            </div>
         </div>
-      </section>
+      </motion.section>
 
-      <section className="rounded-3xl bg-[linear-gradient(180deg,#ffffff_0%,#f8fbff_100%)] border border-gray-200 shadow-[0_18px_45px_-28px_rgba(13,59,102,0.22)] p-6 md:p-8">
+      <motion.section
+        className="rounded-3xl bg-[linear-gradient(180deg,#ffffff_0%,#f8fbff_100%)] border border-gray-200 shadow-[0_18px_45px_-28px_rgba(13,59,102,0.22)] p-6 md:p-8"
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.4 }}
+        transition={{ duration: 0.7, ease: "easeOut", delay: 0.15 }}
+      >
         <p className="section-label">Kapcsolatfelvétel</p>
         <h2 className="text-2xl md:text-3xl font-black text-tifo-dark mb-6">Írj nekünk!</h2>
 
@@ -149,6 +166,6 @@ export default function Kapcsolat() {
         </form>
       </section>
 
-    </main>
+    </motion.main>
   );
 }
