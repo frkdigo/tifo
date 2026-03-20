@@ -144,6 +144,6 @@ export default function ProfilomPage() {
 
         {message && <div className="text-sm text-gray-700">{message}</div>}
       </form>
-    </main>
+    </motion.main>
   );
 }
