@@ -1,8 +1,6 @@
 "use client";
 import { useEffect, useState, useMemo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { uploadImageToStorage } from "../../lib/uploadImageToStorage";
-import Masonry from "react-masonry-css";
+import { AnimatePresence } from "framer-motion";
 
 type EventItem = {
   id: number;
@@ -20,7 +18,6 @@ export default function Esemeneink() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  // Hero images (fade animation)
   const heroImages = [
     "/images/herokep_1.jpg",
     "/images/herokep_2.jpg",
@@ -59,8 +56,6 @@ export default function Esemeneink() {
     setLoading(false);
   }
 
-  const breakpointColumnsObj = { default: 3, 1100: 2, 700: 1 };
-
   const activeIndex = useMemo(() => {
     if (!activeEvent) return -1;
     return events.findIndex((e) => e.id === activeEvent.id);
@@ -75,28 +70,20 @@ export default function Esemeneink() {
 
   return (
     <main className="relative overflow-hidden bg-white text-black">
-      {/* Hero */}
-      <section className="relative overflow-hidden flex items-center justify-center min-h-screen text-center cursor-pointer">
-        <div className="absolute inset-0 w-full h-full z-0">
-          {heroImages.map((src, idx) => (
-            <img
-              key={src}
-              src={src}
-              alt="Hero background"
-              className={`w-full h-full object-cover absolute inset-0 brightness-[0.38] contrast-95 saturate-80 transition-opacity duration-1000 ${idx === current ? 'opacity-100' : 'opacity-0'}`}
-              style={{ zIndex: idx === current ? 1 : 0 }}
-              draggable={false}
-            />
-          ))}
-        </div>
-        <div className="absolute inset-0 z-10 bg-gradient-to-b from-black/20 via-black/40 to-black/65" />
-        <div className="relative z-20 w-full flex flex-col items-center justify-center py-28 px-4">
-          <h1 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-black text-white leading-[0.92] tracking-tight mb-6 drop-shadow-2xl">
-            Eseményeink
-          </h1>
-          <p className="text-lg md:text-xl mb-10 text-white/80 max-w-xl font-medium leading-relaxed">
-            Fedezd fel a legjobb bulikat, programokat és rendezvényeket!<br />
-            Válassz, és éld át a felejthetetlen élményeket!
+      {/* HEADER like Rólunk */}
+      <section className="relative max-w-6xl mx-auto px-4 pt-10 md:pt-14 pb-8">
+        <div className="relative overflow-hidden rounded-3xl border border-white/15 shadow-[0_30px_70px_-40px_rgba(0,0,0,0.65)] p-8 md:p-12 text-center bg-[linear-gradient(180deg,#ffffff_0%,#f8fbff_58%,#f7fff8_100%)]">
+          <div className="absolute inset-0 opacity-80 pointer-events-none" aria-hidden="true"
+            style={{
+              background: 'radial-gradient(circle at 14% -6%, rgba(135,206,235,0.22), transparent 28%), radial-gradient(circle at 88% 8%, rgba(40,167,69,0.18), transparent 25%), radial-gradient(circle at 52% 120%, rgba(13,59,102,0.35), transparent 40%)'
+            }} 
+          />
+          <p className="inline-flex items-center gap-2 rounded-full bg-white/15 text-black text-xs tracking-[0.18em] uppercase px-5 py-2.5 mb-6 shadow-lg">
+            Törökbálinti Ifjúsági Önkormányzat
+          </p>
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-black leading-tight text-black">Eseményeink</h1>
+          <p className="mt-5 text-gray-700 text-lg md:text-xl max-w-3xl leading-[1.58] mx-auto">
+            Fedezd fel a legjobb bulikat, programokat és rendezvényeket! Válassz, és éld át a felejthetetlen élményeket!
           </p>
         </div>
       </section>
