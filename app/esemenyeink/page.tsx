@@ -80,8 +80,8 @@ export default function Esemeneink() {
     <main className="max-w-6xl mx-auto px-4 py-8">
 
       {/* HERO CARD */}
-      <section className="max-w-6xl mx-auto px-4 pt-10 md:pt-14 pb-8">
-        <div className="relative overflow-hidden rounded-3xl border border-white/15 bg-slate-950 shadow-[0_30px_70px_-40px_rgba(0,0,0,0.65)] p-8 md:p-12">
+      <section className="w-full px-0 pt-10 md:pt-14 pb-8">
+        <div className="relative overflow-hidden rounded-3xl border border-white/15 bg-slate-950 shadow-[0_30px_70px_-40px_rgba(0,0,0,0.65)] p-8 md:p-12 mx-4 md:mx-0">
           <div className="absolute inset-0 opacity-80 pointer-events-none" aria-hidden="true" style={{ background: 'radial-gradient(circle at 14% -6%, rgba(135,206,235,0.22), transparent 28%), radial-gradient(circle at 88% 8%, rgba(40,167,69,0.18), transparent 25%), radial-gradient(circle at 52% 120%, rgba(13,59,102,0.35), transparent 40%)' }} />
           <div className="relative flex flex-col md:flex-row md:items-center md:justify-between gap-8 md:gap-0">
             <div className="md:text-left text-center md:max-w-xl flex-1">
@@ -185,28 +185,28 @@ export default function Esemeneink() {
             exit={{ opacity: 0 }}
           >
             <motion.div
-              className="relative bg-white w-full max-w-lg sm:max-w-2xl rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-gray-200 max-h-[90vh] sm:max-h-[80vh] flex flex-col"
+              className="relative bg-white w-full max-w-xs sm:max-w-2xl rounded-xl sm:rounded-3xl overflow-hidden shadow-2xl border border-gray-200 max-h-[70vh] sm:max-h-[80vh] flex flex-col"
               style={{ boxSizing: 'border-box' }}
               onClick={(e) => e.stopPropagation()}
             >
               <button
                 onClick={() => setActiveEvent(null)}
-                className="absolute top-3 right-3 z-10 w-10 h-10 flex items-center justify-center rounded-full bg-white border border-gray-200 shadow-sm text-gray-500 hover:text-black hover:bg-gray-100 transition"
-                style={{ top: 12, right: 12 }}
+                className="absolute top-2 right-2 z-10 w-9 h-9 flex items-center justify-center rounded-full bg-white border border-gray-200 shadow-sm text-gray-500 hover:text-black hover:bg-gray-100 transition"
+                style={{ top: 8, right: 8 }}
               >
                 ✕
               </button>
               {activeEvent.image && (
                 <img
                   src={activeEvent.image}
-                  className="w-full h-48 sm:h-60 object-cover"
+                  className="w-full h-32 sm:h-60 object-cover"
                   alt={activeEvent.title}
                 />
               )}
-              <div className="p-5 sm:p-6 overflow-y-auto flex-1 min-h-0">
-                <h2 className="text-2xl font-bold mb-1">{activeEvent.title}</h2>
-                <p className="text-sm text-gray-500 mb-2">{new Date(activeEvent.date).toLocaleDateString("hu-HU")}</p>
-                <p className="text-gray-700">{activeEvent.description}</p>
+              <div className="p-3 sm:p-6 overflow-y-auto flex-1 min-h-0">
+                <h2 className="text-lg sm:text-2xl font-bold mb-1">{activeEvent.title}</h2>
+                <p className="text-xs sm:text-sm text-gray-500 mb-2">{new Date(activeEvent.date).toLocaleDateString("hu-HU")}</p>
+                <p className="text-gray-700 text-sm sm:text-base">{activeEvent.description}</p>
               </div>
             </motion.div>
           </motion.div>
