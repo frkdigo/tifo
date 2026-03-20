@@ -111,30 +111,34 @@ export default function Esemeneink() {
         <section className="mb-10">
           <div
             onClick={() => setActiveEvent(featuredEvent)}
-            className="cursor-pointer rounded-3xl overflow-hidden border border-gray-200 bg-white shadow-md relative min-h-[220px]"
+            className="cursor-pointer rounded-3xl overflow-hidden border border-gray-200 bg-white shadow-md grid md:grid-cols-2 min-h-[220px]"
             style={{ minHeight: 220 }}
           >
-            {featuredEvent.image && (
-              <div className="relative w-full h-56 md:h-64">
-                <img
-                  src={featuredEvent.image}
-                  className="w-full h-full object-cover"
-                  alt={featuredEvent.title}
-                />
-                <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-transparent" />
-                <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-8">
-                  <span className="text-xs uppercase tracking-widest text-white font-bold mb-1 drop-shadow">KIEMELT ESEMÉNY</span>
-                  <h2 className="text-2xl md:text-3xl font-black text-white mb-1 drop-shadow">{featuredEvent.title}</h2>
-                  <p className="text-sm text-gray-200 mb-2 drop-shadow">{new Date(featuredEvent.date).toLocaleDateString("hu-HU")}</p>
-                  <p className="text-white/90 line-clamp-3 leading-[1.6] drop-shadow">{featuredEvent.description}</p>
-                  <div className="mt-4">
-                    <button className="bg-blue-900 text-white font-bold px-6 py-2 rounded-[16px] hover:bg-blue-800 transition w-full text-base">
-                      Érdekel
-                    </button>
+            {/* Bal oldalt: kép, overlay csak label, cím, dátum */}
+            <div className="relative h-56 md:h-full">
+              {featuredEvent.image && (
+                <>
+                  <img
+                    src={featuredEvent.image}
+                    className="w-full h-full object-cover object-center"
+                    alt={featuredEvent.title}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-transparent" />
+                  <div className="absolute bottom-0 left-0 w-full p-6 md:p-8 flex flex-col gap-1">
+                    <span className="text-xs uppercase tracking-widest text-white font-bold mb-1 drop-shadow">KIEMELT ESEMÉNY</span>
+                    <h2 className="text-2xl md:text-3xl font-black text-white drop-shadow mb-0.5">{featuredEvent.title}</h2>
+                    <p className="text-sm text-gray-200 drop-shadow">{new Date(featuredEvent.date).toLocaleDateString("hu-HU")}</p>
                   </div>
-                </div>
-              </div>
-            )}
+                </>
+              )}
+            </div>
+            {/* Jobb oldalt: csak leírás és gomb */}
+            <div className="flex flex-col justify-center p-6 md:p-8 bg-white">
+              <p className="text-gray-700 mb-6 line-clamp-5 leading-[1.6]">{featuredEvent.description}</p>
+              <button className="bg-blue-900 text-white font-bold px-6 py-2 rounded-[16px] hover:bg-blue-800 transition w-full text-base mt-auto">
+                Érdekel
+              </button>
+            </div>
           </div>
         </section>
       )}
