@@ -43,7 +43,20 @@ export default function Esemeneink() {
     setLoading(false);
   }
 
-  const heroBg = events[0]?.image || "/images/hero-bg.jpg";
+  // Főoldali hero képek (8 kép váltakozik)
+  const heroImages = [
+    "/images/hero1.jpg",
+    "/images/hero2.jpg",
+    "/images/hero3.jpg",
+    "/images/hero4.jpg",
+    "/images/hero5.jpg",
+    "/images/hero6.jpg",
+    "/images/hero7.jpg",
+    "/images/hero8.jpg",
+  ];
+
+  // Véletlenszerűen kiválasztott hero kép
+  const heroBg = events[0]?.image || heroImages[Math.floor(Math.random() * heroImages.length)];
 
   const breakpointColumnsObj = {
     default: 3,
@@ -104,7 +117,7 @@ export default function Esemeneink() {
                 )}
                 <div className="p-6 flex flex-col gap-2 relative z-10">
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="inline-block bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest shadow">
+                    <span className="inline-block bg-gradient-to-r from-purple-500 via-pink-500 to-pink-400 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest shadow">
                       {event.category || "Esemény"}
                     </span>
                     <span className="text-xs text-white/70 ml-auto">
@@ -123,7 +136,7 @@ export default function Esemeneink() {
                   <div className="flex gap-2 mt-2">
                     <button
                       onClick={() => { setSelected(event); setShowModal(true); }}
-                      className="bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 text-white font-bold px-5 py-2 rounded-lg shadow hover:from-blue-500 hover:via-pink-500 hover:to-purple-500 transition-all duration-200 uppercase tracking-wide"
+                      className="bg-gradient-to-r from-purple-500 via-pink-500 to-pink-400 text-white font-bold px-5 py-2 rounded-lg shadow hover:from-pink-500 hover:via-purple-500 hover:to-pink-300 transition-all duration-200 uppercase tracking-wide"
                     >
                       Részletek
                     </button>
