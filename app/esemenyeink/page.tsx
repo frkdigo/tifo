@@ -44,34 +44,23 @@ export default function Esemeneink() {
   function EventCard({ event }: { event: EventItem }) {
     return (
       <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
         whileHover={{ y: -4 }}
         transition={{ duration: 0.25 }}
-        className="cursor-pointer bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300"
+        className="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all"
       >
         {event.image && (
-          <div className="h-48 w-full overflow-hidden">
-            <img
-              src={event.image}
-              alt={event.title}
-              className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-            />
-          </div>
+          <img
+            src={event.image}
+            className="w-full h-44 object-cover"
+          />
         )}
 
         <div className="p-5 flex flex-col gap-2">
-          <span className="text-xs uppercase tracking-wider text-gray-400">
+          <span className="text-xs uppercase text-gray-400">
             {event.category || "Esemény"}
           </span>
 
-          <h3 className="text-lg font-bold text-gray-900">
-            {event.title}
-          </h3>
-
-          {event.location && (
-            <p className="text-sm text-gray-500">📍 {event.location}</p>
-          )}
+          <h3 className="text-lg font-bold">{event.title}</h3>
 
           <p className="text-sm text-gray-500">
             {new Date(event.date).toLocaleDateString("hu-HU")}
@@ -84,7 +73,7 @@ export default function Esemeneink() {
           <div className="flex justify-center mt-3">
             <button
               onClick={() => setActiveEvent(event)}
-              className="bg-blue-900 text-white font-bold px-6 py-2 rounded-full hover:bg-blue-800 hover:scale-105 active:scale-95 transition-all duration-200 text-sm"
+              className="bg-blue-900 text-white font-bold px-6 py-2 rounded-full hover:bg-blue-800 transition text-sm"
             >
               Érdekel
             </button>
@@ -97,67 +86,77 @@ export default function Esemeneink() {
   return (
     <main className="max-w-6xl mx-auto px-4 py-16">
 
-      {/* HEADER (visszaállítva) */}
-      <header className="mb-10">
-        <p className="section-label">Események</p>
-        <h1 className="text-3xl md:text-5xl font-black text-tifo-dark mb-3">
-          Eseményeink
-        </h1>
+      {/* HEADER – mint Rólunk */}
+      <section className="max-w-6xl mx-auto px-4 pt-10 md:pt-14 pb-10 text-center">
+        <div className="relative overflow-hidden rounded-3xl border border-white/15 bg-slate-950 shadow-[0_30px_70px_-40px_rgba(0,0,0,0.65)] p-10 md:p-14">
+          <h1 className="text-4xl md:text-6xl font-black text-white">
+            Eseményeink
+          </h1>
 
-        <p className="mt-2 text-gray-600 max-w-2xl">
-          Fedezd fel a legjobb programokat és eseményeket. Válassz, és csatlakozz hozzánk!
-        </p>
-      </header>
+          <div className="w-20 h-1 bg-white/70 mx-auto my-6" />
 
-      {/* KIEMELT ESEMÉNY */}
+          <p className="text-white/80 max-w-2xl mx-auto text-lg">
+            Fedezd fel legfrissebb eseményeinket és csatlakozz hozzánk!
+          </p>
+        </div>
+      </section>
+
+      {/* KIEMELT ESEMÉNY – SPLIT LAYOUT */}
       {featuredEvent && (
-        <section className="mb-12">
+        <section className="mb-14">
           <div
             onClick={() => setActiveEvent(featuredEvent)}
-            className="cursor-pointer relative rounded-3xl overflow-hidden shadow-lg border border-gray-200"
+            className="cursor-pointer grid md:grid-cols-2 overflow-hidden rounded-3xl border border-gray-200 shadow-lg hover:shadow-2xl transition"
           >
-            {featuredEvent.image && (
-              <img
-                src={featuredEvent.image}
-                className="w-full h-72 object-cover"
-              />
-            )}
+            {/* BAL OLDAL – KÉP */}
+            <div className="h-64 md:h-auto">
+              {featuredEvent.image && (
+                <img
+                  src={featuredEvent.image}
+                  className="w-full h-full object-cover"
+                />
+              )}
+            </div>
 
-            <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-transparent" />
+            {/* JOBB OLDAL – SZÖVEG */}
+            <div className="bg-white p-8 flex flex-col justify-between">
+              <div>
+                <span className="text-xs uppercase tracking-widest text-[#87ceeb]">
+                  Kiemelt esemény
+                </span>
 
-            <div className="absolute bottom-0 left-0 p-8 text-white max-w-xl">
-              <span className="text-xs uppercase tracking-widest text-[#87ceeb]">
-                Kiemelt esemény
-              </span>
+                <h2 className="text-2xl md:text-3xl font-black mt-2">
+                  {featuredEvent.title}
+                </h2>
 
-              <h2 className="text-3xl font-black mt-2">
-                {featuredEvent.title}
-              </h2>
+                <p className="text-sm text-gray-500 mt-2">
+                  {new Date(featuredEvent.date).toLocaleDateString("hu-HU")}
+                </p>
 
-              <p className="text-white/80 mt-2">
-                {featuredEvent.description}
-              </p>
+                <p className="text-gray-600 mt-4 line-clamp-4 leading-[1.6]">
+                  {featuredEvent.description}
+                </p>
+              </div>
 
-              <button className="mt-4 bg-white text-black px-6 py-2 rounded-full font-semibold hover:bg-gray-200 transition">
-                Érdekel →
-              </button>
+              {/* GOMB */}
+              <div className="mt-6">
+                <button className="bg-blue-900 text-white font-bold px-6 py-2 rounded-full hover:bg-blue-800 transition">
+                  Érdekel →
+                </button>
+              </div>
             </div>
           </div>
         </section>
       )}
 
-      {/* KÁRTYÁK */}
+      {/* TÖBBI ESEMÉNY */}
       <section>
         {loading ? (
           <p className="text-gray-500">Betöltés...</p>
-        ) : events.length === 0 ? (
-          <p className="text-gray-500">Nincs esemény.</p>
         ) : (
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {events.map((event, index) => {
-              // ne duplázza a kiemeltet
-              if (index === 0) return null;
-
+              if (index === 0) return null; // ne duplázza a featured-et
               return <EventCard key={event.id} event={event} />;
             })}
           </div>
@@ -177,9 +176,6 @@ export default function Esemeneink() {
             <motion.div
               className="bg-white max-w-2xl w-full rounded-2xl overflow-hidden shadow-xl"
               onClick={(e) => e.stopPropagation()}
-              initial={{ scale: 0.95 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.95 }}
             >
               {activeEvent.image && (
                 <img
@@ -197,12 +193,6 @@ export default function Esemeneink() {
                   {new Date(activeEvent.date).toLocaleDateString("hu-HU")}
                 </p>
 
-                {activeEvent.location && (
-                  <p className="text-sm text-gray-500">
-                    📍 {activeEvent.location}
-                  </p>
-                )}
-
                 <p className="mt-4 text-gray-700">
                   {activeEvent.description}
                 </p>
@@ -211,6 +201,7 @@ export default function Esemeneink() {
           </motion.div>
         )}
       </AnimatePresence>
+
     </main>
   );
 }
