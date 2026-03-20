@@ -39,8 +39,7 @@ export default function Kapcsolat() {
             <motion.section
               className="relative overflow-hidden rounded-3xl bg-slate-950 border border-white/15 shadow-[0_24px_55px_-30px_rgba(0,0,0,0.55)] p-6 md:p-8 mb-6"
               initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.4 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, ease: "easeOut" }}
             >
               ...existing code...
@@ -49,8 +48,7 @@ export default function Kapcsolat() {
             <motion.section
               className="rounded-3xl bg-[linear-gradient(180deg,#ffffff_0%,#f8fbff_100%)] border border-gray-200 shadow-[0_18px_45px_-28px_rgba(13,59,102,0.22)] p-6 md:p-8"
               initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.4 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, ease: "easeOut", delay: 0.15 }}
             >
               ...existing code...
@@ -111,8 +109,7 @@ export default function Kapcsolat() {
       <motion.section
         className="rounded-3xl bg-[linear-gradient(180deg,#ffffff_0%,#f8fbff_100%)] border border-gray-200 shadow-[0_18px_45px_-28px_rgba(13,59,102,0.22)] p-6 md:p-8"
         initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.4 }}
+        animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, ease: "easeOut", delay: 0.15 }}
       >
         <p className="section-label">Kapcsolatfelvétel</p>
