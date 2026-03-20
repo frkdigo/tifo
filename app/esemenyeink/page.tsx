@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Masonry from "react-masonry-css";
 
@@ -13,6 +13,17 @@ type EventItem = {
   category?: string;
 };
 
+const heroImages = [
+  "/images/herokep_1.jpg",
+  "/images/herokep_2.jpg",
+  "/images/herokep_3.jpg",
+  "/images/herokep_4.jpg",
+  "/images/herokep_5.jpg",
+  "/images/herokep_6.jpg",
+  "/images/herokep_7.jpg",
+  "/images/herokep_8.jpg",
+];
+
 export default function Esemeneink() {
   const [events, setEvents] = useState<EventItem[]>([]);
   const [selected, setSelected] = useState<EventItem | null>(null);
@@ -21,6 +32,22 @@ export default function Esemeneink() {
   const [imageSrc, setImageSrc] = useState<string>("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+
+  // Hero kép váltás
+  const [current, setCurrent] = useState(0);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    timeoutRef.current = setTimeout(() => {
+      setCurrent((prev) => (prev + 1) % heroImages.length);
+    }, 5000);
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, [current]);
+
+  const nextHeroImage = () => setCurrent((prev) => (prev + 1) % heroImages.length);
 
   useEffect(() => {
     fetchEvents();
@@ -43,51 +70,51 @@ export default function Esemeneink() {
     setLoading(false);
   }
 
-  const heroImages = [
-    "/images/herokep_1.jpg",
-    "/images/herokep_2.jpg",
-    "/images/herokep_3.jpg",
-    "/images/herokep_4.jpg",
-    "/images/herokep_5.jpg",
-    "/images/herokep_6.jpg",
-    "/images/herokep_7.jpg",
-    "/images/herokep_8.jpg",
-  ];
-
-  const heroBg = heroImages[Math.floor(Math.random() * heroImages.length)];
-
   const breakpointColumnsObj = {
     default: 3,
     1100: 2,
-    700: 1
+    700: 1,
   };
 
   return (
     <main className="min-h-screen bg-white text-gray-900">
       {/* HERO */}
-      <section className="relative flex flex-col items-center justify-center min-h-[95vh] w-full text-center overflow-hidden">
-        <div
-          className="absolute inset-0 bg-cover bg-center z-0"
-          style={{
-            backgroundImage: `url(${heroBg})`,
-            filter: "brightness(0.4) blur(1px)",
-          }}
-        />
-        {/* Gradient eltávolítva az alján lévő sötétítés miatt */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-transparent z-10" />
-        <div className="relative z-20 flex flex-col items-center justify-center py-24 px-4">
-          <h1 className="text-5xl md:text-6xl font-black tracking-tight mb-4 text-white uppercase">
+      <section
+        className="relative overflow-hidden flex items-center justify-center min-h-[60vh] text-center cursor-pointer"
+        onClick={nextHeroImage}
+      >
+        <div className="absolute inset-0 w-full h-full z-0">
+          {heroImages.map((src, idx) => (
+            <img
+              key={src}
+              src={src}
+              alt="Hero background"
+              className={`w-full h-full object-cover absolute inset-0 brightness-[0.38] contrast-95 saturate-80 transition-opacity duration-1000 ${idx === current ? 'opacity-100' : 'opacity-0'}`}
+              style={{ zIndex: idx === current ? 1 : 0 }}
+              draggable={false}
+            />
+          ))}
+        </div>
+        <div className="absolute inset-0 z-10 bg-gradient-to-b from-black/20 via-black/40 to-black/65" />
+
+        <div className="relative z-20 w-full flex flex-col items-center justify-center py-28 px-4">
+          <motion.h1
+            className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-black text-white leading-[0.92] tracking-tight mb-6 drop-shadow-2xl"
+            initial={{ opacity: 0, y: 60 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, ease: "easeOut" }}
+          >
             Eseményeink
-          </h1>
-          <p className="text-lg md:text-2xl font-medium text-white/80 mb-8 max-w-2xl mx-auto">
-            Fedezd fel a legjobb bulikat, programokat és rendezvényeket!
-            <br />
+          </motion.h1>
+
+          <p className="text-lg md:text-xl mb-10 text-white/80 max-w-xl font-medium leading-relaxed">
+            Fedezd fel a legjobb bulikat, programokat és rendezvényeket!<br />
             Válassz, és éld át a felejthetetlen élményeket!
           </p>
         </div>
       </section>
 
-      {/* ESEMÉNYEK - fehér háttér */}
+      {/* ESEMÉNYEK */}
       <section className="max-w-7xl mx-auto px-4 py-16">
         <h2 className="text-3xl md:text-4xl font-extrabold text-center mb-12 uppercase">
           Közelgő események
@@ -193,21 +220,15 @@ export default function Esemeneink() {
                 />
               )}
 
-              <h2 className="text-xl font-bold mb-2">
-                {selected.title}
-              </h2>
+              <h2 className="text-xl font-bold mb-2">{selected.title}</h2>
 
-              <p className="text-purple-600 mb-2">
-                {selected.location}
-              </p>
+              <p className="text-purple-600 mb-2">{selected.location}</p>
 
               <p className="text-gray-500 mb-2">
                 {new Date(selected.date).toLocaleDateString("hu-HU")}
               </p>
 
-              {selected.description && (
-                <p>{selected.description}</p>
-              )}
+              {selected.description && <p>{selected.description}</p>}
             </motion.div>
           </motion.div>
         )}
