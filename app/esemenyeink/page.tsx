@@ -82,7 +82,7 @@ export default function Esemeneink() {
   const nextEvent = events.length > 0 ? events.find(e => toLocalDay(e.date) >= todayStart) || events[0] : null;
 
   return (
-    <main className="relative overflow-hidden bg-white text-black">
+    <main className="relative min-h-screen overflow-hidden bg-gradient-to-b from-slate-50 via-white to-slate-100 text-black">
       {/* Prémium háttér, overlay, mint a Rólunk oldalon */}
       <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_18%_8%,rgba(15,23,42,0.22),transparent_40%),linear-gradient(180deg,#020617_0%,#020617_34%,#f6f9fc_34%,#ffffff_100%)]" />
 
@@ -102,30 +102,35 @@ export default function Esemeneink() {
         </div>
       </section>
 
-      {/* Közelgő esemény doboz */}
+      {/* Közelgő esemény szekció */}
       {nextEvent && (
-        <section className="max-w-2xl mx-auto px-4 mb-12">
-          <div className="relative bg-gradient-to-r from-tifo-primary to-tifo-secondary rounded-2xl shadow-xl p-6 md:p-8 flex flex-col md:flex-row items-center gap-6 border border-white/20">
+        <section className="max-w-3xl mx-auto px-4 mb-14">
+          <h2 className="text-center text-2xl md:text-3xl font-extrabold text-tifo-primary mb-5 tracking-tight drop-shadow-sm">Közelgő esemény</h2>
+          <div className="relative bg-gradient-to-br from-tifo-primary/90 to-tifo-secondary/80 rounded-3xl shadow-2xl p-8 md:p-12 flex flex-col md:flex-row items-center gap-8 border border-white/20 overflow-hidden">
+            {/* Színes háttér animáció */}
+            <div className="pointer-events-none absolute -z-10 inset-0 opacity-80">
+              <div className="absolute -top-16 -left-16 w-60 h-60 bg-white/10 rounded-full blur-3xl animate-pulse" />
+              <div className="absolute -bottom-16 -right-16 w-60 h-60 bg-white/10 rounded-full blur-3xl animate-pulse" />
+            </div>
             <div className="flex-1 min-w-0">
-              <div className="text-xs text-white/80 mb-1">Közelgő esemény</div>
-              <div className="font-bold text-2xl md:text-3xl text-white mb-1 truncate">{nextEvent.title}</div>
+              <div className="font-extrabold text-3xl md:text-4xl text-white mb-2 truncate drop-shadow">{nextEvent.title}</div>
               {nextEvent.location && (
-                <div className="flex items-center gap-1 text-sm text-white/90 mb-1">
-                  <svg width="18" height="18" fill="none" viewBox="0 0 24 24" className="inline-block mr-1"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5z" fill="currentColor"/></svg>
+                <div className="flex items-center gap-1 text-base text-white/90 mb-2 font-semibold">
+                  <svg width="20" height="20" fill="none" viewBox="0 0 24 24" className="inline-block mr-1"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5z" fill="currentColor"/></svg>
                   {nextEvent.location}
                 </div>
               )}
-              <div className="text-white/80 text-sm mb-2">
+              <div className="text-white/80 text-base mb-3 font-medium">
                 {toLocalDay(nextEvent.date).toLocaleDateString('hu-HU', { year: 'numeric', month: 'short', day: 'numeric' })}
               </div>
               {nextEvent.description && (
-                <div className="text-white/90 text-base leading-relaxed line-clamp-3">
+                <div className="text-white/95 text-lg leading-relaxed line-clamp-3">
                   <EventDescription text={nextEvent.description} />
                 </div>
               )}
             </div>
             <button
-              className="mt-4 md:mt-0 w-full md:w-auto py-2 px-6 rounded-xl bg-white text-tifo-primary font-bold shadow hover:scale-[1.03] hover:shadow-xl transition-all duration-200 text-base tracking-wide"
+              className="mt-6 md:mt-0 w-full md:w-auto py-3 px-8 rounded-2xl bg-white text-tifo-primary font-extrabold shadow-lg hover:scale-[1.04] hover:shadow-xl transition-all duration-200 text-lg tracking-wide drop-shadow"
               onClick={() => { setSelected(nextEvent); setShowModal(true); }}
             >
               Érdekel
@@ -134,13 +139,14 @@ export default function Esemeneink() {
         </section>
       )}
 
-      {/* Események listája - prémium kártyák */}
+      {/* További események szekció */}
       <motion.section
-        className="max-w-6xl mx-auto px-4 pb-16"
+        className="max-w-6xl mx-auto px-4 pb-20"
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: 'easeOut' }}
       >
+        <h2 className="text-center text-2xl md:text-3xl font-extrabold text-tifo-primary mb-8 tracking-tight drop-shadow-sm">További eseményeink</h2>
         {loading ? (
           <div className="text-center text-gray-400 text-lg font-medium animate-pulse">Betöltés...</div>
         ) : error ? (
@@ -148,23 +154,20 @@ export default function Esemeneink() {
         ) : events.length === 0 ? (
           <div className="text-center text-gray-400 text-lg font-medium">Nincs megjeleníthető esemény.</div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-12">
             {events.map((event, idx) => (
               <motion.div
                 key={event.id}
-                className="relative group rounded-3xl border border-tifo-primary/20 bg-white/90 shadow-[0_8px_32px_-8px_rgba(40,60,120,0.13)] hover:shadow-[0_16px_48px_-8px_rgba(40,60,120,0.18)] p-7 flex flex-col gap-3 min-h-[240px] overflow-hidden transition-all duration-300 hover:-translate-y-1"
+                className="relative group rounded-3xl border-2 border-tifo-primary/30 bg-white/95 shadow-[0_8px_32px_-8px_rgba(40,60,120,0.13)] hover:shadow-[0_16px_48px_-8px_rgba(40,60,120,0.18)] p-8 flex flex-col gap-4 min-h-[240px] overflow-hidden transition-all duration-300 hover:-translate-y-1"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.2 }}
                 transition={{ duration: 0.5, delay: idx * 0.08 }}
               >
-                {/* Színes háttér animáció */}
-                <div className="pointer-events-none absolute -z-10 inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                  <div className="absolute -top-10 -left-10 w-32 h-32 bg-tifo-primary/15 rounded-full blur-2xl animate-pulse" />
-                  <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-tifo-secondary/15 rounded-full blur-2xl animate-pulse" />
-                </div>
+                {/* Színes felső sáv */}
+                <div className="absolute left-0 top-0 w-full h-2 rounded-t-3xl bg-gradient-to-r from-tifo-primary to-tifo-secondary" />
                 {/* Dátum badge */}
-                <div className="absolute top-5 right-5">
+                <div className="absolute top-6 right-6">
                   <span className="inline-block bg-gradient-to-r from-tifo-primary to-tifo-secondary text-white text-xs font-bold px-4 py-1.5 rounded-full shadow-md tracking-wide">
                     {toLocalDay(event.date).toLocaleDateString('hu-HU', { year: 'numeric', month: 'short', day: 'numeric' })}
                   </span>
