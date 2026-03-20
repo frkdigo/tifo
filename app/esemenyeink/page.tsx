@@ -156,11 +156,10 @@ export default function Esemeneink() {
               <EventCard
                 key={event.id}
                 event={event}
-                onSelect={() => { setSelected(event); setShowModal(true); }}
+                onSelect={() => setActiveEvent(event)}
                 onShowImage={() => {
                   if (event.image) {
-                    setImageSrc(event.image);
-                    setShowImageModal(true);
+                    setActiveEvent(event);
                   }
                 }}
               />
