@@ -144,12 +144,12 @@ export default function Rolunk() {
 
   return (
     <motion.main
-      className="relative overflow-hidden bg-white text-black"
+      className="relative overflow-hidden text-black"
       initial={{ opacity: 0, y: 40 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.7, ease: "easeOut" }}
     >
-      <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_18%_8%,rgba(15,23,42,0.22),transparent_40%),linear-gradient(180deg,#020617_0%,#020617_34%,#f6f9fc_34%,#ffffff_100%)]" />
+      {/* Háttér most már a layoutban, nincs szükség külön divre */}
 
       <motion.section
         className="max-w-6xl mx-auto px-4 pt-10 md:pt-14 pb-8"
