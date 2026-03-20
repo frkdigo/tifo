@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import { useAuth } from "./AuthProvider";
 import { uploadImageToStorage } from "../../lib/uploadImageToStorage";
 
@@ -134,7 +135,13 @@ export default function PostsSection() {
 
   return (
     <>
-      <section className="max-w-6xl mx-auto px-4 py-12">
+      <motion.section
+        className="max-w-6xl mx-auto px-4 py-12"
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.7, ease: "easeOut" }}
+      >
         {/* HEADER */}
         <div className="rounded-3xl border border-white/15 bg-slate-950 p-6 md:p-8 mb-6 shadow-[0_24px_60px_-35px_rgba(0,0,0,0.6)]">
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
@@ -273,7 +280,7 @@ export default function PostsSection() {
             ))
           )}
         </div>
-      </section>
+      </motion.section>
 
       {/* SELECTED IMAGE MODAL */}
       {selectedImage && (

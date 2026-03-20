@@ -30,15 +30,19 @@ export default function HomeHighlights() {
       {items.map((item) => {
         const isFeatured = !!item.featured;
         return (
-          <article
-            key={item.title}
-            className={[
-              "rounded-2xl border p-6 transition-all duration-300",
-              isFeatured
-                ? "bg-slate-900 border-slate-900 text-white shadow-[0_22px_45px_-24px_rgba(15,23,42,0.8)]"
-                : "bg-white/90 backdrop-blur-sm border-slate-200 text-slate-900 shadow-[0_16px_30px_-24px_rgba(15,23,42,0.45)]",
-            ].join(" ")}
-          >
+              <motion.article
+                key={item.title}
+                className={[
+                  "rounded-2xl border p-6 transition-all duration-300",
+                  isFeatured
+                    ? "bg-slate-900 border-slate-900 text-white shadow-[0_22px_45px_-24px_rgba(15,23,42,0.8)]"
+                    : "bg-white/90 backdrop-blur-sm border-slate-200 text-slate-900 shadow-[0_16px_30px_-24px_rgba(15,23,42,0.45)]",
+                ].join(" ")}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.7, ease: "easeOut" }}
+              >
             <p className={[
               "text-xs uppercase tracking-wider",
               isFeatured ? "text-slate-200" : "text-slate-500",

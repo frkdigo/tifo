@@ -1,5 +1,7 @@
 // import { Event } from '../../lib/mockEvents'
 // Az Event típust a Supabase-ből kapott adatok alapján határozzuk meg
+
+import { motion } from "framer-motion";
 import { useAuth } from '../components/AuthProvider';
 
 // Az EventItem típust a page.tsx-ből használjuk, mert abban van image property
@@ -15,8 +17,14 @@ type EventItem = {
 export default function EventCard({ event }: { event: EventItem }) {
   const { user } = useAuth();
   return (
-    <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow flex flex-col justify-between h-[410px]">
-        <img src={event.image ?? undefined} alt={event.title} className="w-full h-48 object-contain bg-white" />
+    <motion.div
+      className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow flex flex-col justify-between h-[410px]"
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.7, ease: "easeOut" }}
+    >
+      <img src={event.image ?? undefined} alt={event.title} className="w-full h-48 object-contain bg-white" />
       <div className="p-4 flex-1 flex flex-col justify-between">
         <div>
           <h2 className="font-semibold text-lg mb-1">{event.title}</h2>
@@ -28,6 +36,6 @@ export default function EventCard({ event }: { event: EventItem }) {
           <button className="mt-4 w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition-colors font-semibold">Szerkesztés</button>
         )}
       </div>
-    </div>
+    </motion.div>
   )
 }
