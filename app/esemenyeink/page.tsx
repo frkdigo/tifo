@@ -69,21 +69,21 @@ export default function Esemeneink() {
   }
 
   return (
-    <main className="relative overflow-hidden bg-white text-black">
-      {/* HEADER like Rólunk */}
-      <section className="relative max-w-6xl mx-auto px-4 pt-10 md:pt-14 pb-8">
-        <div className="relative overflow-hidden rounded-3xl border border-white/15 shadow-[0_30px_70px_-40px_rgba(0,0,0,0.65)] p-8 md:p-12 text-center bg-[linear-gradient(180deg,#ffffff_0%,#f8fbff_58%,#f7fff8_100%)]">
-          <div className="absolute inset-0 opacity-80 pointer-events-none" aria-hidden="true"
-            style={{
-              background: 'radial-gradient(circle at 14% -6%, rgba(135,206,235,0.22), transparent 28%), radial-gradient(circle at 88% 8%, rgba(40,167,69,0.18), transparent 25%), radial-gradient(circle at 52% 120%, rgba(13,59,102,0.35), transparent 40%)'
-            }} 
-          />
-          <p className="inline-flex items-center gap-2 rounded-full bg-white/15 text-black text-xs tracking-[0.18em] uppercase px-5 py-2.5 mb-6 shadow-lg">
-            Törökbálinti Ifjúsági Önkormányzat
-          </p>
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-black leading-tight text-black">Eseményeink</h1>
-          <p className="mt-5 text-gray-700 text-lg md:text-xl max-w-3xl leading-[1.58] mx-auto">
-            Fedezd fel a legjobb bulikat, programokat és rendezvényeket! Válassz, és éld át a felejthetetlen élményeket!
+    <main className="min-h-screen bg-black text-white">
+      {/* HERO szekció */}
+      <section
+        className="relative flex flex-col items-center justify-center min-h-[60vh] w-full text-center overflow-hidden bg-gradient-to-b from-[#0a2259] via-[#0a2259] to-black"
+      >
+        {/* Sötétkék háttér, nincs háttérkép */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0a2259] via-[#0a2259] to-black z-0" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/60 to-black/90 z-10" />
+        <div className="relative z-20 flex flex-col items-center justify-center py-24 px-4">
+          <h1 className="text-5xl md:text-6xl font-black tracking-tight mb-4 drop-shadow-lg text-white uppercase">
+            Eseményeink
+          </h1>
+          <p className="text-lg md:text-2xl font-medium text-white/80 mb-8 max-w-2xl mx-auto drop-shadow">
+            Fedezd fel a legjobb bulikat, programokat és rendezvényeket!<br />
+            Válassz, és éld át a felejthetetlen élményeket!
           </p>
         </div>
       </section>
@@ -97,26 +97,54 @@ export default function Esemeneink() {
         ) : (
           <ul className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {events.map((event) => (
-              <li key={event.id} className="h-full">
-                <div
-                  className="group relative w-full h-full text-left rounded-[1.5rem] overflow-hidden bg-[linear-gradient(180deg,#ffffff_0%,#f8fbff_58%,#f7fff8_100%)] border border-slate-200/90 p-5 md:p-6 shadow-[0_16px_35px_-26px_rgba(15,23,42,0.4)] hover:shadow-[0_24px_45px_-24px_rgba(13,59,102,0.28)] hover:border-[#87ceeb]/70 hover:-translate-y-1 transition-all duration-200 cursor-pointer"
-                  onClick={() => setActiveEvent(event)}
-                >
-                  <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-[#0d3b66] via-[#87ceeb] to-[#28a745] opacity-80" />
-                  {event.image ? (
-                    <img
-                      src={event.image}
-                      alt={event.title}
-                      className="w-full h-48 object-cover rounded-2xl mb-4 transition-transform duration-200 group-hover:scale-[1.03]"
-                    />
-                  ) : (
-                    <div className="w-full h-48 rounded-2xl bg-gray-200 mb-4" />
+              <div
+                key={event.id}
+                className="relative rounded-2xl overflow-hidden shadow-2xl group bg-black/80 border border-white/10"
+              >
+                {event.image && (
+                  <div
+                    className="h-56 w-full bg-cover bg-center group-hover:scale-105 transition-transform duration-300"
+                    style={{ backgroundImage: `url(${event.image})` }}
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+                  </div>
+                )}
+                <div className="p-6 flex flex-col gap-2 relative z-10">
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="inline-block bg-gradient-to-r from-pink-500 to-blue-500 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest shadow">
+                      {event.category || "Esemény"}
+                    </span>
+                    <span className="text-xs text-white/70 ml-auto">
+                      {new Date(event.date).toLocaleDateString("hu-HU", { year: "numeric", month: "short", day: "numeric" })}
+                    </span>
+                  </div>
+                  <h3 className="text-2xl font-extrabold text-white mb-1 line-clamp-2 drop-shadow">
+                    {event.title}
+                  </h3>
+                  {event.location && (
+                    <p className="text-sm text-blue-300 mb-1">📍 {event.location}</p>
                   )}
-                  <h3 className="text-lg font-semibold text-black mb-1 line-clamp-2">{event.title}</h3>
-                  <p className="text-gray-700 text-sm line-clamp-3">{event.description || "Részletes információk a megtekintéshez."}</p>
-                  <div className="mt-3 text-xs text-gray-500">{new Date(event.date).toLocaleDateString("hu-HU")}</div>
+                  {event.description && (
+                    <p className="text-white/80 text-base line-clamp-3 mb-2">{event.description}</p>
+                  )}
+                  <div className="flex gap-2 mt-2">
+                    <button
+                      onClick={() => { setSelected(event); setShowModal(true); }}
+                      className="bg-[#0a2259] hover:bg-blue-900 text-white font-bold px-5 py-2 rounded-lg shadow transition-all duration-200 uppercase tracking-wide"
+                    >
+                      Érdekel
+                    </button>
+                    {event.image && (
+                      <button
+                        onClick={() => { setImageSrc(event.image!); setShowImageModal(true); }}
+                        className="bg-white/10 text-white px-4 py-2 rounded-lg border border-white/20 hover:bg-white/20 transition"
+                      >
+                        Kép
+                      </button>
+                    )}
+                  </div>
                 </div>
-              </li>
+              </div>
             ))}
           </ul>
         )}
