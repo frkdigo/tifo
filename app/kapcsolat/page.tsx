@@ -27,36 +27,37 @@ export default function Kapcsolat() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, message }),
       });
-      if (res.ok) {
-        setSuccess("Üzenet sikeresen elküldve!");
-        form.reset();
-      } else {
-        const data = await res.json();
-        setError(data.error || "Hiba történt az üzenet küldésekor.");
-      }
-    } catch {
-      setError("Hálózati hiba történt.");
-    } finally {
-      setSending(false);
-    }
-  }
+      return (
+        <motion.main
+          className="max-w-5xl mx-auto py-12 px-4"
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
+        >
+          <>
+            {/* Logó a kör alakú kép helyén, a tetejéről eltávolítva */}
+            <motion.section
+              className="relative overflow-hidden rounded-3xl bg-slate-950 border border-white/15 shadow-[0_24px_55px_-30px_rgba(0,0,0,0.55)] p-6 md:p-8 mb-6"
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.4 }}
+              transition={{ duration: 0.7, ease: "easeOut" }}
+            >
+              ...existing code...
+            </motion.section>
 
-  return (
-    <motion.main
-      className="max-w-5xl mx-auto py-12 px-4"
-      initial={{ opacity: 0, y: 40 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.7, ease: "easeOut" }}
-    >
-      {/* Logó a kör alakú kép helyén, a tetejéről eltávolítva */}
-      <motion.section
-        className="relative overflow-hidden rounded-3xl bg-slate-950 border border-white/15 shadow-[0_24px_55px_-30px_rgba(0,0,0,0.55)] p-6 md:p-8 mb-6"
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.4 }}
-        transition={{ duration: 0.7, ease: "easeOut" }}
-      >
-        <div className="absolute inset-0 opacity-80 pointer-events-none" aria-hidden="true" style={{ background: 'radial-gradient(circle at 14% -6%, rgba(135,206,235,0.22), transparent 28%), radial-gradient(circle at 88% 8%, rgba(40,167,69,0.18), transparent 25%), radial-gradient(circle at 52% 120%, rgba(13,59,102,0.35), transparent 40%)' }} />
+            <motion.section
+              className="rounded-3xl bg-[linear-gradient(180deg,#ffffff_0%,#f8fbff_100%)] border border-gray-200 shadow-[0_18px_45px_-28px_rgba(13,59,102,0.22)] p-6 md:p-8"
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.4 }}
+              transition={{ duration: 0.7, ease: "easeOut", delay: 0.15 }}
+            >
+              ...existing code...
+            </motion.section>
+          </>
+        </motion.main>
+      );
         <div className="relative grid md:grid-cols-[1.25fr,0.75fr] gap-6 items-center">
           <div>
             <p className="inline-flex rounded-full bg-white/15 text-white uppercase tracking-[0.18em] text-xs px-4 py-2 mb-4">
