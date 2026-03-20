@@ -1,7 +1,7 @@
-
 "use client";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Masonry from "react-masonry-css";
 
 type EventItem = {
   id: number;
@@ -43,20 +43,23 @@ export default function Esemeneink() {
     setLoading(false);
   }
 
-  // Hero háttérkép (lehet fix vagy első esemény képe)
   const heroBg = events[0]?.image || "/images/hero-bg.jpg";
 
+  const breakpointColumnsObj = {
+    default: 3,
+    1100: 2,
+    700: 1
+  };
+
   return (
-    <main className="min-h-screen bg-black text-white">
-      {/* HERO szekció */}
-      <section
-        className="relative flex flex-col items-center justify-center min-h-[60vh] w-full text-center overflow-hidden"
-      >
+    <main className="min-h-screen bg-gray-900 text-white">
+      {/* HERO */}
+      <section className="relative flex flex-col items-center justify-center min-h-[60vh] w-full text-center overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center z-0"
-          style={{ backgroundImage: `url(${heroBg})`, filter: 'brightness(0.5) blur(1px)' }}
+          style={{ backgroundImage: `url(${heroBg})`, filter: 'brightness(0.4) blur(1px)' }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/60 to-black/90 z-10" />
+        <div className="absolute inset-0 bg-gradient-to-b from-gray-900/80 via-gray-900/60 to-gray-900/90 z-10" />
         <div className="relative z-20 flex flex-col items-center justify-center py-24 px-4">
           <h1 className="text-5xl md:text-6xl font-black tracking-tight mb-4 drop-shadow-lg text-white uppercase">
             Eseményeink
@@ -68,11 +71,12 @@ export default function Esemeneink() {
         </div>
       </section>
 
-      {/* Események grid Buzz Club stílusban */}
-      <section className="relative z-20 max-w-6xl mx-auto px-4 py-16">
+      {/* Pinterest-stílusú események */}
+      <section className="relative z-20 max-w-7xl mx-auto px-4 py-16">
         <h2 className="text-3xl md:text-4xl font-extrabold text-center mb-12 tracking-wide text-white uppercase drop-shadow-lg">
           Közelgő események
         </h2>
+
         {loading ? (
           <p className="text-center text-white/60">Betöltés...</p>
         ) : error ? (
@@ -80,23 +84,27 @@ export default function Esemeneink() {
         ) : events.length === 0 ? (
           <p className="text-center text-white/60">Nincs esemény.</p>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+          <Masonry
+            breakpointCols={breakpointColumnsObj}
+            className="flex gap-6"
+            columnClassName="flex flex-col gap-6"
+          >
             {events.map((event) => (
               <div
                 key={event.id}
-                className="relative rounded-2xl overflow-hidden shadow-2xl group bg-black/80 border border-white/10"
+                className="relative rounded-2xl overflow-hidden shadow-2xl group bg-gray-800/80 border border-gray-700"
               >
                 {event.image && (
                   <div
-                    className="h-56 w-full bg-cover bg-center group-hover:scale-105 transition-transform duration-300"
+                    className="h-64 w-full bg-cover bg-center transform group-hover:scale-105 transition-transform duration-300"
                     style={{ backgroundImage: `url(${event.image})` }}
                   >
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-transparent to-transparent" />
                   </div>
                 )}
                 <div className="p-6 flex flex-col gap-2 relative z-10">
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="inline-block bg-gradient-to-r from-pink-500 to-blue-500 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest shadow">
+                    <span className="inline-block bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest shadow">
                       {event.category || "Esemény"}
                     </span>
                     <span className="text-xs text-white/70 ml-auto">
@@ -107,7 +115,7 @@ export default function Esemeneink() {
                     {event.title}
                   </h3>
                   {event.location && (
-                    <p className="text-sm text-blue-300 mb-1">📍 {event.location}</p>
+                    <p className="text-sm text-purple-300 mb-1">📍 {event.location}</p>
                   )}
                   {event.description && (
                     <p className="text-white/80 text-base line-clamp-3 mb-2">{event.description}</p>
@@ -115,7 +123,7 @@ export default function Esemeneink() {
                   <div className="flex gap-2 mt-2">
                     <button
                       onClick={() => { setSelected(event); setShowModal(true); }}
-                      className="bg-gradient-to-r from-pink-500 to-blue-500 text-white font-bold px-5 py-2 rounded-lg shadow hover:from-blue-500 hover:to-pink-500 transition-all duration-200 uppercase tracking-wide"
+                      className="bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 text-white font-bold px-5 py-2 rounded-lg shadow hover:from-blue-500 hover:via-pink-500 hover:to-purple-500 transition-all duration-200 uppercase tracking-wide"
                     >
                       Részletek
                     </button>
@@ -131,7 +139,7 @@ export default function Esemeneink() {
                 </div>
               </div>
             ))}
-          </div>
+          </Masonry>
         )}
       </section>
 
@@ -146,7 +154,7 @@ export default function Esemeneink() {
             onClick={() => setShowModal(false)}
           >
             <motion.div
-              className="bg-black rounded-3xl shadow-2xl p-8 max-w-md w-full overflow-y-auto border border-white/10 text-white"
+              className="bg-gray-900 rounded-3xl shadow-2xl p-8 max-w-md w-full overflow-y-auto border border-gray-700 text-white"
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
@@ -160,7 +168,7 @@ export default function Esemeneink() {
                 />
               )}
               <h2 className="text-2xl font-bold text-white mb-2">{selected.title}</h2>
-              <p className="text-blue-300 mb-2">
+              <p className="text-purple-300 mb-2">
                 {selected.location}
               </p>
               <p className="text-white/70 mb-2">
@@ -181,90 +189,6 @@ export default function Esemeneink() {
         {showImageModal && imageSrc && (
           <motion.div
             className="fixed inset-0 z-50 flex items-center justify-center bg-black/90"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setShowImageModal(false)}
-          >
-            <motion.img
-              src={imageSrc}
-              className="max-w-full max-h-[80vh] rounded-3xl shadow-2xl"
-              initial={{ scale: 0.95 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.95 }}
-            />
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </main>
-  );
-}
-              &lt;
-            </button>
-            {Array.from({ length: totalPages }, (_, i) => (
-              <button
-                key={i + 1}
-                className={`px-3 py-1 rounded-full border font-bold ${currentPage === i + 1 ? 'bg-blue-700 text-white border-blue-700' : 'bg-white text-blue-700 border-blue-200 hover:bg-blue-50'}`}
-                onClick={() => setCurrentPage(i + 1)}
-              >
-                {i + 1}
-              </button>
-            ))}
-            <button
-              className="px-3 py-1 rounded-full border bg-white text-blue-700 font-bold disabled:opacity-50"
-              onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-              disabled={currentPage === totalPages}
-            >
-              &gt;
-            </button>
-          </div>
-        )}
-      </section>
-
-      {/* Event Modal */}
-      <AnimatePresence>
-        {showModal && selected && (
-          <motion.div
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setShowModal(false)}
-          >
-            <motion.div
-              className="bg-white rounded-3xl shadow-2xl p-8 max-w-md w-full overflow-y-auto"
-              initial={{ scale: 0.95, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.95, opacity: 0 }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              {selected.image && (
-                <img
-                  src={selected.image}
-                  alt={selected.title}
-                  className="w-full rounded-2xl mb-4"
-                />
-              )}
-              <h2 className="text-2xl font-bold text-blue-900 mb-2">{selected.title}</h2>
-              <p className="text-gray-500 mb-2">
-                {new Date(selected.date).toLocaleDateString("hu-HU", {
-                  year: "numeric",
-                  month: "short",
-                  day: "numeric",
-                })}
-              </p>
-              {selected.location && <p className="text-gray-700 mb-2">📍 {selected.location}</p>}
-              {selected.description && <p className="text-gray-800">{selected.description}</p>}
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Image Lightbox */}
-      <AnimatePresence>
-        {showImageModal && imageSrc && (
-          <motion.div
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/80"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
