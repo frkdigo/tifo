@@ -125,47 +125,45 @@ export default function Esemeneink() {
   }
 
   return (
-    <main className="min-h-screen bg-black text-white">
-      {/* HERO szekció */}
-      <section
-        className="relative flex flex-col items-center justify-center min-h-[60vh] w-full text-center overflow-hidden bg-gradient-to-b from-[#0a2259] via-[#0a2259] to-black"
-      >
-        {/* Sötétkék háttér, nincs háttérkép */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0a2259] via-[#0a2259] to-black z-0" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/60 to-black/90 z-10" />
-        <div className="relative z-20 flex flex-col items-center justify-center py-24 px-4">
-          <h1 className="text-5xl md:text-6xl font-black tracking-tight mb-4 drop-shadow-lg text-white uppercase">
-            Eseményeink
-          </h1>
-          <p className="text-lg md:text-2xl font-medium text-white/80 mb-8 max-w-2xl mx-auto drop-shadow">
-            Fedezd fel a legjobb bulikat, programokat és rendezvényeket!<br />
-            Válassz, és éld át a felejthetetlen élményeket!
-          </p>
-        </div>
-      </section>
+    <main className="relative overflow-hidden bg-white text-black">
+      <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_18%_8%,rgba(15,23,42,0.22),transparent_40%),linear-gradient(180deg,#020617_0%,#020617_34%,#f6f9fc_34%,#ffffff_100%)]" />
 
-      {/* Események lista */}
-      <section className="max-w-6xl mx-auto px-4 py-10">
-        {loading ? (
-          <p className="text-gray-500 text-center">Betöltés...</p>
-        ) : error ? (
-          <p className="text-red-500 text-center">{error}</p>
-        ) : (
-          <ul className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {events.map((event) => (
-              <EventCard
-                key={event.id}
-                event={event}
-                onSelect={() => setActiveEvent(event)}
-                onShowImage={() => {
-                  if (event.image) {
-                    setActiveEvent(event);
-                  }
-                }}
-              />
-            ))}
-          </ul>
-        )}
+      <section className="max-w-6xl mx-auto px-4 pt-10 md:pt-14 pb-8">
+        <div className="relative overflow-hidden rounded-3xl border border-white/15 bg-slate-950 shadow-[0_30px_70px_-40px_rgba(0,0,0,0.65)] p-8 md:p-12 text-center">
+          <div className="absolute inset-0 opacity-80 pointer-events-none" aria-hidden="true" style={{ background: 'radial-gradient(circle at 14% -6%, rgba(135,206,235,0.22), transparent 28%), radial-gradient(circle at 88% 8%, rgba(40,167,69,0.18), transparent 25%), radial-gradient(circle at 52% 120%, rgba(13,59,102,0.35), transparent 40%)' }} />
+          <div className="relative">
+            <p className="inline-flex items-center gap-2 rounded-full bg-white/15 text-white text-xs tracking-[0.18em] uppercase px-5 py-2.5 mb-6 shadow-lg shadow-black/20">
+              Törökbálinti Ifjúsági Önkormányzat
+            </p>
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-black leading-tight text-white">Eseményeink</h1>
+            <p className="mt-5 text-white/90 text-lg md:text-xl max-w-3xl leading-[1.58] mx-auto">
+              Fedezd fel a legjobb bulikat, programokat és rendezvényeket! Válassz, és éld át a felejthetetlen élményeket!
+            </p>
+
+            <div className="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {loading ? (
+                <p className="text-white/70 col-span-full text-center">Betöltés...</p>
+              ) : error ? (
+                <p className="text-red-400 col-span-full text-center">{error}</p>
+              ) : events.length === 0 ? (
+                <p className="text-white/70 col-span-full text-center">Nincs esemény.</p>
+              ) : (
+                events.map((event) => (
+                  <EventCard
+                    key={event.id}
+                    event={event}
+                    onSelect={() => setActiveEvent(event)}
+                    onShowImage={() => {
+                      if (event.image) {
+                        setActiveEvent(event);
+                      }
+                    }}
+                  />
+                ))
+              )}
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* Modal */}
