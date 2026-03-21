@@ -26,7 +26,7 @@ export default function Navbar() {
   const [loading, setLoading] = useState(false);
 
   return (
-    <nav className="sticky top-0 z-[100] bg-black shadow-lg min-h-[64px] flex items-center transition-all duration-300">
+    <nav className="header-animated sticky top-0 z-[100] bg-black shadow-lg min-h-[64px] flex items-center transition-all duration-300">
       {/* Töltőképernyő overlay */}
       {loading && (
         <div className="fixed inset-0 bg-white bg-opacity-70 flex items-center justify-center z-[9999]">

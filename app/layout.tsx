@@ -5,6 +5,7 @@ import { Inter, Plus_Jakarta_Sans } from 'next/font/google'
 import Navbar from './components/Navbar'
 import { AuthProvider } from './components/AuthProvider'
 import Footer from './components/Footer'
+import MobileAnimationGuard from './components/MobileAnimationGuard'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' })
 const jakarta = Plus_Jakarta_Sans({
@@ -38,11 +39,13 @@ export default function RootLayout({
       <body className={`${inter.variable} ${jakarta.variable} ${inter.className} min-h-screen text-slate-900 flex flex-col`} style={{ background: 'linear-gradient(180deg, #d6f0ff 0%, #ffffff 100%)' }}>
         <div className="site-bg-layer" aria-hidden="true" />
         <AuthProvider>
-          <div className="relative z-10 flex flex-col min-h-screen">
-            <Navbar />
-            <main className="flex-1 flex flex-col">{children}</main>
-            <Footer />
-          </div>
+          <MobileAnimationGuard>
+            <div className="relative z-10 flex flex-col min-h-screen">
+              <Navbar />
+              <main className="flex-1 flex flex-col">{children}</main>
+              <Footer />
+            </div>
+          </MobileAnimationGuard>
         </AuthProvider>
       </body>
     </html>
