@@ -16,7 +16,6 @@ type TeamMember = {
 
 export default function Rolunk() {
   const { user } = useAuth();
-  const [isMobile, setIsMobile] = useState(false);
   const [team, setTeam] = useState<TeamMember[]>([]);
   const [activeMember, setActiveMember] = useState<TeamMember | null>(null);
   const [loading, setLoading] = useState(true);
@@ -45,18 +44,6 @@ export default function Rolunk() {
   ];
 
   const isAdmin = !!user?.isAdmin;
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(max-width: 767px)");
-    const syncMobileState = () => setIsMobile(mediaQuery.matches);
-
-    syncMobileState();
-    mediaQuery.addEventListener("change", syncMobileState);
-
-    return () => {
-      mediaQuery.removeEventListener("change", syncMobileState);
-    };
-  }, []);
 
   useEffect(() => {
     fetchTeam();
@@ -158,18 +145,18 @@ export default function Rolunk() {
   return (
     <motion.main
       className="relative overflow-hidden text-black"
-      initial={isMobile ? false : { opacity: 0, y: 40 }}
-      animate={isMobile ? undefined : { opacity: 1, y: 0 }}
-      transition={isMobile ? { duration: 0 } : { duration: 0.7, ease: "easeOut" }}
+      initial={{ opacity: 0, y: 40 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.7, ease: "easeOut" }}
     >
       {/* Háttér most már a layoutban, nincs szükség külön divre */}
 
       <motion.section
         className="max-w-6xl mx-auto px-4 pt-10 md:pt-14 pb-8"
-        initial={isMobile ? false : { opacity: 0, y: 40 }}
-        whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
-        viewport={isMobile ? undefined : { once: true, amount: 0.4 }}
-        transition={isMobile ? { duration: 0 } : { duration: 0.7, ease: "easeOut" }}
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.4 }}
+        transition={{ duration: 0.7, ease: "easeOut" }}
       >
         <div className="relative overflow-hidden rounded-3xl border border-white/15 bg-slate-950 shadow-[0_30px_70px_-40px_rgba(0,0,0,0.65)] p-8 md:p-12 text-center">
           <div className="absolute inset-0 opacity-80 pointer-events-none" aria-hidden="true" style={{ background: 'radial-gradient(circle at 14% -6%, rgba(135,206,235,0.22), transparent 28%), radial-gradient(circle at 88% 8%, rgba(40,167,69,0.18), transparent 25%), radial-gradient(circle at 52% 120%, rgba(13,59,102,0.35), transparent 40%)' }} />
@@ -207,10 +194,10 @@ export default function Rolunk() {
 
       <motion.section
         className="max-w-6xl mx-auto px-4 py-10"
-        initial={isMobile ? false : { opacity: 0, y: 40 }}
-        whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
-        viewport={isMobile ? undefined : { once: true, amount: 0.4 }}
-        transition={isMobile ? { duration: 0 } : { duration: 0.7, ease: "easeOut", delay: 0.15 }}
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.4 }}
+        transition={{ duration: 0.7, ease: "easeOut", delay: 0.15 }}
       >
         <p className="section-label">Értékeink</p>
         <h2 className="text-3xl md:text-4xl font-black text-tifo-dark mb-6">Mit képviselünk?</h2>
@@ -219,10 +206,10 @@ export default function Rolunk() {
             <motion.article
               key={value.title}
               className="group rounded-2xl border border-gray-200 bg-white p-6 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
-              initial={isMobile ? false : { opacity: 0, y: 30 }}
-              whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
-              viewport={isMobile ? undefined : { once: true, amount: 0.3 }}
-              transition={isMobile ? { duration: 0 } : { duration: 0.5, delay: 0.1 + i * 0.12, ease: "easeOut" }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.5, delay: 0.1 + i * 0.12, ease: "easeOut" }}
             >
               <div className="w-12 h-12 rounded-2xl bg-gray-50 border border-gray-200 grid place-items-center text-2xl mb-5 group-hover:bg-[#87ceeb]/15 group-hover:border-[#87ceeb]/60 transition-colors">
                 {value.icon}
@@ -236,10 +223,10 @@ export default function Rolunk() {
 
       <motion.section
         className="max-w-6xl mx-auto px-4 py-10"
-        initial={isMobile ? false : { opacity: 0, y: 40 }}
-        whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
-        viewport={isMobile ? undefined : { once: true, amount: 0.4 }}
-        transition={isMobile ? { duration: 0 } : { duration: 0.7, ease: "easeOut", delay: 0.25 }}
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.4 }}
+        transition={{ duration: 0.7, ease: "easeOut", delay: 0.25 }}
       >
         <div className="relative overflow-hidden rounded-3xl border border-slate-200 p-8 md:p-12 shadow-[0_24px_55px_-35px_rgba(13,59,102,0.35)] bg-[linear-gradient(180deg,#ffffff_0%,#f7fbff_42%,#f8fff9_100%)]">
           <div className="absolute inset-0 opacity-80 pointer-events-none" aria-hidden="true" style={{ background: 'radial-gradient(circle at 8% 0%, rgba(135,206,235,0.16), transparent 24%), radial-gradient(circle at 92% 12%, rgba(40,167,69,0.12), transparent 22%), radial-gradient(circle at 50% 100%, rgba(13,59,102,0.08), transparent 30%)' }} />
@@ -261,10 +248,10 @@ export default function Rolunk() {
                 <motion.li
                   key={member.id}
                   className="h-full"
-                  initial={isMobile ? false : { opacity: 0, y: 30 }}
-                  whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
-                  viewport={isMobile ? undefined : { once: true, amount: 0.3 }}
-                  transition={isMobile ? { duration: 0 } : { duration: 0.5, delay: 0.1 + i * 0.09, ease: "easeOut" }}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{ duration: 0.5, delay: 0.1 + i * 0.09, ease: "easeOut" }}
                 >
                   <div
                     className="group relative w-full h-full text-left rounded-[1.5rem] overflow-hidden bg-[linear-gradient(180deg,#ffffff_0%,#f8fbff_58%,#f7fff8_100%)] border border-slate-200/90 p-5 md:p-6 shadow-[0_16px_35px_-26px_rgba(15,23,42,0.4)] hover:shadow-[0_24px_45px_-24px_rgba(13,59,102,0.28)] hover:border-[#87ceeb]/70 hover:-translate-y-1 transition-all duration-200"
