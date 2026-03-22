@@ -19,6 +19,15 @@ export default function Rolunk() {
   const [team, setTeam] = useState<TeamMember[]>([]);
   const [activeMember, setActiveMember] = useState<TeamMember | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 767px)");
+    setIsMobile(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
   const [editing, setEditing] = useState(false);
   const [draftBio, setDraftBio] = useState("");
   const [draftImage, setDraftImage] = useState<string | null>(null);
@@ -248,10 +257,12 @@ export default function Rolunk() {
                 <motion.li
                   key={member.id}
                   className="h-full"
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.3 }}
-                  transition={{ duration: 0.5, delay: 0.1 + i * 0.09, ease: "easeOut" }}
+                  {...(!isMobile && {
+                    initial: { opacity: 0, y: 30 },
+                    whileInView: { opacity: 1, y: 0 },
+                    viewport: { once: true, amount: 0.3 },
+                    transition: { duration: 0.5, delay: 0.1 + i * 0.09, ease: "easeOut" },
+                  })}
                 >
                   <div
                     className="group relative w-full h-full text-left rounded-[1.5rem] overflow-hidden bg-[linear-gradient(180deg,#ffffff_0%,#f8fbff_58%,#f7fff8_100%)] border border-slate-200/90 p-5 md:p-6 shadow-[0_16px_35px_-26px_rgba(15,23,42,0.4)] hover:shadow-[0_24px_45px_-24px_rgba(13,59,102,0.28)] hover:border-[#87ceeb]/70 hover:-translate-y-1 transition-all duration-200"
