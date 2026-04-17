@@ -219,9 +219,20 @@ export default function Esemeneink() {
                 />
               )}
               <div className="p-3 sm:p-6 overflow-y-auto flex-1 min-h-0">
-                <h2 className="text-lg sm:text-2xl font-bold mb-1">{activeEvent.title}</h2>
-                <p className="text-xs sm:text-sm text-gray-500 mb-2">{new Date(activeEvent.date).toLocaleDateString("hu-HU")}</p>
-                <p className="text-gray-700 text-sm sm:text-base">{activeEvent.description}</p>
+                <h2 className="text-lg sm:text-2xl font-bold mb-2">{activeEvent.title}</h2>
+                <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-3">
+                  <span className="text-xs sm:text-sm text-gray-500">{new Date(activeEvent.date).toLocaleDateString("hu-HU")}</span>
+                  {activeEvent.location && (
+                    <span className="text-xs sm:text-sm text-gray-400 sm:ml-4">Helyszín: {activeEvent.location}</span>
+                  )}
+                </div>
+                {activeEvent.description && (
+                  <div className="prose prose-sm sm:prose-base max-w-none text-gray-800">
+                    {activeEvent.description.split('\n').map((line, idx) => (
+                      <p key={idx} className="mb-2 last:mb-0">{line}</p>
+                    ))}
+                  </div>
+                )}
               </div>
             </motion.div>
           </motion.div>
