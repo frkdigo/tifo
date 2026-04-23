@@ -135,7 +135,13 @@ function AdminPageContent() {
                           <span className="text-xs text-slate-500">{getPostCreatedAt(post)}</span>
                         </div>
                       </div>
-                      {post.image && (
+                      {post.mediaType === "video" && post.media && (
+                        <video src={post.media} controls className="max-h-20 rounded mt-1 mb-1 w-full" style={{objectFit:'contain', maxWidth:'100%'}} />
+                      )}
+                      {post.mediaType === "image" && post.media && (
+                        <img src={post.media} alt="post" className="max-h-20 rounded mt-1 mb-1" style={{objectFit:'contain', maxWidth:'100%'}} />
+                      )}
+                      {!post.media && post.image && (
                         <img src={post.image} alt="post" className="max-h-20 rounded mt-1 mb-1" style={{objectFit:'contain', maxWidth:'100%'}} />
                       )}
                       <p className="text-sm text-slate-700 max-h-16 overflow-hidden">{post.text}</p>
@@ -198,7 +204,13 @@ function AdminPageContent() {
                 <p className="text-xs text-slate-500">{getPostCreatedAt(selectedPost)}</p>
               </div>
             </div>
-            {selectedPost.image && (
+            {selectedPost.mediaType === "video" && selectedPost.media && (
+              <video src={selectedPost.media} controls className="w-full max-h-72 object-contain rounded-lg border border-slate-200 mb-4" />
+            )}
+            {selectedPost.mediaType === "image" && selectedPost.media && (
+              <img src={selectedPost.media} alt="Poszt képe" className="w-full max-h-72 object-contain rounded-lg border border-slate-200 mb-4" />
+            )}
+            {!selectedPost.media && selectedPost.image && (
               <img src={selectedPost.image} alt="Poszt képe" className="w-full max-h-72 object-contain rounded-lg border border-slate-200 mb-4" />
             )}
             <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 text-slate-800 whitespace-pre-line">
