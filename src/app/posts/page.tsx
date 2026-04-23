@@ -7,7 +7,8 @@ export default function PostsPage() {
   const { user } = useAuth();
   const [posts, setPosts] = useState<any[]>([]);
   const [text, setText] = useState("");
-  const [image, setImage] = useState<string | null>(null);
+  const [media, setMedia] = useState<string | null>(null);
+  const [mediaType, setMediaType] = useState<"image" | "video" | null>(null);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(true);
@@ -15,10 +16,12 @@ export default function PostsPage() {
   function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
+    const isVideo = file.type.startsWith("video/");
+    setMediaType(isVideo ? "video" : "image");
     const reader = new FileReader();
     reader.onload = () => {
       if (typeof reader.result === "string") {
-        setImage(reader.result);
+        setMedia(reader.result);
       }
     };
     reader.readAsDataURL(file);
@@ -52,14 +55,15 @@ export default function PostsPage() {
     const res = await fetch("/api/posts", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text, email: user.email, image }),
+      body: JSON.stringify({ text, email: user.email, media, mediaType }),
     });
     if (!res.ok) {
       setError("Hiba történt a poszt létrehozásakor.");
     } else {
       setSuccess("A poszt elküldve, jóváhagyásra vár!");
       setText("");
-      setImage(null);
+      setMedia(null);
+      setMediaType(null);
       fetchPosts();
     }
   }
@@ -86,15 +90,19 @@ export default function PostsPage() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-2">Kép feltöltése</label>
+            <label className="block text-sm font-medium mb-2">Kép vagy videó feltöltése</label>
             <div className="flex items-center gap-4">
               <label className="cursor-pointer bg-primary text-white px-4 py-2 rounded shadow hover:bg-secondary transition-colors">
                 Fájl kiválasztása
-                <input type="file" accept="image/*" onChange={handleFileChange} className="hidden" />
+                <input type="file" accept="image/*,video/*" onChange={handleFileChange} className="hidden" />
               </label>
-              {image && (
+              {media && (
                 <div className="bg-gray-100 rounded-lg shadow p-2 flex items-center">
-                  <img src={image} alt="Előnézet" className="h-20 w-20 object-cover rounded mr-2 border" />
+                  {mediaType === "image" ? (
+                    <img src={media} alt="Előnézet" className="h-20 w-20 object-cover rounded mr-2 border" />
+                  ) : (
+                    <video src={media} controls className="h-20 w-20 rounded mr-2 border" />
+                  )}
                   <span className="text-xs text-gray-500">Előnézet</span>
                 </div>
               )}
@@ -124,7 +132,11 @@ export default function PostsPage() {
                 </div>
               </div>
               <div className="font-medium">{post.text}</div>
-              {post.image && <img src={post.image} alt="Poszt kép" className="mt-3 rounded border max-h-72 w-auto" />}
+              {post.mediaType === "video" && post.media ? (
+                <video src={post.media} controls className="mt-3 rounded border max-h-72 w-auto" />
+              ) : post.mediaType === "image" && post.media ? (
+                <img src={post.media} alt="Poszt kép" className="mt-3 rounded border max-h-72 w-auto" />
+              ) : null}
               <div className="text-xs text-gray-400 mt-1">{post.createdAt}</div>
             </li>
           ))}

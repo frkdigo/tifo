@@ -7,7 +7,9 @@ import { uploadImageToStorage } from "../../lib/uploadImageToStorage";
 type Post = {
   id: string;
   text: string;
-  image?: string | null;
+  media?: string | null;
+  mediaType?: "image" | "video" | null;
+  image?: string | null; // visszafelé kompatibilitás
   createdAt?: string;
   created_at?: string;
   authorName?: string;
@@ -25,8 +27,9 @@ export default function PostsSection() {
   const { user } = useAuth();
   const [posts, setPosts] = useState<Post[]>([]);
   const [text, setText] = useState("");
-  const [imageFile, setImageFile] = useState<File | null>(null);
-  const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const [file, setFile] = useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [previewType, setPreviewType] = useState<"image" | "video" | null>(null);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -57,11 +60,12 @@ export default function PostsSection() {
   function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
-    setImageFile(file);
-
+    setFile(file);
+    const isVideo = file.type.startsWith("video/");
+    setPreviewType(isVideo ? "video" : "image");
     const reader = new FileReader();
     reader.onload = () => {
-      if (typeof reader.result === "string") setImageUrl(reader.result);
+      if (typeof reader.result === "string") setPreviewUrl(reader.result);
     };
     reader.readAsDataURL(file);
   }
@@ -93,22 +97,26 @@ export default function PostsSection() {
       return;
     }
 
-    let imageUrlToSend: string | null = null;
+    let mediaUrlToSend: string | null = null;
+    let mediaTypeToSend: "image" | "video" | null = null;
     try {
       setLoading(true);
-      if (imageFile) imageUrlToSend = await uploadImageToStorage(imageFile, user.id);
-
+      if (file) {
+        mediaUrlToSend = await uploadImageToStorage(file, user.id);
+        mediaTypeToSend = previewType;
+      }
       const res = await fetch("/api/posts", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text, image: imageUrlToSend, email: user.email }),
+        body: JSON.stringify({ text, media: mediaUrlToSend, mediaType: mediaTypeToSend, email: user.email }),
       });
       if (!res.ok) throw new Error();
 
       setSuccess("Poszt elküldve!");
       setText("");
-      setImageFile(null);
-      setImageUrl(null);
+      setFile(null);
+      setPreviewUrl(null);
+      setPreviewType(null);
       fetchPosts();
     } catch {
       setError("Hiba történt a feltöltéskor.");
@@ -175,17 +183,26 @@ export default function PostsSection() {
             <div className="flex flex-col items-start gap-2">
               <label className="inline-block cursor-pointer">
                 <span className="bg-blue-900 text-white px-6 py-2.5 rounded-full font-semibold hover:bg-blue-800 transition-colors inline-block">Fájl kiválasztása</span>
-                <input type="file" accept="image/*" onChange={handleFileChange} className="hidden" />
+                <input type="file" accept="image/*,video/*" onChange={handleFileChange} className="hidden" />
               </label>
-              {imageUrl && (
-                <img
-                  src={imageUrl}
-                  alt="Kép előnézet"
-                  className="mt-2 rounded-2xl shadow max-h-32 border border-slate-200"
-                  style={{ objectFit: "contain", maxWidth: 180 }}
-                  loading="lazy"
-                  decoding="async"
-                />
+              {previewUrl && (
+                previewType === "image" ? (
+                  <img
+                    src={previewUrl}
+                    alt="Előnézet"
+                    className="mt-2 rounded-2xl shadow max-h-32 border border-slate-200"
+                    style={{ objectFit: "contain", maxWidth: 180 }}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ) : (
+                  <video
+                    src={previewUrl}
+                    controls
+                    className="mt-2 rounded-2xl shadow max-h-32 border border-slate-200"
+                    style={{ objectFit: "contain", maxWidth: 180 }}
+                  />
+                )
               )}
             </div>
             <div className="flex gap-2 flex-wrap rounded-2xl bg-slate-50 border border-slate-200 p-3">
@@ -245,7 +262,24 @@ export default function PostsSection() {
                   </div>
                 </div>
                 <div className="text-slate-700 mb-3 line-clamp-4 leading-[1.58] flex-1">{post.text}</div>
-                {post.image && (
+                {post.mediaType === "video" && post.media ? (
+                  <video
+                    src={post.media}
+                    controls
+                    className="max-h-48 w-full rounded-2xl mt-1 border border-slate-200 object-contain bg-slate-50"
+                    style={{ maxWidth: '100%' }}
+                  />
+                ) : post.mediaType === "image" && post.media ? (
+                  <img
+                    src={post.media}
+                    alt="post"
+                    className="max-h-48 w-full rounded-2xl mt-1 border border-slate-200 object-contain bg-slate-50 cursor-pointer"
+                    style={{ maxWidth: '100%' }}
+                    loading="lazy"
+                    decoding="async"
+                    onClick={() => handleImageClick(post.media!)}
+                  />
+                ) : post.image ? (
                   <img
                     src={post.image}
                     alt="post"
@@ -255,7 +289,7 @@ export default function PostsSection() {
                     decoding="async"
                     onClick={() => handleImageClick(post.image!)}
                   />
-                )}
+                ) : null}
                 {user && (
                   <div className="flex flex-col gap-2 mt-4">
                     <button
@@ -335,7 +369,30 @@ export default function PostsSection() {
             <div className="rounded-2xl border border-slate-200 bg-slate-50 p-6 text-slate-800 whitespace-pre-line text-lg font-medium leading-[1.58] shadow-sm mb-4">
               {selectedPost.text || "Nincs szöveg."}
             </div>
-            {selectedPost.image && (
+            {selectedPost.mediaType === "video" && selectedPost.media && (
+              <div className="flex justify-center">
+                <video
+                  src={selectedPost.media}
+                  controls
+                  className="max-h-96 rounded-2xl border border-slate-200 shadow-lg mt-2 object-contain bg-slate-50"
+                  style={{ maxWidth: '100%' }}
+                />
+              </div>
+            )}
+            {selectedPost.mediaType === "image" && selectedPost.media && (
+              <div className="flex justify-center">
+                <img
+                  src={selectedPost.media}
+                  alt="Poszt képe"
+                  className="max-h-96 rounded-2xl border border-slate-200 shadow-lg mt-2 object-contain bg-slate-50 cursor-pointer"
+                  style={{ maxWidth: '100%' }}
+                  loading="lazy"
+                  decoding="async"
+                  onClick={() => setSelectedImage(selectedPost.media!)}
+                />
+              </div>
+            )}
+            {!selectedPost.media && selectedPost.image && (
               <div className="flex justify-center">
                 <img
                   src={selectedPost.image}

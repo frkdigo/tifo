@@ -28,6 +28,9 @@ export async function GET(req: NextRequest) {
         authorName: user?.nickname || user?.name || '',
         authorProfileImage: user?.profileImage || null,
         authorEmail: user?.email || null,
+        // kompatibilitás kedvéért image/media mezők
+        media: post.media || post.image || null,
+        mediaType: post.mediaType || (post.image ? "image" : null),
       };
     })
   );
@@ -67,7 +70,7 @@ export async function PATCH(req: NextRequest) {
 // POST: új poszt létrehozása (bejelentkezett user kell)
 export async function POST(req: NextRequest) {
   try {
-    const { text, image, email } = await req.json();
+    const { text, media, mediaType, email } = await req.json();
     if (!email) {
       return NextResponse.json({ error: 'Nincs email, nem vagy bejelentkezve.' }, { status: 401 });
     }
@@ -82,7 +85,7 @@ export async function POST(req: NextRequest) {
     }
     const { data: insertData, error: insertError } = await supabase
       .from('posts')
-      .insert({ userId: user.id, text, image, status: 'pending' })
+      .insert({ userId: user.id, text, media, mediaType, status: 'pending' })
       .select()
       .single();
     if (insertError) {
