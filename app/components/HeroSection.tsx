@@ -50,15 +50,15 @@ export default function HeroSection() {
       {/* Gradient overlay */}
       <div className="absolute inset-0 z-10 bg-gradient-to-b from-black/20 via-black/40 to-black/65" aria-hidden="true" />
 
-      <div className="relative z-20 w-full flex flex-col items-center justify-center py-28 px-4">
+      <div className="relative z-20 w-full flex flex-col items-center justify-center py-32 px-4 md:py-40">
         {/* Live badge */}
-        <span className="hero-badge mb-8">
+        <span className="hero-badge mb-10">
           <span className="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
           Törökbálint &bull; Ifjúsági Önkormányzat
         </span>
 
         <motion.h1
-          className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-black text-white leading-[0.92] tracking-tight mb-6 drop-shadow-2xl"
+          className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-black text-white dark:text-white leading-[0.92] tracking-tight mb-8 drop-shadow-2xl"
           initial={{ opacity: 0, y: 60 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, ease: "easeOut" }}
@@ -68,11 +68,11 @@ export default function HeroSection() {
           Önkormányzat
         </motion.h1>
 
-        <p className="text-lg md:text-xl mb-10 text-white/80 max-w-xl font-medium leading-relaxed">
+        <p className="text-lg md:text-2xl mb-14 text-white/80 dark:text-white/80 max-w-xl font-medium leading-relaxed">
           Fiatalokért, közösségben, Törökbálinton
         </p>
 
-        <div className="flex flex-col sm:flex-row gap-4 items-center">
+        <div className="flex flex-col sm:flex-row gap-5 items-center">
           <a
             href="/kapcsolat"
             className="inline-flex items-center gap-2 bg-blue-900 text-white font-black px-8 py-4 rounded-full shadow-xl hover:bg-blue-800 hover:scale-105 active:scale-95 transition-all duration-200 text-base tracking-tight"

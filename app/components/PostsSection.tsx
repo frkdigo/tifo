@@ -235,7 +235,7 @@ export default function PostsSection() {
         )}
 
         {/* POSTS */}
-        <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-5 items-stretch">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 md:gap-8 xl:gap-10 items-stretch">
           {loading ? null : posts.length === 0 ? (
             <div className="text-gray-500 md:col-span-2 xl:col-span-3">Még nincsenek posztok.</div>
           ) : (

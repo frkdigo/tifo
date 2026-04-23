@@ -78,16 +78,16 @@ export default function Esemeneink() {
   }
 
   return (
-    <main className="max-w-6xl mx-auto px-4 py-8">
+    <main className="max-w-7xl mx-auto px-2 sm:px-4 py-8 md:py-12">
 
       {/* HERO CARD */}
       <motion.section
-        className="w-full px-0 pt-10 md:pt-14 pb-8"
+        className="w-full px-0 pt-8 md:pt-14 pb-8"
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, ease: [0.4, 0.2, 0.2, 1] }}
       >
-        <div className="relative overflow-hidden rounded-3xl border border-white/15 bg-slate-950 shadow-[0_30px_70px_-40px_rgba(0,0,0,0.65)] p-8 md:p-12 mx-4 md:mx-0">
+        <div className="relative overflow-hidden rounded-3xl border border-white/15 bg-slate-950 shadow-[0_30px_70px_-40px_rgba(0,0,0,0.65)] p-6 md:p-12 mx-0">
           <div className="absolute inset-0 opacity-80 pointer-events-none" aria-hidden="true" style={{ background: 'radial-gradient(circle at 14% -6%, rgba(135,206,235,0.22), transparent 28%), radial-gradient(circle at 88% 8%, rgba(40,167,69,0.18), transparent 25%), radial-gradient(circle at 52% 120%, rgba(13,59,102,0.35), transparent 40%)' }} />
           <div className="relative flex flex-col md:flex-row md:items-center md:justify-between gap-8 md:gap-0">
             <div className="md:text-left text-center md:max-w-xl flex-1">
@@ -120,7 +120,7 @@ export default function Esemeneink() {
       {/* KIEMELT ESEMÉNY */}
       {featuredEvent && (
         <motion.section
-          className="mb-10"
+          className="mb-12"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.6 }}
@@ -128,7 +128,7 @@ export default function Esemeneink() {
         >
           <div
             onClick={() => setActiveEvent(featuredEvent)}
-            className="cursor-pointer rounded-3xl overflow-hidden border border-gray-200 bg-white shadow-md grid md:grid-cols-2 min-h-[220px]"
+            className="cursor-pointer rounded-3xl overflow-hidden border border-slate-200 bg-white dark:bg-slate-900 shadow-[0_16px_40px_-18px_rgba(56,189,248,0.10)] grid md:grid-cols-2 min-h-[220px] group hover:scale-[1.015] transition-transform duration-200"
             style={{ minHeight: 220 }}
           >
             {/* Bal oldalt: kép, overlay csak label, cím, dátum */}
@@ -137,8 +137,10 @@ export default function Esemeneink() {
                 <>
                   <img
                     src={featuredEvent.image}
-                    className="w-full h-full object-cover object-center"
+                    className="w-full h-full object-cover object-center group-hover:brightness-95 transition-all duration-200"
                     alt={featuredEvent.title}
+                    loading="lazy"
+                    decoding="async"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
                   <div className="absolute bottom-0 left-0 w-full p-6 md:p-8 flex flex-col gap-1">
@@ -150,9 +152,9 @@ export default function Esemeneink() {
               )}
             </div>
             {/* Jobb oldalt: csak leírás és gomb */}
-            <div className="flex flex-col justify-center p-6 md:p-8 bg-white">
-              <p className="text-gray-700 mb-6 line-clamp-5 leading-[1.6]">{featuredEvent.description}</p>
-              <button className="bg-blue-900 text-white font-bold px-6 py-2 rounded-[16px] hover:bg-blue-800 transition w-full text-base mt-auto">
+            <div className="flex flex-col justify-center p-6 md:p-8 bg-white dark:bg-slate-900">
+              <p className="text-slate-700 dark:text-slate-200 mb-6 line-clamp-5 leading-[1.6]">{featuredEvent.description}</p>
+              <button className="bg-blue-900 text-white font-bold px-6 py-2 rounded-2xl hover:bg-blue-800 transition w-full text-base mt-auto shadow-sm">
                 Érdekel
               </button>
             </div>
@@ -161,12 +163,12 @@ export default function Esemeneink() {
       )}
 
       {/* KÖZELGŐ ESEMÉNYEK */}
-      <section className="mb-10">
-        <h2 className="text-xl font-bold mb-4">További események</h2>
+      <section className="mb-14">
+        <h2 className="text-lg md:text-2xl font-extrabold mb-4 text-slate-900 dark:text-white tracking-tight">További események</h2>
         {loading ? (
           <p className="text-gray-500">Betöltés...</p>
         ) : (
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7 md:gap-8 xl:gap-10">
             {upcoming.slice(1).map((event) => (
               <EventCard key={event.id} event={event} />
             ))}
@@ -176,11 +178,11 @@ export default function Esemeneink() {
 
       {/* KORÁBBI ESEMÉNYEK */}
       <section className="mb-10">
-        <h2 className="text-xl font-bold mb-2">Korábbi események</h2>
+        <h2 className="text-lg md:text-2xl font-extrabold mb-4 text-slate-900 dark:text-white tracking-tight">Korábbi események</h2>
         {past.length === 0 ? (
           <p className="text-gray-400">Még nincsenek korábbi események.</p>
         ) : (
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7 md:gap-8 xl:gap-10">
             {past.map((event) => (
               <EventCard key={event.id} event={event} />
             ))}
