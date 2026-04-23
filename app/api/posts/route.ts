@@ -25,8 +25,13 @@ export async function GET(req: NextRequest) {
     if (error) {
       throw new Error(error.message);
     }
-    // posts = data; // már a data-ban van
-    return NextResponse.json(data || [], {
+    // Egységes media/mediaType mezők hozzáadása
+    const posts = (data || []).map(post => ({
+      ...post,
+      media: post.media || post.image || null,
+      mediaType: post.mediaType || (post.image ? "image" : null),
+    }));
+    return NextResponse.json(posts, {
       headers: {
         'Cache-Control': 'no-store',
       },
@@ -70,7 +75,7 @@ export async function PATCH(req: NextRequest) {
 // POST: új poszt létrehozása (bejelentkezett user kell)
 export async function POST(req: NextRequest) {
   try {
-    const { text, image, email } = await req.json();
+    const { text, media, mediaType, image, email } = await req.json();
     if (!email) {
       return NextResponse.json({ error: 'Nincs email, nem vagy bejelentkezve.' }, { status: 401 });
     }
@@ -87,7 +92,7 @@ export async function POST(req: NextRequest) {
     // Supabase insert
     const { data: postData, error: postError } = await supabase
       .from('posts')
-      .insert([{ userId, text, image, status: 'pending' }])
+      .insert([{ userId, text, media: media || image || null, mediaType: mediaType || (image ? "image" : null), status: 'pending' }])
       .select('*')
       .single();
     if (postError || !postData) {
