@@ -36,7 +36,7 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/favicon.png" />
         <title>TIFO</title>
       </head>
-      <body className={`${inter.variable} ${jakarta.variable} ${inter.className} min-h-screen text-slate-900 flex flex-col`} style={{ background: 'linear-gradient(180deg, #d6f0ff 0%, #ffffff 100%)' }}>
+      <body className={`${inter.variable} ${jakarta.variable} ${inter.className} min-h-screen text-slate-900 flex flex-col`} style={{ backgroundColor: '#fff' }}>
         <div className="site-bg-layer" aria-hidden="true" />
         <AuthProvider>
           <MobileAnimationGuard>
