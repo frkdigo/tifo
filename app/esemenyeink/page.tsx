@@ -87,8 +87,8 @@ export default function Esemeneink() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, ease: [0.4, 0.2, 0.2, 1] }}
       >
-        <div className="relative overflow-hidden rounded-3xl border border-white/15 bg-blue-900 shadow-[0_30px_70px_-40px_rgba(0,0,0,0.65)] p-6 md:p-12 mx-0">
-          <div className="absolute inset-0 opacity-80 pointer-events-none" aria-hidden="true" style={{ background: 'rgba(30, 64, 175, 0.85)' }} />
+        <div className="relative overflow-hidden rounded-3xl border border-white/15 bg-[#0a174e] shadow-[0_30px_70px_-40px_rgba(0,0,0,0.65)] p-6 md:p-12 mx-0">
+          <div className="absolute inset-0 opacity-80 pointer-events-none" aria-hidden="true" style={{ background: '#0a174e' }} />
           <div className="relative flex flex-col md:flex-row md:items-center md:justify-between gap-8 md:gap-0">
             <div className="md:text-left text-center md:max-w-xl flex-1">
               <p className="inline-flex items-center gap-2 rounded-full bg-white/15 text-white text-xs tracking-[0.18em] uppercase px-5 py-2.5 mb-6 shadow-lg shadow-black/20">
@@ -152,7 +152,7 @@ export default function Esemeneink() {
               )}
             </div>
             {/* Jobb oldalt: csak leírás és gomb */}
-            <div className="flex flex-col justify-center p-6 md:p-8 bg-white dark:bg-slate-900">
+            <div className="flex flex-col justify-center p-6 md:p-8 bg-white">
               <p className="text-slate-700 dark:text-slate-200 mb-6 line-clamp-5 leading-[1.6]">{featuredEvent.description}</p>
               <button className="bg-black text-white font-bold px-6 py-2 rounded-2xl hover:bg-neutral-800 transition w-full text-base mt-auto shadow-sm">
                 Érdekel
