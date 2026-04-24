@@ -102,7 +102,7 @@ export default function NewEventForm({ onCreated }: { onCreated?: () => void }) 
       <div className="flex flex-col items-start gap-1">
         <span className="text-sm font-medium text-slate-700">Kép feltöltése</span>
         <label className="inline-block cursor-pointer">
-          <span className="bg-slate-900 text-white px-6 py-2 rounded-full font-semibold hover:bg-slate-800 transition-colors inline-block">Fájl kiválasztása</span>
+          <span className="bg-black text-white px-6 py-2 rounded-full font-semibold hover:bg-neutral-800 transition-colors inline-block">Fájl kiválasztása</span>
           <input type="file" accept="image/*" onChange={handleFileChange} className="hidden" />
         </label>
         {imageFile && <span className="text-xs text-slate-600 mt-1">{imageFile.name}</span>}
@@ -117,7 +117,7 @@ export default function NewEventForm({ onCreated }: { onCreated?: () => void }) 
       </div>
       <button
         type="submit"
-        className="bg-blue-900 text-white px-6 py-2 rounded-full font-semibold hover:bg-blue-800 transition-all duration-150 active:scale-95 active:brightness-90 mt-2 disabled:opacity-70 disabled:cursor-not-allowed"
+        className="bg-black text-white px-6 py-2 rounded-full font-semibold hover:bg-neutral-800 transition-all duration-150 active:scale-95 active:brightness-90 mt-2 disabled:opacity-70 disabled:cursor-not-allowed"
         disabled={loading}
       >
         {loading ? "Mentés..." : "Mentés"}

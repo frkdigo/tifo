@@ -311,7 +311,7 @@ export default function Rolunk() {
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-2">Kép feltöltése</label>
                   <div className="flex items-center gap-3 flex-wrap">
-                    <label className="cursor-pointer bg-slate-900 text-white px-4 py-2 rounded-lg hover:bg-slate-800 transition-colors">
+                    <label className="cursor-pointer bg-black text-white px-4 py-2 rounded-lg hover:bg-neutral-800 transition-colors">
                       Fájl kiválasztása
                       <input type="file" accept="image/*" onChange={onPickImage} className="hidden" />
                     </label>
@@ -335,7 +335,7 @@ export default function Rolunk() {
               {isAdmin && !editing && (
                 <button
                   type="button"
-                  className="bg-slate-900 text-white px-4 py-2 rounded-lg hover:bg-slate-800 transition-colors"
+                  className="bg-black text-white px-4 py-2 rounded-lg hover:bg-neutral-800 transition-colors"
                   onClick={() => setEditing(true)}
                 >
                   Szerkesztés
@@ -348,7 +348,7 @@ export default function Rolunk() {
                     type="button"
                     onClick={saveMember}
                     disabled={saving}
-                    className="bg-slate-900 text-white px-4 py-2 rounded-lg hover:bg-slate-800 transition-colors disabled:opacity-60"
+                    className="bg-black text-white px-4 py-2 rounded-lg hover:bg-neutral-800 transition-colors disabled:opacity-60"
                   >
                     {saving ? "Mentés..." : "Mentés"}
                   </button>

@@ -74,7 +74,7 @@ export default function AuthPage() {
         <button
           type="submit"
           disabled={submitting}
-          className="bg-secondary text-white font-semibold px-6 py-2 rounded hover:bg-primary transition-all duration-150 active:scale-95 active:brightness-90 disabled:opacity-70 disabled:cursor-not-allowed"
+          className="bg-black text-white font-semibold px-6 py-2 rounded hover:bg-neutral-800 transition-all duration-150 active:scale-95 active:brightness-90 disabled:opacity-70 disabled:cursor-not-allowed"
         >
           {submitting ? "Folyamatban..." : isLogin ? "Bejelentkezés" : "Regisztráció"}
         </button>
