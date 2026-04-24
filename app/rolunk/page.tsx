@@ -168,7 +168,7 @@ export default function Rolunk() {
         transition={{ duration: 0.7, ease: "easeOut" }}
       >
         <div className="relative overflow-hidden rounded-3xl border border-white/15 bg-slate-950 shadow-[0_30px_70px_-40px_rgba(0,0,0,0.65)] p-8 md:p-12 text-center">
-          <div className="absolute inset-0 opacity-80 pointer-events-none" aria-hidden="true" style={{ background: 'radial-gradient(circle at 14% -6%, rgba(135,206,235,0.22), transparent 28%), radial-gradient(circle at 88% 8%, rgba(40,167,69,0.18), transparent 25%), radial-gradient(circle at 52% 120%, rgba(13,59,102,0.35), transparent 40%)' }} />
+          <div className="absolute inset-0 opacity-80 pointer-events-none" aria-hidden="true" style={{ background: '#fff' }} />
           <div className="relative">
           <p className="inline-flex items-center gap-2 rounded-full bg-white/15 text-white text-xs tracking-[0.18em] uppercase px-5 py-2.5 mb-6 shadow-lg shadow-black/20">
             Törökbálinti Ifjúsági Önkormányzat
@@ -237,8 +237,8 @@ export default function Rolunk() {
         viewport={{ once: true, amount: 0.4 }}
         transition={{ duration: 0.7, ease: "easeOut", delay: 0.25 }}
       >
-        <div className="relative overflow-hidden rounded-3xl border border-slate-200 p-8 md:p-12 shadow-[0_24px_55px_-35px_rgba(13,59,102,0.35)] bg-[linear-gradient(180deg,#ffffff_0%,#f7fbff_42%,#f8fff9_100%)]">
-          <div className="absolute inset-0 opacity-80 pointer-events-none" aria-hidden="true" style={{ background: 'radial-gradient(circle at 8% 0%, rgba(135,206,235,0.16), transparent 24%), radial-gradient(circle at 92% 12%, rgba(40,167,69,0.12), transparent 22%), radial-gradient(circle at 50% 100%, rgba(13,59,102,0.08), transparent 30%)' }} />
+        <div className="relative overflow-hidden rounded-3xl border border-slate-200 p-8 md:p-12 shadow-[0_24px_55px_-35px_rgba(13,59,102,0.35)] bg-white">
+          <div className="absolute inset-0 opacity-80 pointer-events-none" aria-hidden="true" style={{ background: '#fff' }} />
           <div className="relative">
           <p className="text-xs uppercase tracking-[0.2em] text-[#87ceeb] font-semibold mb-3">Emberek</p>
           <h2 className="text-3xl md:text-4xl font-black text-tifo-dark mb-2">Csapatunk</h2>
@@ -265,9 +265,9 @@ export default function Rolunk() {
                   })}
                 >
                   <div
-                    className="group relative w-full h-full text-left rounded-[1.5rem] overflow-hidden bg-[linear-gradient(180deg,#ffffff_0%,#f8fbff_58%,#f7fff8_100%)] border border-slate-200/90 p-5 md:p-6 shadow-[0_16px_35px_-26px_rgba(15,23,42,0.4)] hover:shadow-[0_24px_45px_-24px_rgba(13,59,102,0.28)] hover:border-[#87ceeb]/70 hover:-translate-y-1 transition-all duration-200"
+                    className="group relative w-full h-full text-left rounded-[1.5rem] overflow-hidden bg-white border border-slate-200/90 p-5 md:p-6 shadow-[0_16px_35px_-26px_rgba(15,23,42,0.4)] hover:shadow-[0_24px_45px_-24px_rgba(13,59,102,0.28)] hover:border-slate-200/70 hover:-translate-y-1 transition-all duration-200"
                   >
-                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none bg-[radial-gradient(circle_at_top_right,rgba(135,206,235,0.16),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(40,167,69,0.12),transparent_26%)]" />
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none bg-white" />
                     <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-[#0d3b66] via-[#87ceeb] to-[#28a745] opacity-80" />
                     <div className="flex items-start gap-4 pt-2 h-full relative">
                       {member.image ? (
@@ -381,7 +381,7 @@ export default function Rolunk() {
 
 {!editing && (
   <>
-    <div className="rounded-[1.35rem] border border-slate-200 bg-[linear-gradient(180deg,#ffffff_0%,#f8fbff_100%)] p-5 md:p-6 shadow-[0_14px_35px_-26px_rgba(15,23,42,0.22)]">
+    <div className="rounded-[1.35rem] border border-slate-200 bg-white p-5 md:p-6 shadow-[0_14px_35px_-26px_rgba(15,23,42,0.22)]">
     <p className="text-gray-700 leading-[1.65] whitespace-pre-line text-[15px] md:text-base">
       {activeMember.bio?.trim() || "Még nincs megadva bemutatkozás ehhez a személyhez."}
     </p>
@@ -399,7 +399,7 @@ export default function Rolunk() {
 )}
 
             {editing && (
-              <div className="space-y-4 rounded-[1.35rem] border border-slate-200 bg-[linear-gradient(180deg,#ffffff_0%,#f8fbff_100%)] p-5 md:p-6 shadow-[0_14px_35px_-26px_rgba(15,23,42,0.22)]">
+              <div className="space-y-4 rounded-[1.35rem] border border-slate-200 bg-white p-5 md:p-6 shadow-[0_14px_35px_-26px_rgba(15,23,42,0.22)]">
                 <label className="block text-sm font-medium text-gray-800">
                   Rövid bemutatkozás
                   <textarea

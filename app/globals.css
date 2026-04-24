@@ -13,7 +13,7 @@ h1, h2, h3 {
 }
 
 .bg-site {
-  background: linear-gradient(180deg, #f8fbff 0%, #f4f9ff 50%, #ffffff 100%);
+  background: #fff;
 }
 
 .site-bg-layer {
@@ -21,10 +21,7 @@ h1, h2, h3 {
   inset: 0;
   pointer-events: none;
   z-index: 0;
-  background:
-    radial-gradient(circle at 12% 8%, rgba(56, 189, 248, 0.22), transparent 38%),
-    radial-gradient(circle at 84% -4%, rgba(244, 114, 182, 0.14), transparent 28%),
-    radial-gradient(circle at 55% 92%, rgba(30, 41, 59, 0.08), transparent 34%);
+  background: none;
 }
 
 @media (max-width: 767px) {

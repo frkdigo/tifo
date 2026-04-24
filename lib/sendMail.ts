@@ -14,7 +14,7 @@ export async function sendMail(to: string, resetUrl: string) {
     to,
     subject: "Jelszó visszaállítás - tifo.hu",
     html: `
-      <div style="background: linear-gradient(180deg, #f8fbff 0%, #f4f9ff 50%, #ffffff 100%); padding: 32px 0; min-height: 100vh; font-family: 'Inter', 'Segoe UI', Arial, sans-serif; color: #0f172a;">
+      <div style="background: #fff; padding: 32px 0; min-height: 100vh; font-family: 'Inter', 'Segoe UI', Arial, sans-serif; color: #0f172a;">
         <div style="max-width: 420px; margin: 0 auto; background: #fff; border-radius: 18px; box-shadow: 0 8px 32px -12px rgba(15,23,42,0.13); border: 1px solid #e2e8f0; padding: 32px 28px;">
           <div style="text-align: center; margin-bottom: 18px;">
             <img src='https://tifo.hu/images/logo.jpg' alt='TIFO logó' style='height: 56px; width: 56px; border-radius: 50%; box-shadow: 0 2px 8px #bae6fd; margin-bottom: 8px;' />

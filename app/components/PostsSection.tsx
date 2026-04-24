@@ -240,7 +240,7 @@ export default function PostsSection() {
             <div className="text-gray-500 md:col-span-2 xl:col-span-3">Még nincsenek posztok.</div>
           ) : (
             posts.map(post => (
-              <article key={post.id} className="h-full rounded-[1.5rem] overflow-hidden border border-slate-200 bg-[linear-gradient(180deg,#ffffff_0%,#f8fbff_100%)] shadow-[0_16px_35px_-26px_rgba(15,23,42,0.4)] p-5 flex flex-col">
+              <article key={post.id} className="h-full rounded-[1.5rem] overflow-hidden border border-slate-200 bg-white shadow-[0_16px_35px_-26px_rgba(15,23,42,0.4)] p-5 flex flex-col">
                 {/* Posztoló neve/beceneve */}
                 <div className="flex items-center gap-3 mb-2">
                   {getPostAuthorImage(post) ? (

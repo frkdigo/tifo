@@ -139,7 +139,7 @@ export default function Rolunk() {
 
   return (
     <main className="relative overflow-hidden">
-      <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_20%_10%,rgba(56,189,248,0.22),transparent_45%),radial-gradient(circle_at_80%_0%,rgba(244,114,182,0.18),transparent_35%),linear-gradient(180deg,#f8fafc_0%,#eef7ff_55%,#ffffff_100%)]" />
+      <div className="absolute inset-0 -z-10 bg-white" />
 
       <section className="max-w-6xl mx-auto px-4 pt-12 pb-8">
         <div className="rounded-3xl border border-white/70 bg-white/80 backdrop-blur-md shadow-[0_20px_60px_-30px_rgba(15,23,42,0.45)] p-8 md:p-12">

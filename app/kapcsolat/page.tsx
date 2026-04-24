@@ -63,7 +63,7 @@ export default function Kapcsolat() {
           aria-hidden="true"
           style={{
             background:
-              "radial-gradient(circle at 14% -6%, rgba(135,206,235,0.22), transparent 28%), radial-gradient(circle at 88% 8%, rgba(40,167,69,0.18), transparent 25%), radial-gradient(circle at 52% 120%, rgba(13,59,102,0.35), transparent 40%)",
+              "#fff",
           }}
         />
 
@@ -124,7 +124,7 @@ export default function Kapcsolat() {
 
       {/* FORM - eredeti, részletes, színes, címkézett blokk */}
       <motion.section
-        className="rounded-3xl bg-[linear-gradient(180deg,#ffffff_0%,#f8fbff_100%)] border border-gray-200 shadow-[0_18px_45px_-28px_rgba(13,59,102,0.22)] p-6 md:p-8"
+        className="rounded-3xl bg-white border border-gray-200 shadow-[0_18px_45px_-28px_rgba(13,59,102,0.22)] p-6 md:p-8"
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, ease: "easeOut", delay: 0.15 }}
