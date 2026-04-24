@@ -53,7 +53,7 @@ export default function Kapcsolat() {
     >
       {/* HERO */}
       <motion.section
-        className="relative overflow-hidden rounded-3xl bg-[#0a174e] border border-white/15 shadow-[0_24px_55px_-30px_rgba(0,0,0,0.55)] p-6 md:p-8 mb-6"
+        className="relative overflow-hidden rounded-3xl bg-[#020618] border border-white/15 shadow-[0_24px_55px_-30px_rgba(0,0,0,0.55)] p-6 md:p-8 mb-6"
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, ease: "easeOut" }}
@@ -62,7 +62,7 @@ export default function Kapcsolat() {
           className="absolute inset-0 opacity-80 pointer-events-none"
           aria-hidden="true"
           style={{
-            background: '#0a174e',
+            background: '#020618',
           }}
         />
 

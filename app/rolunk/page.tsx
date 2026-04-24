@@ -167,8 +167,8 @@ export default function Rolunk() {
         viewport={{ once: true, amount: 0.4 }}
         transition={{ duration: 0.7, ease: "easeOut" }}
       >
-        <div className="relative overflow-hidden rounded-3xl border border-white/15 bg-[#0a174e] shadow-[0_30px_70px_-40px_rgba(0,0,0,0.65)] p-8 md:p-12 text-center">
-          <div className="absolute inset-0 opacity-80 pointer-events-none" aria-hidden="true" style={{ background: '#0a174e' }} />
+        <div className="relative overflow-hidden rounded-3xl border border-white/15 bg-[#020618] shadow-[0_30px_70px_-40px_rgba(0,0,0,0.65)] p-8 md:p-12 text-center">
+          <div className="absolute inset-0 opacity-80 pointer-events-none" aria-hidden="true" style={{ background: '#020618' }} />
           <div className="relative">
           <p className="inline-flex items-center gap-2 rounded-full bg-white/15 text-white text-xs tracking-[0.18em] uppercase px-5 py-2.5 mb-6 shadow-lg shadow-black/20">
             Törökbálinti Ifjúsági Önkormányzat
