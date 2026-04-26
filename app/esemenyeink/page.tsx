@@ -48,6 +48,22 @@ export default function Esemeneink() {
     fetchEvents();
   }, []);
 
+  useEffect(() => {
+    const modalOpen = Boolean(activeEvent || imagePreview);
+    const previousBodyOverflow = document.body.style.overflow;
+    const previousHtmlOverflow = document.documentElement.style.overflow;
+
+    if (modalOpen) {
+      document.body.style.overflow = "hidden";
+      document.documentElement.style.overflow = "hidden";
+    }
+
+    return () => {
+      document.body.style.overflow = previousBodyOverflow;
+      document.documentElement.style.overflow = previousHtmlOverflow;
+    };
+  }, [activeEvent, imagePreview]);
+
   async function fetchEvents() {
     setLoading(true);
     const res = await fetch("/api/events", { cache: "no-store" });
