@@ -355,7 +355,7 @@ export default function Rolunk() {
                   type="button"
                   onClick={() => navigateMember(-1)}
                   disabled={editing || team.length < 2}
-                  className="text-sm px-3.5 py-2 rounded-xl border border-blue-900/30 bg-blue-900 text-white hover:bg-blue-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  className="text-sm px-3.5 py-2 rounded-xl border border-black/30 bg-black text-white hover:bg-neutral-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                 >
                   Előző személy
                 </button>
@@ -366,7 +366,7 @@ export default function Rolunk() {
                   type="button"
                   onClick={() => navigateMember(1)}
                   disabled={editing || team.length < 2}
-                  className="text-sm px-3.5 py-2 rounded-xl border border-blue-900/30 bg-blue-900 text-white hover:bg-blue-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  className="text-sm px-3.5 py-2 rounded-xl border border-black/30 bg-black text-white hover:bg-neutral-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                 >
                   Következő személy
                 </button>
