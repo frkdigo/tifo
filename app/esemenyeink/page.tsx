@@ -42,7 +42,7 @@ export default function Esemeneink() {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [events, setEvents] = useState<EventItem[]>([]);
   const [activeEvent, setActiveEvent] = useState<EventItem | null>(null);
-  const [expandedEventId, setExpandedEventId] = useState<number | null>(null);
+  const [expandedEventKey, setExpandedEventKey] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -88,7 +88,7 @@ export default function Esemeneink() {
   const past = events.filter(e => new Date(e.date) < now);
   const featuredEvent = upcoming[0];
 
-  function EventCard({ event }: { event: EventItem }) {
+  function EventCard({ event, cardKey }: { event: EventItem; cardKey: string }) {
     return (
       <motion.article
         whileHover={{ y: -5 }}
@@ -99,7 +99,7 @@ export default function Esemeneink() {
           {event.image ? (
             <img
               src={event.image}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-contain bg-slate-100"
               alt={event.title}
               loading="lazy"
               decoding="async"
@@ -124,7 +124,7 @@ export default function Esemeneink() {
 
           <button
             type="button"
-            onClick={() => setExpandedEventId((prev) => (prev === event.id ? null : event.id))}
+            onClick={() => setExpandedEventKey((prev) => (prev === cardKey ? null : cardKey))}
             className="absolute right-4 bottom-4 sm:right-5 sm:bottom-5 bg-black/35 hover:bg-black/50 border border-white/40 text-white font-bold px-5 py-2 rounded-full backdrop-blur-sm transition-colors"
           >
             Érdekel
@@ -132,7 +132,7 @@ export default function Esemeneink() {
         </div>
 
         <AnimatePresence initial={false}>
-          {expandedEventId === event.id && (
+          {expandedEventKey === cardKey && (
             <motion.div
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: "auto", opacity: 1 }}
@@ -223,7 +223,7 @@ export default function Esemeneink() {
               {featuredEvent.image ? (
                 <img
                   src={featuredEvent.image}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-contain bg-slate-100"
                   alt={featuredEvent.title}
                   loading="lazy"
                   decoding="async"
@@ -248,7 +248,7 @@ export default function Esemeneink() {
 
               <button
                 type="button"
-                onClick={() => setExpandedEventId((prev) => (prev === featuredEvent.id ? null : featuredEvent.id))}
+                onClick={() => setExpandedEventKey((prev) => (prev === `featured-${featuredEvent.id ?? "noid"}` ? null : `featured-${featuredEvent.id ?? "noid"}`))}
                 className="absolute right-4 bottom-4 sm:right-5 sm:bottom-5 bg-black/35 hover:bg-black/50 border border-white/40 text-white font-bold px-5 py-2 rounded-full backdrop-blur-sm transition-colors"
               >
                 Érdekel
@@ -256,7 +256,7 @@ export default function Esemeneink() {
             </div>
 
             <AnimatePresence initial={false}>
-              {expandedEventId === featuredEvent.id && (
+              {expandedEventKey === `featured-${featuredEvent.id ?? "noid"}` && (
                 <motion.div
                   initial={{ height: 0, opacity: 0 }}
                   animate={{ height: "auto", opacity: 1 }}
@@ -295,8 +295,8 @@ export default function Esemeneink() {
           <p className="text-gray-500">Betöltés...</p>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-7 lg:gap-8">
-            {upcoming.slice(1).map((event) => (
-              <EventCard key={event.id} event={event} />
+            {upcoming.slice(1).map((event, index) => (
+              <EventCard key={`upcoming-${event.id ?? index}-${index}`} event={event} cardKey={`upcoming-${event.id ?? index}-${index}`} />
             ))}
           </div>
         )}
@@ -309,8 +309,8 @@ export default function Esemeneink() {
           <p className="text-gray-400">Még nincsenek korábbi események.</p>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-7 lg:gap-8">
-            {past.map((event) => (
-              <EventCard key={event.id} event={event} />
+            {past.map((event, index) => (
+              <EventCard key={`past-${event.id ?? index}-${index}`} event={event} cardKey={`past-${event.id ?? index}-${index}`} />
             ))}
           </div>
         )}
