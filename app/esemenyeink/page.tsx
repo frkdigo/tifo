@@ -21,7 +21,7 @@ function parseTextWithLinks(text: string) {
   const parts = text.split(urlRegex);
   
   return parts.map((part, idx) => {
-    if (urlRegex.test(part)) {
+    if (/^https?:\/\/[^\s]+$/i.test(part)) {
       return (
         <a
           key={idx}
@@ -42,6 +42,7 @@ export default function Esemeneink() {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [events, setEvents] = useState<EventItem[]>([]);
   const [activeEvent, setActiveEvent] = useState<EventItem | null>(null);
+  const [expandedEventId, setExpandedEventId] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -89,32 +90,77 @@ export default function Esemeneink() {
 
   function EventCard({ event }: { event: EventItem }) {
     return (
-      <motion.div
-        whileHover={{ y: -6 }}
-        transition={{ duration: 0.3 }}
-        className="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300"
+      <motion.article
+        whileHover={{ y: -5 }}
+        transition={{ duration: 0.25 }}
+        className="bg-white border border-slate-200 rounded-[1.75rem] overflow-hidden shadow-[0_18px_35px_-25px_rgba(2,6,23,0.45)]"
       >
-        {event.image && (
-          <img
-            src={event.image}
-            className="w-full h-44 object-cover"
-            alt={event.title}
-          />
-        )}
-        <div className="p-5 flex flex-col gap-2">
-          <h3 className="text-lg font-bold mb-1">{event.title}</h3>
-          <p className="text-sm text-gray-500 mb-1">{new Date(event.date).toLocaleDateString("hu-HU")}</p>
-          <p className="text-sm text-gray-600 line-clamp-3 mb-2">{event.description}</p>
-          <div className="flex justify-center mt-2">
-            <button
-              onClick={() => setActiveEvent(event)}
-              className="bg-black text-white font-bold px-6 py-2 rounded-[16px] hover:bg-neutral-800 transition text-base w-full"
-            >
-              Érdekel
-            </button>
+        <div className="relative aspect-[4/5] overflow-hidden">
+          {event.image ? (
+            <img
+              src={event.image}
+              className="w-full h-full object-cover"
+              alt={event.title}
+              loading="lazy"
+              decoding="async"
+            />
+          ) : (
+            <div className="w-full h-full bg-slate-200" />
+          )}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent" />
+
+          <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5 text-white">
+            <h3 className="text-2xl md:text-3xl font-black leading-tight drop-shadow-md line-clamp-2">{event.title}</h3>
+            <div className="mt-1 text-sm md:text-base font-semibold text-white/90 drop-shadow">
+              {new Date(event.date).toLocaleDateString("hu-HU")} · {new Date(event.date).toLocaleTimeString("hu-HU", {
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
+            </div>
+            <span className="mt-2 inline-flex items-center rounded-full bg-white/20 backdrop-blur px-3 py-1 text-xs font-bold text-white border border-white/30">
+              {event.category || "Program"}
+            </span>
           </div>
+
+          <button
+            type="button"
+            onClick={() => setExpandedEventId((prev) => (prev === event.id ? null : event.id))}
+            className="absolute right-4 bottom-4 sm:right-5 sm:bottom-5 bg-black/35 hover:bg-black/50 border border-white/40 text-white font-bold px-5 py-2 rounded-full backdrop-blur-sm transition-colors"
+          >
+            Érdekel
+          </button>
         </div>
-      </motion.div>
+
+        <AnimatePresence initial={false}>
+          {expandedEventId === event.id && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.22, ease: "easeOut" }}
+              className="overflow-hidden"
+            >
+              <div className="px-4 sm:px-5 py-4 border-t border-slate-200 bg-white">
+                <div className="text-slate-700 text-sm sm:text-base leading-[1.62]">
+                  {(event.description || "Nincs leírás.").split("\n").map((line, idx) => (
+                    <p key={idx} className="mb-2 last:mb-0">{parseTextWithLinks(line)}</p>
+                  ))}
+                </div>
+                {event.eventLink && event.eventLinkName && (
+                  <a
+                    href={event.eventLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block mt-3 text-sky-600 hover:text-sky-700 underline font-semibold"
+                  >
+                    {event.eventLinkName}
+                  </a>
+                )}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.article>
     );
   }
 
@@ -168,48 +214,77 @@ export default function Esemeneink() {
           viewport={{ once: true, amount: 0.6 }}
           transition={{ duration: 0.7, delay: 0.1 }}
         >
-          <div
-            onClick={() => setActiveEvent(featuredEvent)}
-            className="cursor-pointer rounded-2xl sm:rounded-3xl overflow-hidden border border-slate-200 bg-white dark:bg-slate-900 shadow-[0_16px_40px_-18px_rgba(56,189,248,0.10)] grid md:grid-cols-2 min-h-[auto] group hover:scale-[1.015] transition-transform duration-200"
+          <motion.article
+            whileHover={{ y: -5 }}
+            transition={{ duration: 0.25 }}
+            className="bg-white border border-slate-200 rounded-[1.75rem] overflow-hidden shadow-[0_18px_35px_-25px_rgba(2,6,23,0.45)]"
           >
-            {/* Bal oldalt: kép, overlay csak label, cím, dátum */}
-            <div className="relative h-48 sm:h-56 md:h-full">
-              {featuredEvent.image && (
-                <>
-                  <img
-                    src={featuredEvent.image}
-                    className="w-full h-full object-cover object-center group-hover:brightness-95 transition-all duration-200"
-                    alt={featuredEvent.title}
-                    loading="lazy"
-                    decoding="async"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
-                  <div className="absolute bottom-0 left-0 w-full p-4 sm:p-6 md:p-8 flex flex-col gap-1">
-                    <span className="text-xs uppercase tracking-widest text-white font-bold mb-1 drop-shadow">KIEMELT ESEMÉNY</span>
-                    <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-white drop-shadow mb-0.5 line-clamp-2">{featuredEvent.title}</h2>
-                    <p className="text-xs sm:text-sm text-gray-200 drop-shadow">{new Date(featuredEvent.date).toLocaleDateString("hu-HU")}</p>
-                  </div>
-                </>
+            <div className="relative aspect-[16/9] md:aspect-[21/9] overflow-hidden">
+              {featuredEvent.image ? (
+                <img
+                  src={featuredEvent.image}
+                  className="w-full h-full object-cover"
+                  alt={featuredEvent.title}
+                  loading="lazy"
+                  decoding="async"
+                />
+              ) : (
+                <div className="w-full h-full bg-slate-200" />
               )}
-            </div>
-            {/* Jobb oldalt: csak leírás és gomb */}
-            <div className="flex flex-col justify-between p-3 sm:p-6 md:p-8 bg-white gap-3 sm:gap-4">
-              <p className="text-black line-clamp-3 sm:line-clamp-5 leading-[1.6] text-sm sm:text-sm md:text-base overflow-hidden">{parseTextWithLinks(featuredEvent.description || "")}</p>
-              {featuredEvent.eventLink && featuredEvent.eventLinkName && (
-                <a
-                  href={featuredEvent.eventLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sky-600 hover:text-sky-700 underline text-xs sm:text-sm font-semibold break-all"
-                >
-                  {featuredEvent.eventLinkName}
-                </a>
-              )}
-              <button className="bg-black text-white font-bold px-6 py-2 rounded-lg sm:rounded-2xl hover:bg-neutral-800 transition w-full text-base shadow-sm flex-shrink-0">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent" />
+
+              <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5 md:p-6 text-white">
+                <span className="mb-2 inline-flex items-center rounded-full bg-white/20 backdrop-blur px-3 py-1 text-xs font-bold text-white border border-white/30">
+                  KIEMELT ESEMÉNY
+                </span>
+                <h2 className="text-2xl md:text-4xl font-black leading-tight drop-shadow-md line-clamp-2">{featuredEvent.title}</h2>
+                <div className="mt-1 text-sm md:text-base font-semibold text-white/90 drop-shadow">
+                  {new Date(featuredEvent.date).toLocaleDateString("hu-HU")} · {new Date(featuredEvent.date).toLocaleTimeString("hu-HU", {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
+                </div>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setExpandedEventId((prev) => (prev === featuredEvent.id ? null : featuredEvent.id))}
+                className="absolute right-4 bottom-4 sm:right-5 sm:bottom-5 bg-black/35 hover:bg-black/50 border border-white/40 text-white font-bold px-5 py-2 rounded-full backdrop-blur-sm transition-colors"
+              >
                 Érdekel
               </button>
             </div>
-          </div>
+
+            <AnimatePresence initial={false}>
+              {expandedEventId === featuredEvent.id && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.22, ease: "easeOut" }}
+                  className="overflow-hidden"
+                >
+                  <div className="px-4 sm:px-5 py-4 border-t border-slate-200 bg-white">
+                    <div className="text-slate-700 text-sm sm:text-base leading-[1.62]">
+                      {(featuredEvent.description || "Nincs leírás.").split("\n").map((line, idx) => (
+                        <p key={idx} className="mb-2 last:mb-0">{parseTextWithLinks(line)}</p>
+                      ))}
+                    </div>
+                    {featuredEvent.eventLink && featuredEvent.eventLinkName && (
+                      <a
+                        href={featuredEvent.eventLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-block mt-3 text-sky-600 hover:text-sky-700 underline font-semibold"
+                      >
+                        {featuredEvent.eventLinkName}
+                      </a>
+                    )}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.article>
         </motion.section>
       )}
 
