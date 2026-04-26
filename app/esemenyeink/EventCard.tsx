@@ -11,7 +11,32 @@ type EventItem = {
   description?: string;
   image?: string | null;
   location?: string | null;
+  eventLink?: string | null;
+  eventLinkName?: string | null;
 };
+
+// Parseol szöveget és konvertálja az URL-eket kattintható linkekké
+function parseTextWithLinks(text: string) {
+  const urlRegex = /(https?:\/\/[^\s]+)/g;
+  const parts = text.split(urlRegex);
+  
+  return parts.map((part, idx) => {
+    if (urlRegex.test(part)) {
+      return (
+        <a
+          key={idx}
+          href={part}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-sky-600 hover:text-sky-700 underline break-all"
+        >
+          {part}
+        </a>
+      );
+    }
+    return <span key={idx}>{part}</span>;
+  });
+}
 
 export default function EventCard({ event }: { event: EventItem }) {
   const { user } = useAuth();
@@ -50,7 +75,17 @@ export default function EventCard({ event }: { event: EventItem }) {
             </span>
           )}
         </div>
-        <p className="text-slate-700 dark:text-slate-200 mb-2 line-clamp-3 min-h-[54px] sm:min-h-[72px] leading-relaxed text-sm sm:text-base">{event.description}</p>
+        <p className="text-slate-700 dark:text-slate-200 mb-2 line-clamp-3 min-h-[54px] sm:min-h-[72px] leading-relaxed text-sm sm:text-base">{parseTextWithLinks(event.description || "")}</p>
+        {event.eventLink && event.eventLinkName && (
+          <a
+            href={event.eventLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sky-600 hover:text-sky-700 underline text-sm font-semibold mb-2 inline-block break-all"
+          >
+            {event.eventLinkName}
+          </a>
+        )}
         {user && user.isAdmin && (
           <button className="mt-2 w-full bg-blue-900 text-white py-2 px-3 rounded-lg sm:rounded-xl hover:bg-blue-800 transition-colors font-semibold text-xs sm:text-sm shadow-sm">
             Szerkesztés

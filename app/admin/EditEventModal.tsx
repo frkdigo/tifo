@@ -49,7 +49,9 @@ export default function EditEventModal({ event, onClose, onDeleted, onUpdated }:
     date: event.date || "",
     description: event.description || "",
     image: event.image || "",
-    location: event.location || ""
+    location: event.location || "",
+    eventLink: event.eventLink || "",
+    eventLinkName: event.eventLinkName || ""
   });
 
   useEffect(() => {
@@ -164,6 +166,8 @@ export default function EditEventModal({ event, onClose, onDeleted, onUpdated }:
               )}
             </div>
             <input type="text" value={form.location} onChange={e => setForm(f => ({ ...f, location: e.target.value }))} className="w-full border border-slate-200 rounded-lg p-2 focus:ring-2 focus:ring-slate-300 transition bg-white" placeholder="Helyszín" />
+            <input type="url" value={form.eventLink} onChange={e => setForm(f => ({ ...f, eventLink: e.target.value }))} className="w-full border border-slate-200 rounded-lg p-2 focus:ring-2 focus:ring-slate-300 transition bg-white" placeholder="Esemény linkje (pl. https://facebook.com/...)" />
+            <input type="text" value={form.eventLinkName} onChange={e => setForm(f => ({ ...f, eventLinkName: e.target.value }))} className="w-full border border-slate-200 rounded-lg p-2 focus:ring-2 focus:ring-slate-300 transition bg-white" placeholder="Link neve (pl. Majális)" />
             <div className="flex gap-2 mt-2">
               <button type="submit" className="bg-blue-900 text-white px-6 py-2 rounded-full font-semibold hover:bg-blue-800 transition-colors" disabled={loading}>Mentés</button>
               <button type="button" className="bg-red-500 text-white px-6 py-2 rounded-full font-semibold hover:bg-red-600 transition-colors" onClick={handleDelete} disabled={loading}>Törlés</button>

@@ -11,7 +11,32 @@ type EventItem = {
   image?: string | null;
   location?: string | null;
   category?: string;
+  eventLink?: string | null;
+  eventLinkName?: string | null;
 };
+
+// Parseol szöveget és konvertálja az URL-eket kattintható linkekké
+function parseTextWithLinks(text: string) {
+  const urlRegex = /(https?:\/\/[^\s]+)/g;
+  const parts = text.split(urlRegex);
+  
+  return parts.map((part, idx) => {
+    if (urlRegex.test(part)) {
+      return (
+        <a
+          key={idx}
+          href={part}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-sky-600 hover:text-sky-700 underline break-all"
+        >
+          {part}
+        </a>
+      );
+    }
+    return <span key={idx}>{part}</span>;
+  });
+}
 
 export default function Esemeneink() {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -152,7 +177,17 @@ export default function Esemeneink() {
             </div>
             {/* Jobb oldalt: csak leírás és gomb */}
             <div className="flex flex-col justify-between p-3 sm:p-6 md:p-8 bg-white gap-3 sm:gap-4">
-              <p className="text-black line-clamp-3 sm:line-clamp-5 leading-[1.6] text-sm sm:text-sm md:text-base overflow-hidden">{featuredEvent.description}</p>
+              <p className="text-black line-clamp-3 sm:line-clamp-5 leading-[1.6] text-sm sm:text-sm md:text-base overflow-hidden">{parseTextWithLinks(featuredEvent.description || "")}</p>
+              {featuredEvent.eventLink && featuredEvent.eventLinkName && (
+                <a
+                  href={featuredEvent.eventLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sky-600 hover:text-sky-700 underline text-xs sm:text-sm font-semibold break-all"
+                >
+                  {featuredEvent.eventLinkName}
+                </a>
+              )}
               <button className="bg-black text-white font-bold px-6 py-2 rounded-lg sm:rounded-2xl hover:bg-neutral-800 transition w-full text-base shadow-sm flex-shrink-0">
                 Érdekel
               </button>
@@ -228,9 +263,19 @@ export default function Esemeneink() {
                 {activeEvent.description && (
                   <div className="prose prose-sm max-w-none text-gray-800 text-sm sm:text-base">
                     {activeEvent.description.split('\n').map((line, idx) => (
-                      <p key={idx} className="mb-2 last:mb-0">{line}</p>
+                      <p key={idx} className="mb-2 last:mb-0">{parseTextWithLinks(line)}</p>
                     ))}
                   </div>
+                )}
+                {activeEvent.eventLink && activeEvent.eventLinkName && (
+                  <a
+                    href={activeEvent.eventLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sky-600 hover:text-sky-700 underline text-sm font-semibold mt-3 inline-block break-all"
+                  >
+                    {activeEvent.eventLinkName}
+                  </a>
                 )}
               </div>
             </motion.div>

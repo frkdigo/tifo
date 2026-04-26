@@ -9,6 +9,8 @@ export default function NewEventForm({ onCreated }: { onCreated?: () => void }) 
   const [date, setDate] = useState("");
   const [location, setLocation] = useState("");
   const [description, setDescription] = useState("");
+  const [eventLink, setEventLink] = useState("");
+  const [eventLinkName, setEventLinkName] = useState("");
   const descriptionRef = useRef<HTMLTextAreaElement | null>(null);
 
   // Auto-resize textarea minden rendernél
@@ -61,7 +63,7 @@ export default function NewEventForm({ onCreated }: { onCreated?: () => void }) 
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
-        body: JSON.stringify({ title, date, location, description, image: uploadedImageUrl })
+        body: JSON.stringify({ title, date, location, description, image: uploadedImageUrl, eventLink, eventLinkName })
       });
       const data = await res.json().catch(() => null);
       if (!res.ok || !data || !data.id) {
@@ -72,6 +74,8 @@ export default function NewEventForm({ onCreated }: { onCreated?: () => void }) 
       setDate("");
       setLocation("");
       setDescription("");
+      setEventLink("");
+      setEventLinkName("");
       setImageFile(null);
       setImageUrl(null);
       if (onCreated) onCreated();
@@ -99,6 +103,8 @@ export default function NewEventForm({ onCreated }: { onCreated?: () => void }) 
         rows={2}
         style={{ minHeight: 40, maxHeight: 400 }}
       />
+      <input type="url" value={eventLink} onChange={e => setEventLink(e.target.value)} className="w-full border border-slate-200 rounded-lg p-2 focus:ring-2 focus:ring-slate-300 transition" placeholder="Esemény linkje (pl. https://facebook.com/...)" />
+      <input type="text" value={eventLinkName} onChange={e => setEventLinkName(e.target.value)} className="w-full border border-slate-200 rounded-lg p-2 focus:ring-2 focus:ring-slate-300 transition" placeholder="Link neve (pl. Majális)" />
       <div className="flex flex-col items-start gap-1">
         <span className="text-sm font-medium text-slate-700">Kép feltöltése</span>
         <label className="inline-block cursor-pointer">

@@ -53,7 +53,7 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     // DEBUG: logoljuk a kapott body-t
     console.log('EVENT POST BODY:', body);
-    const { title, date, description, image, location } = body;
+    const { title, date, description, image, location, eventLink, eventLinkName } = body;
     if (!title || !date || !description) {
       return NextResponse.json({ error: 'Cím, dátum és leírás kötelező.' }, { status: 400 });
     }
@@ -76,7 +76,7 @@ export async function POST(req: NextRequest) {
     }
     const { data: insertData, error: insertError } = await supabase
       .from('events')
-      .insert([{ title, date, description, image, location, status: 'approved' }])
+      .insert([{ title, date, description, image, location, eventLink, eventLinkName, status: 'approved' }])
       .select();
     if (insertError) {
       return NextResponse.json({ error: insertError.message }, { status: 500 });
@@ -112,8 +112,8 @@ export async function PATCH(req: NextRequest) {
       return NextResponse.json({ success: true });
     }
     if (action === 'update') {
-      const { title, date, description, image, location } = body;
-      const { error } = await supabase.from('events').update({ title, date, description, image, location }).eq('id', id);
+      const { title, date, description, image, location, eventLink, eventLinkName } = body;
+      const { error } = await supabase.from('events').update({ title, date, description, image, location, eventLink, eventLinkName }).eq('id', id);
       if (error) return NextResponse.json({ error: error.message }, { status: 500 });
       return NextResponse.json({ success: true });
     }
