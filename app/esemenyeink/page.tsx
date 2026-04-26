@@ -104,6 +104,7 @@ export default function Esemeneink() {
 
   return (
     <main className="w-full mx-auto px-3 sm:px-4 md:px-6 py-8 md:py-12 overflow-x-hidden">
+      <div className="max-w-6xl mx-auto">
 
       {/* HERO CARD */}
       <motion.section
@@ -307,6 +308,7 @@ export default function Esemeneink() {
         )}
       </AnimatePresence>
 
+      </div>
     </main>
   );
 }
