@@ -45,6 +45,26 @@ export async function GET(req: NextRequest) {
 export async function PATCH(req: NextRequest) {
   try {
     const { id, action } = await req.json();
+    if (action === 'view') {
+      const { data: currentPost, error: fetchError } = await supabase
+        .from('posts')
+        .select('viewCount')
+        .eq('id', id)
+        .single();
+      if (fetchError) {
+        throw new Error(fetchError.message);
+      }
+
+      const nextViewCount = (currentPost?.viewCount || 0) + 1;
+      const { error } = await supabase
+        .from('posts')
+        .update({ viewCount: nextViewCount })
+        .eq('id', id);
+      if (error) {
+        throw new Error(error.message);
+      }
+      return NextResponse.json({ success: true, viewCount: nextViewCount });
+    }
     if (action === 'approve') {
       const { error } = await supabase
         .from('posts')

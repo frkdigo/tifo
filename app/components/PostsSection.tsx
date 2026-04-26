@@ -10,6 +10,7 @@ type Post = {
   media?: string | null;
   mediaType?: "image" | "video" | null;
   image?: string | null; // visszafelé kompatibilitás
+  viewCount?: number;
   createdAt?: string;
   created_at?: string;
   authorName?: string;
@@ -73,6 +74,22 @@ export default function PostsSection() {
   useEffect(() => {
     fetchPosts();
   }, []);
+
+  useEffect(() => {
+    const modalOpen = Boolean(selectedPost || selectedImage);
+    const previousBodyOverflow = document.body.style.overflow;
+    const previousHtmlOverflow = document.documentElement.style.overflow;
+
+    if (modalOpen) {
+      document.body.style.overflow = "hidden";
+      document.documentElement.style.overflow = "hidden";
+    }
+
+    return () => {
+      document.body.style.overflow = previousBodyOverflow;
+      document.documentElement.style.overflow = previousHtmlOverflow;
+    };
+  }, [selectedPost, selectedImage]);
 
   async function fetchPosts() {
     try {
@@ -138,6 +155,33 @@ export default function PostsSection() {
       fetchPosts();
     } catch {
       setError("Törlés sikertelen.");
+    }
+  }
+
+  async function handleOpenPost(post: Post) {
+    setSelectedPost(post);
+
+    try {
+      const res = await fetch("/api/posts", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: post.id, action: "view" }),
+      });
+
+      if (!res.ok) return;
+      const data = await res.json();
+      const nextViewCount = typeof data?.viewCount === "number"
+        ? data.viewCount
+        : (post.viewCount || 0) + 1;
+
+      setPosts((prev) => prev.map((p) => (
+        p.id === post.id ? { ...p, viewCount: nextViewCount } : p
+      )));
+      setSelectedPost((prev) => (
+        prev && prev.id === post.id ? { ...prev, viewCount: nextViewCount } : prev
+      ));
+    } catch {
+      // Nem blokkoljuk a poszt megnyitasat akkor sem, ha a szamlalo frissites hibazik.
     }
   }
 
@@ -262,6 +306,23 @@ export default function PostsSection() {
                   </div>
                 </div>
                 <div className="text-slate-700 mb-3 line-clamp-4 leading-[1.58] flex-1">{post.text}</div>
+                {user?.isAdmin && (
+                  <div className="mb-3 inline-flex items-center gap-2 text-xs font-semibold text-slate-600 bg-slate-100 border border-slate-200 rounded-full px-3 py-1 w-fit">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      className="w-4 h-4"
+                      aria-hidden="true"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z" />
+                      <circle cx="12" cy="12" r="3" />
+                    </svg>
+                    <span>{post.viewCount || 0}</span>
+                  </div>
+                )}
                 {post.mediaType === "video" && post.media ? (
                   <video
                     src={post.media}
@@ -290,26 +351,24 @@ export default function PostsSection() {
                     onClick={() => handleImageClick(post.image!)}
                   />
                 ) : null}
-                {user && (
-                  <div className="flex flex-col gap-2 mt-4">
+                <div className="flex flex-col gap-2 mt-4">
+                  <button
+                    type="button"
+                    onClick={() => handleOpenPost(post)}
+                    className="bg-black text-white px-4 py-2.5 rounded-full text-sm font-semibold hover:bg-neutral-800 transition-colors"
+                  >
+                    Megnézem
+                  </button>
+                  {user?.isAdmin && (
                     <button
                       type="button"
-                      onClick={() => setSelectedPost(post)}
-                      className="bg-blue-900 text-white px-4 py-2.5 rounded-full text-sm font-semibold hover:bg-blue-800 transition-colors"
+                      onClick={() => handleDeletePost(post.id)}
+                      className="bg-red-500 hover:bg-red-600 text-white rounded-full px-4 py-2.5 text-sm font-semibold transition-colors"
                     >
-                      Megtekintés
+                      Törlés
                     </button>
-                    {user.isAdmin && (
-                      <button
-                        type="button"
-                        onClick={() => handleDeletePost(post.id)}
-                        className="bg-red-500 hover:bg-red-600 text-white rounded-full px-4 py-2.5 text-sm font-semibold transition-colors"
-                      >
-                        Törlés
-                      </button>
-                    )}
-                  </div>
-                )}
+                  )}
+                </div>
               </article>
             ))
           )}
