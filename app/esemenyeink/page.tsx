@@ -99,7 +99,7 @@ export default function Esemeneink() {
           {event.image ? (
             <img
               src={event.image}
-              className="w-full h-full object-contain bg-slate-100"
+              className="w-full h-full object-cover"
               alt={event.title}
               loading="lazy"
               decoding="async"
@@ -223,7 +223,7 @@ export default function Esemeneink() {
               {featuredEvent.image ? (
                 <img
                   src={featuredEvent.image}
-                  className="w-full h-full object-contain bg-slate-100"
+                  className="w-full h-full object-cover"
                   alt={featuredEvent.title}
                   loading="lazy"
                   decoding="async"
@@ -294,7 +294,7 @@ export default function Esemeneink() {
         {loading ? (
           <p className="text-gray-500">Betöltés...</p>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-7 lg:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 items-start gap-4 sm:gap-6 md:gap-7 lg:gap-8">
             {upcoming.slice(1).map((event, index) => (
               <EventCard key={`upcoming-${event.id ?? index}-${index}`} event={event} cardKey={`upcoming-${event.id ?? index}-${index}`} />
             ))}
@@ -308,7 +308,7 @@ export default function Esemeneink() {
         {past.length === 0 ? (
           <p className="text-gray-400">Még nincsenek korábbi események.</p>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-7 lg:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 items-start gap-4 sm:gap-6 md:gap-7 lg:gap-8">
             {past.map((event, index) => (
               <EventCard key={`past-${event.id ?? index}-${index}`} event={event} cardKey={`past-${event.id ?? index}-${index}`} />
             ))}
