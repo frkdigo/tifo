@@ -42,7 +42,6 @@ export default function Esemeneink() {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [events, setEvents] = useState<EventItem[]>([]);
   const [activeEvent, setActiveEvent] = useState<EventItem | null>(null);
-  const [expandedEventKey, setExpandedEventKey] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -88,7 +87,7 @@ export default function Esemeneink() {
   const past = events.filter(e => new Date(e.date) < now);
   const featuredEvent = upcoming[0];
 
-  function EventCard({ event, cardKey }: { event: EventItem; cardKey: string }) {
+  function EventCard({ event }: { event: EventItem }) {
     return (
       <motion.article
         whileHover={{ y: -5 }}
@@ -124,42 +123,12 @@ export default function Esemeneink() {
 
           <button
             type="button"
-            onClick={() => setExpandedEventKey((prev) => (prev === cardKey ? null : cardKey))}
+            onClick={() => setActiveEvent(event)}
             className="absolute right-4 bottom-4 sm:right-5 sm:bottom-5 bg-black/35 hover:bg-black/50 border border-white/40 text-white font-bold px-5 py-2 rounded-full backdrop-blur-sm transition-colors"
           >
             Érdekel
           </button>
         </div>
-
-        <AnimatePresence initial={false}>
-          {expandedEventKey === cardKey && (
-            <motion.div
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: "auto", opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.22, ease: "easeOut" }}
-              className="overflow-hidden"
-            >
-              <div className="px-4 sm:px-5 py-4 border-t border-slate-200 bg-white">
-                <div className="text-slate-700 text-sm sm:text-base leading-[1.62]">
-                  {(event.description || "Nincs leírás.").split("\n").map((line, idx) => (
-                    <p key={idx} className="mb-2 last:mb-0">{parseTextWithLinks(line)}</p>
-                  ))}
-                </div>
-                {event.eventLink && event.eventLinkName && (
-                  <a
-                    href={event.eventLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-block mt-3 text-sky-600 hover:text-sky-700 underline font-semibold"
-                  >
-                    {event.eventLinkName}
-                  </a>
-                )}
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
       </motion.article>
     );
   }
@@ -248,42 +217,12 @@ export default function Esemeneink() {
 
               <button
                 type="button"
-                onClick={() => setExpandedEventKey((prev) => (prev === `featured-${featuredEvent.id ?? "noid"}` ? null : `featured-${featuredEvent.id ?? "noid"}`))}
+                onClick={() => setActiveEvent(featuredEvent)}
                 className="absolute right-4 bottom-4 sm:right-5 sm:bottom-5 bg-black/35 hover:bg-black/50 border border-white/40 text-white font-bold px-5 py-2 rounded-full backdrop-blur-sm transition-colors"
               >
                 Érdekel
               </button>
             </div>
-
-            <AnimatePresence initial={false}>
-              {expandedEventKey === `featured-${featuredEvent.id ?? "noid"}` && (
-                <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: "auto", opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.22, ease: "easeOut" }}
-                  className="overflow-hidden"
-                >
-                  <div className="px-4 sm:px-5 py-4 border-t border-slate-200 bg-white">
-                    <div className="text-slate-700 text-sm sm:text-base leading-[1.62]">
-                      {(featuredEvent.description || "Nincs leírás.").split("\n").map((line, idx) => (
-                        <p key={idx} className="mb-2 last:mb-0">{parseTextWithLinks(line)}</p>
-                      ))}
-                    </div>
-                    {featuredEvent.eventLink && featuredEvent.eventLinkName && (
-                      <a
-                        href={featuredEvent.eventLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-block mt-3 text-sky-600 hover:text-sky-700 underline font-semibold"
-                      >
-                        {featuredEvent.eventLinkName}
-                      </a>
-                    )}
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
           </motion.article>
         </motion.section>
       )}
@@ -296,7 +235,7 @@ export default function Esemeneink() {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 items-start gap-4 sm:gap-6 md:gap-7 lg:gap-8">
             {upcoming.slice(1).map((event, index) => (
-              <EventCard key={`upcoming-${event.id ?? index}-${index}`} event={event} cardKey={`upcoming-${event.id ?? index}-${index}`} />
+              <EventCard key={`upcoming-${event.id ?? index}-${index}`} event={event} />
             ))}
           </div>
         )}
@@ -310,7 +249,7 @@ export default function Esemeneink() {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 items-start gap-4 sm:gap-6 md:gap-7 lg:gap-8">
             {past.map((event, index) => (
-              <EventCard key={`past-${event.id ?? index}-${index}`} event={event} cardKey={`past-${event.id ?? index}-${index}`} />
+              <EventCard key={`past-${event.id ?? index}-${index}`} event={event} />
             ))}
           </div>
         )}
