@@ -152,8 +152,8 @@ export default function Esemeneink() {
             </div>
             {/* Jobb oldalt: csak leírás és gomb */}
             <div className="flex flex-col justify-between p-3 sm:p-6 md:p-8 bg-white gap-3 sm:gap-4">
-              <p className="text-black line-clamp-3 sm:line-clamp-5 leading-[1.6] text-xs sm:text-sm md:text-base overflow-hidden">{featuredEvent.description}</p>
-              <button className="bg-black text-white font-bold px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg sm:rounded-2xl hover:bg-neutral-800 transition w-full text-xs sm:text-sm md:text-base shadow-sm flex-shrink-0">
+              <p className="text-black line-clamp-3 sm:line-clamp-5 leading-[1.6] text-sm sm:text-sm md:text-base overflow-hidden">{featuredEvent.description}</p>
+              <button className="bg-black text-white font-bold px-6 py-2 rounded-lg sm:rounded-2xl hover:bg-neutral-800 transition w-full text-base shadow-sm flex-shrink-0">
                 Érdekel
               </button>
             </div>
