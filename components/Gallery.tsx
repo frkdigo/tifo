@@ -26,6 +26,7 @@ export default function Gallery() {
   const [images, setImages] = useState<GalleryImage[]>(initialImages);
   const [current, setCurrent] = useState(0);
   const [showInfo, setShowInfo] = useState(true);
+  const [showUpload, setShowUpload] = useState(false);
   const image = images[current];
 
   // Téma létrehozása Supabase-ben
