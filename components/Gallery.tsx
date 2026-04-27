@@ -27,6 +27,10 @@ export default function Gallery() {
     useEffect(() => {
       fetchTopics();
       fetchImages();
+      // Supabase Auth session ellenőrzése
+      supabase.auth.getSession().then(({ data: { session } }) => {
+        console.log('Aktív Supabase session:', session);
+      });
     }, []);
   const [current, setCurrent] = useState(0);
   const [showInfo, setShowInfo] = useState(true);
