@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import GalleryUpload, { GalleryTopic, GalleryImage } from './GalleryUpload';
 import { useUser } from '../app/lib/useUser';
 import { uploadGalleryImageToStorage } from '../lib/uploadGalleryImageToStorage';
@@ -22,8 +22,24 @@ const initialImages: GalleryImage[] = [
 
 export default function Gallery() {
   const { user } = useUser();
-  const [topics, setTopics] = useState<GalleryTopic[]>(initialTopics);
-  const [images, setImages] = useState<GalleryImage[]>(initialImages);
+  const [topics, setTopics] = useState<GalleryTopic[]>([]);
+  const [images, setImages] = useState<GalleryImage[]>([]);
+    // Témák betöltése
+    async function fetchTopics() {
+      const { data, error } = await supabase.from('gallery_topics').select('*').order('name');
+      if (!error && data) setTopics(data);
+    }
+
+    // Képek betöltése
+    async function fetchImages() {
+      const { data, error } = await supabase.from('gallery_images').select('*').order('created_at', { ascending: false });
+      if (!error && data) setImages(data);
+    }
+
+    useEffect(() => {
+      fetchTopics();
+      fetchImages();
+    }, []);
   const [current, setCurrent] = useState(0);
   const [showInfo, setShowInfo] = useState(true);
   const [showUpload, setShowUpload] = useState(false);
@@ -40,8 +56,7 @@ export default function Gallery() {
       alert('Hiba a téma létrehozásakor: ' + error.message);
       return;
     }
-    const newTopic: GalleryTopic = { id: data.id, name: data.name };
-    setTopics([...topics, newTopic]);
+    await fetchTopics();
     alert(`Új téma létrehozva: ${name}`);
   }
 
@@ -52,7 +67,7 @@ export default function Gallery() {
       // 1. Kép feltöltése storage-ba
       const publicUrl = await uploadGalleryImageToStorage(file, topicId, user.email);
       // 2. Metaadat beszúrása DB-be
-      const { data, error } = await supabase
+      const { error } = await supabase
         .from('gallery_images')
         .insert([
           {
@@ -62,23 +77,12 @@ export default function Gallery() {
             info: '',
             topic_id: topicId,
           },
-        ])
-        .select()
-        .single();
+        ]);
       if (error) {
         alert('Hiba a kép mentésekor: ' + error.message);
         return;
       }
-      setImages([
-        ...images,
-        {
-          src: data.src,
-          title: data.title,
-          subtitle: data.subtitle,
-          info: data.info,
-          topicId: data.topic_id,
-        },
-      ]);
+      await fetchImages();
       alert(`Kép feltöltve: ${file.name}`);
     } catch (e: any) {
       alert('Hiba a feltöltés során: ' + e.message);
