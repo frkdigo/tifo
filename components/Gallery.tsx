@@ -16,7 +16,7 @@ const initialImages: GalleryImage[] = [
     title: 'TIFO',
     subtitle: 'photography / creative direction',
     info: 'Nézz bele a TIFO világába.',
-    topic_id: '1',
+    topicId: '1',
   },
 ];
 
