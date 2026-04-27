@@ -12,7 +12,7 @@ const initialTopics: GalleryTopic[] = [
 ];
 const initialImages: GalleryImage[] = [
   {
-    src: '/images/450386206_992128892703656_8737641397939424641_n.jpg',
+    src: '/public/images/logo.jpg',
     title: 'TIFO',
     subtitle: 'photography / creative direction',
     info: 'Ez egy példa leírás a galéria képhez.',
