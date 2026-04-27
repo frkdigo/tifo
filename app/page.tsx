@@ -3,7 +3,7 @@
 import HeroSection from './components/HeroSection'
 import PostsSection from './components/PostsSection'
 import HomeHighlights from './components/HomeHighlights'
-import Gallery from '../components/Gallery'
+// import Gallery from '../components/Gallery'
 import { motion } from "framer-motion";
 
 export default function Home() {
@@ -71,3 +71,4 @@ export default function Home() {
     </motion.main>
   )
 }
+      {/* Galéria szekció ideiglenesen eltávolítva */}
