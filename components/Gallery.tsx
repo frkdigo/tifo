@@ -15,7 +15,7 @@ const initialImages: GalleryImage[] = [
     src: '/public/images/logo.jpg',
     title: 'TIFO',
     subtitle: 'photography / creative direction',
-    info: 'Ez egy példa leírás a galéria képhez.',
+    info: 'Nézz bele a TIFO világába.',
     topicId: '1',
   },
 ];
@@ -32,7 +32,7 @@ export default function Gallery() {
 
     // Képek betöltése
     async function fetchImages() {
-      const { data, error } = await supabase.from('gallery_images').select('*').order('created_at', { ascending: false });
+      const { data, error } = await supabase.from('gallery_images2').select('*').order('created_at', { ascending: false });
       if (!error && data) setImages(data);
     }
 
@@ -68,7 +68,7 @@ export default function Gallery() {
       const publicUrl = await uploadGalleryImageToStorage(file, topicId, user.email);
       // 2. Metaadat beszúrása DB-be
       const { error } = await supabase
-        .from('gallery_images')
+        .from('gallery_images2')
         .insert([
           {
             src: publicUrl,
