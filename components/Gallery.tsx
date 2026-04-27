@@ -1,21 +1,88 @@
 "use client";
 import React, { useState } from 'react';
+import GalleryUpload, { GalleryTopic, GalleryImage } from './GalleryUpload';
+import { useUser } from '../app/lib/useUser';
+import { uploadGalleryImageToStorage } from '../lib/uploadGalleryImageToStorage';
+import { supabase } from '../lib/supabaseClient';
 
-// Példa képek (cseréld le a sajátjaidra)
-const images = [
+
+// Dummy témák és képek
+const initialTopics: GalleryTopic[] = [
+  { id: '1', name: 'Alapértelmezett téma' },
+];
+const initialImages: GalleryImage[] = [
   {
     src: '/images/450386206_992128892703656_8737641397939424641_n.jpg',
-    title: 'SILENT BLOOM',
+    title: 'TIFO',
     subtitle: 'photography / creative direction',
-    info: 'Ez egy példa leírás a galéria képhez.'
+    info: 'Ez egy példa leírás a galéria képhez.',
+    topicId: '1',
   },
-  // További képek hozzáadhatók ide
 ];
 
 export default function Gallery() {
+  const { user } = useUser();
+  const [topics, setTopics] = useState<GalleryTopic[]>(initialTopics);
+  const [images, setImages] = useState<GalleryImage[]>(initialImages);
   const [current, setCurrent] = useState(0);
   const [showInfo, setShowInfo] = useState(true);
   const image = images[current];
+
+  // Téma létrehozása Supabase-ben
+  async function handleCreateTopic(name: string) {
+    const { data, error } = await supabase
+      .from('gallery_topics')
+      .insert([{ name }])
+      .select()
+      .single();
+    if (error) {
+      alert('Hiba a téma létrehozásakor: ' + error.message);
+      return;
+    }
+    const newTopic: GalleryTopic = { id: data.id, name: data.name };
+    setTopics([...topics, newTopic]);
+    alert(`Új téma létrehozva: ${name}`);
+  }
+
+  // Kép feltöltése Supabase storage-ba és DB-be
+  async function handleUploadImage(file: File, topicId: string) {
+    if (!user) return;
+    try {
+      // 1. Kép feltöltése storage-ba
+      const publicUrl = await uploadGalleryImageToStorage(file, topicId, user.email);
+      // 2. Metaadat beszúrása DB-be
+      const { data, error } = await supabase
+        .from('gallery_images')
+        .insert([
+          {
+            src: publicUrl,
+            title: file.name,
+            subtitle: 'Feltöltött kép',
+            info: '',
+            topic_id: topicId,
+          },
+        ])
+        .select()
+        .single();
+      if (error) {
+        alert('Hiba a kép mentésekor: ' + error.message);
+        return;
+      }
+      setImages([
+        ...images,
+        {
+          src: data.src,
+          title: data.title,
+          subtitle: data.subtitle,
+          info: data.info,
+          topicId: data.topic_id,
+        },
+      ]);
+      alert(`Kép feltöltve: ${file.name}`);
+    } catch (e: any) {
+      alert('Hiba a feltöltés során: ' + e.message);
+    }
+  }
 
   const prev = () => setCurrent((current - 1 + images.length) % images.length);
   const next = () => setCurrent((current + 1) % images.length);
@@ -25,8 +92,17 @@ export default function Gallery() {
       {/* Logo */}
       <div className="absolute top-8 left-1/2 -translate-x-1/2 text-center z-10">
         <span className="font-bold tracking-widest text-gray-700 text-lg">DIRECTOR</span>
-        <div className="text-xs text-gray-400">MEDIA GALLERY SLIDER</div>
+        <div className="text-xs text-gray-400">TÖRÖKBÁLINTI IFJÚSÁGI ÖNKORMÁNYZAT</div>
       </div>
+
+      {/* Admin feltöltő */}
+      {user?.isAdmin && (
+        <GalleryUpload
+          topics={topics}
+          onCreateTopic={handleCreateTopic}
+          onUploadImage={handleUploadImage}
+        />
+      )}
 
       {/* Kép */}
       <div className="w-full max-w-4xl aspect-video flex items-center justify-center relative">
@@ -72,7 +148,7 @@ export default function Gallery() {
       <div className="flex gap-2 mt-6">
         {images.map((img, idx) => (
           <button
-            key={img.src}
+            key={img.src + idx}
             onClick={() => setCurrent(idx)}
             className={`w-16 h-10 rounded border-2 ${idx === current ? 'border-gray-900' : 'border-gray-200'} overflow-hidden`}
           >
