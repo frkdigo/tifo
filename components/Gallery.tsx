@@ -97,12 +97,26 @@ export default function Gallery() {
 
       {/* Admin feltöltő */}
       {user?.isAdmin && (
-        <GalleryUpload
-          topics={topics}
-          onCreateTopic={handleCreateTopic}
-          onUploadImage={handleUploadImage}
-        />
+        <>
+          {!showUpload && (
+            <button
+              className="px-6 py-2 rounded bg-black text-white font-semibold mt-8 mb-4 hover:bg-gray-800 transition"
+              onClick={() => setShowUpload(true)}
+            >
+              Kép feltöltés
+            </button>
+          )}
+          {showUpload && (
+            <GalleryUpload
+              topics={topics}
+              onCreateTopic={handleCreateTopic}
+              onUploadImage={handleUploadImage}
+            />
+          )}
+        </>
       )}
+  // ...
+  const [showUpload, setShowUpload] = useState(false);
 
       {/* Kép */}
       <div className="w-full max-w-4xl aspect-video flex items-center justify-center relative">
