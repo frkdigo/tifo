@@ -6,19 +6,7 @@ import { uploadGalleryImageToStorage } from '../lib/uploadGalleryImageToStorage'
 import { supabase } from '../lib/supabaseClient';
 
 
-// Dummy témák és képek
-const initialTopics: GalleryTopic[] = [
-  { id: '1', name: 'Alapértelmezett téma' },
-];
-const initialImages: GalleryImage[] = [
-  {
-    src: '/public/images/logo.jpg',
-    title: 'TIFO',
-    subtitle: 'photography / creative direction',
-    info: 'Nézz bele a TIFO világába.',
-    topicId: '1',
-  },
-];
+// Dummy témák és képek eltávolítva, csak Supabase-ből töltjük be az adatokat
 
 export default function Gallery() {
   const { user } = useUser();
