@@ -62,10 +62,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Galéria szekció */}
-      <section className="max-w-6xl mx-auto px-4 py-16">
-        <Gallery />
-      </section>
+      {/* Galéria szekció ideiglenesen eltávolítva */}
 
       <PostsSection />
     </motion.main>
