@@ -3,6 +3,7 @@
 import HeroSection from './components/HeroSection'
 import PostsSection from './components/PostsSection'
 import HomeHighlights from './components/HomeHighlights'
+import Gallery from '../components/Gallery'
 import { motion } from "framer-motion";
 
 export default function Home() {
@@ -59,6 +60,11 @@ export default function Home() {
             </a>
           </div>
         </div>
+      </section>
+
+      {/* Galéria szekció */}
+      <section className="max-w-6xl mx-auto px-4 py-16">
+        <Gallery />
       </section>
 
       <PostsSection />

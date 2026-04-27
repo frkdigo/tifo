@@ -13,6 +13,7 @@ const sora = Sora({ subsets: ["latin-ext"], weight: ["600", "700"] });
 const navItems = [
   { href: "/", label: "Főoldal" },
   { href: "/esemenyeink", label: "Eseményeink" },
+  { href: "/galeria", label: "Galéria" },
   { href: "/rolunk", label: "Rólunk" },
   { href: "/kapcsolat", label: "Kapcsolat" },
 ];
