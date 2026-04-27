@@ -54,8 +54,16 @@ export default function Gallery() {
     try {
       // 1. Kép feltöltése storage-ba
       const publicUrl = await uploadGalleryImageToStorage(file, topicId, user.email);
+      // Debug: logoljuk a beszúrandó adatokat
+      console.log('Feltöltés adatok:', {
+        src: publicUrl,
+        title: file.name,
+        subtitle: 'Feltöltött kép',
+        info: '',
+        topic_id: topicId,
+      });
       // 2. Metaadat beszúrása DB-be
-      const { error } = await supabase
+      const { error, data } = await supabase
         .from('gallery_images2')
         .insert([
           {
@@ -66,6 +74,8 @@ export default function Gallery() {
             topic_id: topicId,
           },
         ]);
+      // Debug: logoljuk a választ
+      console.log('Supabase insert válasz:', { error, data });
       if (error) {
         alert('Hiba a kép mentésekor: ' + error.message);
         return;
@@ -74,6 +84,7 @@ export default function Gallery() {
       alert(`Kép feltöltve: ${file.name}`);
     } catch (e: any) {
       alert('Hiba a feltöltés során: ' + e.message);
+      console.error('Feltöltés kivétel:', e);
     }
   }
 
